@@ -1,0 +1,1538 @@
+# English catalog. Strings missing here fall back to Russian (ru.toml).
+
+[meta]
+name = "English"
+plural = "one_other"
+
+[fmt]
+group_separator = ","
+decimal_separator = "."
+money = "{symbol}{amount}"
+unknown_amount = "amount unknown"
+no_date = "—"
+no_period = "—"
+date = "{month} {day}"
+date_year = "{month} {day}, {year}"
+date_short = "{month} {day}"
+date_weekday = "{weekday}, {date}"
+datetime = "{date}, {time}"
+when = "{date}, {relative}"
+percent = "{value}%"
+
+[fmt.months]
+genitive = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+nominative = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+short = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+
+[fmt.weekdays]
+full = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+short = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+
+[fmt.rel]
+today = "today"
+tomorrow = "tomorrow"
+yesterday = "yesterday"
+in_days = { one = "in {n} day", other = "in {n} days" }
+days_ago = { one = "{n} day ago", other = "{n} days ago" }
+
+[fmt.units]
+day = { one = "{n} day", other = "{n} days" }
+hour = { one = "{n} hour", other = "{n} hours" }
+minute = { one = "{n} minute", other = "{n} minutes" }
+month = { one = "{n} month", other = "{n} months" }
+subscription = { one = "{n} subscription", other = "{n} subscriptions" }
+email = { one = "{n} email", other = "{n} emails" }
+item = { one = "{n} item", other = "{n} items" }
+transaction = { one = "{n} transaction", other = "{n} transactions" }
+
+[fmt.period]
+every_1_day = "daily"
+every_1_week = "weekly"
+every_1_month = "monthly"
+every_1_year = "yearly"
+quarterly = "quarterly"
+every_n_day = { one = "every {n} day", other = "every {n} days" }
+every_n_week = { one = "every {n} week", other = "every {n} weeks" }
+every_n_month = { one = "every {n} month", other = "every {n} months" }
+every_n_year = { one = "every {n} year", other = "every {n} years" }
+short_day = "day"
+short_week = "wk"
+short_month = "mo"
+short_year = "yr"
+short_n = "{n} {unit}"
+
+[category]
+music = "Music"
+video = "Video"
+cloud = "Cloud"
+games = "Games"
+education = "Learning"
+software = "Software"
+other = "Other"
+
+[config.err]
+header = "Configuration error in {path}:"
+header_value = "Invalid value:"
+line = "  • {key}: {message}"
+missing = "required setting is missing"
+unknown_key = "unknown setting (typo?)"
+int = "an integer is expected"
+float = "a number is expected"
+number = "a number is expected"
+bool = "true or false is expected"
+string = "a quoted string is expected"
+list = "a list is expected, e.g. [1, 2] or \"a, b\""
+table = "a table (section) is expected"
+ge = "must be at least {ge}"
+le = "must be at most {le}"
+gt = "must be greater than {gt}"
+lt = "must be less than {lt}"
+literal = "allowed values: {expected}"
+or = " or "
+generic = "invalid value ({detail})"
+duration = "“{value}” is not a duration; examples: 15m, 4h, 1d, 2w"
+clock = "“{value}” is not a time of day; use HH:MM, e.g. 09:30"
+color = "“{value}” is not a colour; use #rrggbb"
+language = "“{value}” is not a language code (ru, en, kk...)"
+timezone = "unknown time zone “{value}”; example: Asia/Almaty"
+currency = "“{value}” is not a currency code; use a three-letter ISO code such as KZT"
+rate = "the {code} rate must be positive"
+schedule = "the schedule cannot be empty"
+account_name = "account name “{value}”: Latin letters, digits, dot, dash and underscore only"
+duplicate_account = "IMAP account names must be unique"
+thresholds = "review_threshold cannot be greater than auto_accept"
+periods = "periods are whole numbers of days from 1 to 800"
+days_before = "days before a charge must be between 0 and 365"
+negative = "the value cannot be negative"
+category_key = "category key “{value}”: lowercase Latin letters, digits, - and _ only"
+unknown_category = "a rule refers to a category that does not exist: “{value}”"
+period = "“{value}” is not a period; examples: 1m, 3m, 1y, 1w, 14d, monthly"
+set_syntax = "key=value expected"
+toml = "could not parse TOML: {detail}"
+toml_at = "TOML syntax error at line {line}, column {column}"
+read = "could not read the file: {detail}"
+
+[config.origin]
+cli = "from the command line"
+env = "from the environment"
+file = "from config.toml"
+default = "default"
+
+[cli]
+error_prefix = "Error:"
+hint_prefix = "What to do:"
+hint_config_check = "Check the file with: subwatch config check"
+unexpected = "unexpected error ({detail}). Details: subwatch logs"
+version_line = "Subwatch {version}"
+yes_answers = "y,yes"
+yes_no_default_yes = "(Y/n)"
+yes_no_default_no = "(y/N)"
+
+[cli.chrome]
+usage = "Usage:"
+options_metavar = "[OPTIONS]"
+subcommand_metavar = "COMMAND [ARGS]..."
+help_option = "Show this message and exit."
+arguments = "Arguments"
+options = "Options"
+commands = "Commands"
+error = "Error"
+aborted = "Aborted."
+try_help = "Try [blue]{command_path} {help_option}[/] for help."
+deprecated = "(deprecated) "
+default = "[default: {}]"
+envvar = "[env var: {}]"
+required = "[required]"
+range = "[range: {}]"
+dynamic = "(dynamic)"
+default_inline = "default: {default}"
+required_inline = "required"
+envvar_inline = "env var: {var}"
+missing_command = "Missing command."
+no_such_command = "No such command {name!r}."
+missing_argument = "Missing argument {name}.{rest}"
+missing_option = "Missing option {name}.{rest}"
+missing_parameter = "Missing parameter {name}.{rest}"
+no_such_option = "No such option: {name}"
+no_such_option_hint = "No such option: {name} (did you mean {options}?)"
+extra_args = "Unexpected extra arguments: {args}"
+requires_arg = "Option {name} requires a value."
+requires_args = "Option {name} requires {n} values."
+no_value = "Option {name} does not take a value."
+invalid_value_for = "Invalid value for {name}: {detail}"
+invalid_value = "Invalid value: {detail}"
+not_int = "“{value}” is not an integer."
+not_float = "“{value}” is not a number."
+not_bool = "“{value}” — yes or no (true/false) expected."
+not_choice = "“{value}” — allowed: {choices}."
+not_in_range = "{value} is outside the range {range}."
+bad_format = "“{value}” does not match the format {formats}."
+path_missing = "File “{path}” does not exist."
+path_is_dir = "“{path}” is a directory, a file is expected."
+
+[cli.app]
+help = """Subwatch — a local subscription tracker for Omarchy.
+
+Finds subscriptions in your mail (Gmail, IMAP) and bank statements, reminds you about upcoming charges and adds up what they cost per month. Everything stays on your computer.
+
+Without a command it opens the TUI."""
+epilog = "Docs: README.md and docs/. Check the installation: subwatch doctor"
+
+[cli.opt]
+config = "Use another config file instead of ~/.config/subwatch/config.toml."
+set = "Override a setting for this run, e.g. --set reminders.time=09:00. Repeatable."
+lang = "Interface language for this run (ru, en)."
+quiet = "Print nothing but errors."
+verbose = "Verbose log (debug level)."
+version = "Show the version and exit."
+tui_add = "Open the add-subscription form right away."
+tui_review = "Open the review queue right away."
+all = "Include cancelled subscriptions."
+status = "Only with this status: active, review, paused, cancelled."
+set_status = "New status: active, review, paused, cancelled."
+category = "Category: key (video) or name (Video)."
+sort = "Sort by: next_charge, amount, monthly, name, category, status."
+reverse = "Reverse order."
+json = "Print JSON instead of a table."
+amount = "Amount, optionally with currency: “3990”, “3 990 ₸”, “9.99 USD”."
+currency = "Currency code (KZT, RUB, USD...). Defaults to the base currency."
+period = "Period: 1m, 3m, 1y, 1w, 14d or monthly, yearly, weekly."
+next = "Next charge date: 2026-11-01, 01.11.2026, “November 1”, +7d."
+tag = "Tag. Repeatable."
+cancel_url = "Link to the cancellation page."
+notes = "Note."
+trial_until = "End of the free trial."
+track_usage = "Track usage (to find “zombie” subscriptions)."
+service_name = "New service name."
+yes = "Do not ask for confirmation."
+open_page = "Open the cancellation page in the browser if it is known."
+used_date = "Date of use (today by default)."
+days = "How many days ahead to look."
+notify = "Show the result as a notification instead of printing it."
+months_hist = "How many recent months to show."
+by = "Group by: category or month."
+source = "Scan only this source (gmail, imap, statements or a plugin name). Repeatable."
+full = "Ignore the saved position and re-read the whole period."
+months = "Search depth in months for this run."
+dry_run = "Change nothing, only show what would be done."
+ai_dry_run = "Show what would be sent to the AI model without sending anything."
+no_ai = "Do not use the AI layer in this run."
+reprocess = "Re-read messages that were already processed."
+action = "Action: keep, cancel, snooze."
+snooze = "Snooze for: 3h, 1d, 3d..."
+bar_format = "Format: waybar (JSON for Waybar and the Omarchy bar) or text."
+fix = "Try to fix the problems found."
+online = "Also check Gmail access and the network."
+payloads = "Show the text that was sent to the AI (if it was kept)."
+purge_all = "Also delete the configuration in ~/.config/subwatch."
+follow = "Follow the log."
+lines = "How many recent log lines to show."
+sources = "Show where each value comes from."
+show_source = "Show where the value comes from."
+gmail_account = "Account label (if you connect several)."
+client_secret = "Path to the OAuth client JSON from Google Cloud."
+no_browser = "Do not open a browser, print the link instead."
+imap_name = "Short account name in Latin letters, e.g. fastmail."
+imap_host = "IMAP server, e.g. imap.fastmail.com."
+imap_user = "Login (usually your email address)."
+imap_port = "IMAP port."
+imap_no_ssl = "Connect without TLS (local test servers only)."
+imap_starttls = "Upgrade to TLS with STARTTLS after connecting."
+imap_folder = "Folder to scan. Repeatable. INBOX by default."
+imap_test = "Test the login before saving."
+password_stdin = "Read the password from standard input (for scripts)."
+ai_provider = "Provider the key is for."
+bank = "Bank template (list: subwatch banks)."
+map = "Columns by hand: “date=Date,amount=Amount,description=Description”."
+date_format = "Date format, e.g. %d.%m.%Y."
+delimiter = "CSV delimiter: “;”, “,” or tab."
+encoding = "File encoding: utf-8, cp1251..."
+save_template = "Save the column mapping as a bank template with this name."
+force_import = "Import the file even if it was imported before."
+output = "Write to a file instead of the terminal."
+only = "Only this component: systemd, bar, menu, keybinds, launchers, waybar, hook, completion. Repeatable."
+ai_test_dry = "Only show what would be sent to the model."
+
+[cli.arg]
+ref = "Subscription number or service name."
+service = "Service name."
+keep = "The subscription to keep."
+drop = "The subscription to delete after moving its history."
+reminder = "Reminder number."
+route = "Submenu: upcoming. Without an argument — the root menu."
+key = "Setting key, e.g. reminders.days_before."
+value = "New value."
+reset_key = "Key to reset to its default. Without a key — the whole file."
+revoke_what = "What to revoke: gmail, imap, ai or all."
+revoke_name = "IMAP account name (all by default)."
+files = "Statement files (CSV or PDF)."
+code = "Currency code."
+rate = "How much base currency one unit costs."
+budget_amount = "Monthly limit in the base currency. 0 removes the limit."
+rule_id = "Rule number (see subwatch rules list)."
+rule_kind = "Type: ignore_service, ignore_sender, accept_service, alias, category."
+rule_pattern = "Service or sender address."
+rule_value = "Value (for alias — the new name, for category — the category key)."
+eml = "An email in .eml format."
+shell = "Shell: bash, zsh or fish."
+
+[cli.metavar]
+path = "PATH"
+key_value = "KEY=VALUE"
+lang = "LANG"
+status = "STATUS"
+category = "CATEGORY"
+sort = "FIELD"
+ref = "SUBSCRIPTION"
+service = "SERVICE"
+amount = "AMOUNT"
+currency = "CURRENCY"
+period = "PERIOD"
+date = "DATE"
+tag = "TAG"
+url = "URL"
+text = "TEXT"
+n = "N"
+by = "BY"
+source = "SOURCE"
+id = "ID"
+action = "ACTION"
+duration = "DURATION"
+format = "FORMAT"
+route = "MENU"
+key = "KEY"
+value = "VALUE"
+name = "NAME"
+host = "HOST"
+user = "LOGIN"
+folder = "FOLDER"
+what = "WHAT"
+bank = "BANK"
+mapping = "COLUMNS"
+char = "CHAR"
+kind = "TYPE"
+pattern = "PATTERN"
+component = "COMPONENT"
+shell = "SHELL"
+
+[cli.tui]
+help = "Open the TUI in this terminal."
+short = "TUI in this terminal"
+
+[cli.open]
+help = "Open the TUI in a new terminal window (this is what the bar, menu and keybindings do)."
+short = "TUI in a new window"
+
+[cli.list]
+help = "Subscriptions with amounts, periods and charge dates."
+short = "List subscriptions"
+empty = "No subscriptions yet."
+empty_hint = "Add one by hand (subwatch add) or connect your mail: subwatch auth gmail / subwatch auth imap."
+total = "Total: {total} per month ({yearly} per year), {count}."
+unconverted = "No exchange rate to convert into the base currency: {services}. Set one: subwatch rates set CODE RATE"
+review_hint = "{count} more waiting for review: subwatch review"
+
+[cli.show]
+help = "Details of a subscription: amounts, dates, charge history."
+short = "Subscription details"
+
+[cli.add]
+help = "Add a subscription by hand. Missing fields are asked interactively."
+short = "Add a subscription"
+ask_service = "Service:"
+ask_amount = "Amount (currency optional, Enter to skip):"
+ask_period = "Period (1m, 3m, 1y, monthly, yearly):"
+ask_next = "Next charge (2026-11-01, “November 1”, Enter to skip):"
+done = "Added: {service} (#{id})."
+
+[cli.edit]
+help = "Change a subscription. Only the given options are changed."
+short = "Edit a subscription"
+done = "Saved: {service}."
+
+[cli.remove]
+help = "Delete a subscription together with its charge history."
+short = "Delete a subscription"
+confirm = "Delete “{service}” with all its history?"
+done = "Deleted: {service}."
+
+[cli.cancel]
+help = "Mark a subscription cancelled and open its cancellation page if known."
+short = "Cancel a subscription"
+opened = "Opened the cancellation page: {url}"
+no_url = "The cancellation link for “{service}” is unknown — cancel it in the service settings."
+done = "“{service}” is marked as cancelled. No more reminders."
+
+[cli.pause]
+help = "Pause a subscription: it stays in the list but gets no reminders."
+short = "Pause"
+done = "“{service}” paused."
+
+[cli.resume]
+help = "Make a subscription active again."
+short = "Resume"
+done = "“{service}” is active again."
+
+[cli.used]
+help = "Record that you used a subscription (needed to find “zombies”)."
+short = "Record usage"
+done = "Recorded usage of “{service}”."
+
+[cli.merge]
+help = "Merge two records of the same subscription: the second one's history moves to the first."
+short = "Merge duplicates"
+confirm = "Move the history of “{drop}” into “{keep}” and delete “{drop}”?"
+done = "“{drop}” merged into “{keep}”."
+
+[cli.upcoming]
+help = "Upcoming charges."
+short = "Upcoming charges"
+title = "Charges in the next {days}:"
+none = "No charges in the next {days}."
+notify_title = "Charges in the next {days}"
+notify_line = "{date} · {service} · {amount} ({relative})"
+
+[cli.spend]
+help = "What subscriptions cost: per month, by category, by month, budgets."
+short = "How much I spend"
+total = "{total} per month, {yearly} per year ({count})."
+notify_title = "Subscriptions: spending"
+notify_total = "{total} per month · {yearly} per year"
+notify_cat = "{name}: {amount}"
+
+[cli.scan]
+help = "Find subscriptions in mail and statements. Later runs read only what is new."
+short = "Scan mail and statements"
+running = "Scanning…"
+progress = "Scanning: {source} — {count}"
+done = "Done in {seconds} s."
+error_line = "{source}: {message}"
+no_sources = "No source is connected."
+no_sources_hint = "Connect your mail (subwatch auth gmail or subwatch auth imap) or import a statement (subwatch import file.csv)."
+would_title = "What would be saved:"
+would_none = "Nothing new found."
+would_line = "• {service} — {kind}, {amount}, {period}, {category}; confidence {confidence}% → {status}"
+would_active = "to the list"
+would_review = "to review"
+would_ignored = "dropped"
+
+[cli.scan.col]
+source = "Source"
+seen = "Messages"
+created = "New"
+review = "To review"
+updated = "Updated"
+filtered = "Filtered"
+
+[cli.remind]
+help = "Check whether it is time to remind about charges (run by a timer)."
+short = "Send reminders"
+none = "Nothing to remind about right now."
+line = "Reminded: {service}, {date}{repeat}"
+repeat = " (again)"
+
+[cli.notify-action]
+help = "Act on a reminder: keep, cancel or snooze."
+short = "Reminder action"
+
+[cli.notify-wait]
+help = "Internal: waits for a click on a notification button."
+short = "Internal"
+
+[cli.bar]
+help = "Output for the Omarchy bar or Waybar module (JSON)."
+short = "Bar module"
+
+[cli.menu]
+help = "The Subwatch menu: in the Omarchy menu, or Walker, fuzzel, wofi, rofi or fzf without it."
+short = "Menu"
+upcoming_detail = "{date}, {relative} · {amount}"
+open_tui = "Open in Subwatch"
+cancel_page = "Open the cancellation page"
+mark_used = "Record usage"
+
+[cli.doctor]
+help = "Check the environment, keys, permissions, timers and the Omarchy integration, with fixes."
+short = "Diagnostics"
+
+[cli.privacy]
+help = "What Subwatch keeps on your machine and what has ever been sent to a cloud model."
+short = "Privacy"
+
+[cli.purge]
+help = "Delete all Subwatch data and tokens."
+short = "Delete all data"
+confirm = "Delete the database, cache, calendar and all keyring entries? The configuration stays."
+confirm_all = "Delete the database, cache, calendar, all keyring entries and the configuration?"
+removed = "removed: {item}"
+done = "All Subwatch data deleted."
+
+[cli.logs]
+help = "The Subwatch log from journald."
+short = "Log"
+
+[cli.version]
+help = "Show the version."
+short = "Version"
+
+[cli.config]
+help = "Settings: show, change, check."
+short = "Settings"
+set_done = "{key}: {old} → {new}"
+side_effect = "  {what}"
+env_shadow = "Note: {var} is set and overrides this value."
+unset_done = "{key} now uses the default."
+unset_absent = "{key} is not set in the file anyway."
+edit_again = "Open the file again and fix it?"
+restore = "Restore the file as it was before editing?"
+restored = "File restored."
+valid = "Configuration is fine: {path}"
+defaults_only = "No configuration file — defaults are used."
+env_active = "Environment overrides in effect: {keys}"
+reset_confirm = "Replace config.toml with the default one? The old file is kept next to it."
+reset_done = "Configuration reset. Old copy: {backup}"
+reset_key = "{key} reset to its default."
+no_diff = "All settings are default."
+diff_line = "{key}: {default} → {current} ({origin})"
+
+[cli.config_path]
+help = "Path to the configuration file."
+short = "File path"
+
+[cli.config_show]
+help = "All effective settings, including the file, environment and flags."
+short = "All settings"
+
+[cli.config_get]
+help = "The value of one setting."
+short = "Get a setting"
+
+[cli.config_set]
+help = "Change a setting in config.toml (comments are kept). The value is validated before writing."
+short = "Change a setting"
+
+[cli.config_unset]
+help = "Remove a setting from the file so the default applies."
+short = "Remove a setting"
+
+[cli.config_edit]
+help = "Open config.toml in an editor and validate it after saving."
+short = "Edit in an editor"
+
+[cli.config_reset]
+help = "Reset a setting or the whole file to defaults."
+short = "Reset"
+
+[cli.config_diff]
+help = "How the effective settings differ from the defaults and where each difference comes from."
+short = "Differences from defaults"
+
+[cli.config_check]
+help = "Validate the configuration."
+short = "Validate"
+
+[cli.auth]
+help = "Connecting mail and keys: Gmail, IMAP, AI. Secrets live only in the keyring."
+short = "Access"
+imap_intro = "IMAP connection: {host}"
+imap_app_password = "Use an app password, not your main mail password. It is created in the security settings of your mail provider."
+imap_password = "App password:"
+imap_testing = "Testing the login…"
+imap_ok = "Logged in, folders on the server: {count}."
+imap_missing_folders = "The server has no folders: {folders}. Available, for example: {available}"
+imap_saved = "Account “{name}” saved: password in the keyring, address and folders in config.toml."
+next_scan = "Next: subwatch scan"
+ai_key = "API key for {provider}:"
+ai_saved = "The {provider} key is saved in the keyring."
+status_gmail = "Gmail: {state}, token: {token} (label {account})"
+status_imap = "IMAP “{name}”: {user} at {host}, password: {token}"
+status_no_imap = "IMAP: no accounts."
+status_ai = "AI ({provider}): key {token}"
+on = "on"
+off = "off"
+token_yes = "present"
+token_no = "missing"
+revoke_confirm = "Revoke access: {what}?"
+revoked_gmail = "Gmail access revoked at Google and removed from the keyring."
+revoked_gmail_local = "The Gmail token was removed from the keyring (revoking at Google failed — check myaccount.google.com/permissions)."
+revoked_imap = "Password for “{name}” removed. Revoke the app password in the {host} settings as well."
+revoked_ai = "The {provider} key was removed."
+revoke_done = "Done."
+
+[cli.auth_gmail]
+help = "Connect Gmail: a step-by-step wizard for your own Google Cloud project, read-only access."
+short = "Connect Gmail"
+
+[cli.auth_imap]
+help = "Connect mail over IMAP with an app password."
+short = "Connect IMAP"
+
+[cli.auth_ai]
+help = "Save a cloud model API key in the keyring."
+short = "AI key"
+
+[cli.auth_status]
+help = "Which sources are connected and whether their keys are present."
+short = "Status"
+
+[cli.auth_revoke]
+help = "Revoke access and delete tokens: gmail, imap, ai or all."
+short = "Revoke access"
+
+[cli.review]
+help = "Review queue: findings Subwatch is not sure about. Your decision is remembered as a rule."
+short = "Review queue"
+empty = "The review queue is empty."
+title = "Waiting for review: {count}"
+hint = "Confirm: subwatch review confirm ID · reject for good: subwatch review reject ID"
+item_header = "Finding {n} of {total}"
+prompt = "Is this a subscription? y — yes, n — no (never suggest again), Enter — skip, q — quit:"
+answers_yes = "y,yes"
+answers_no = "n,no"
+answers_quit = "q,quit"
+confirmed = "“{service}” added to subscriptions."
+rejected = "“{service}” will not be suggested again."
+not_in_queue = "“{service}” is not in the review queue."
+
+[cli.review_list]
+help = "Show the review queue."
+short = "Show"
+
+[cli.review_confirm]
+help = "Confirm a finding: it is a subscription."
+short = "Confirm"
+
+[cli.review_reject]
+help = "Reject a finding: not a subscription, never suggest it again."
+short = "Reject"
+
+[cli.import]
+help = "Import bank statements (CSV, PDF) and look for recurring charges."
+short = "Import a statement"
+already = "{path} was already imported (repeat with --force)."
+unknown = "The format of {path} is not recognised. Describe the columns by hand."
+headers_title = "Columns in the file:"
+ask_date = "Number or name of the date column:"
+ask_amount = "Amount column:"
+ask_description = "Description column (who was paid):"
+ask_currency = "Currency column (Enter — none):"
+ask_date_format = "Date format, e.g. %d.%m.%Y (Enter — guess):"
+bad_column = "No such column, try again."
+parsed = "{path}: template “{template}”, rows {rows}, debits {debits}, skipped {skipped}."
+stored = "New transactions saved: {count}."
+template_saved = "Template saved: {path}"
+none_found = "No recurring charges found. Reliable detection needs at least 3 months of statements."
+found = "Subscription found: {service}, {amount}, {period} — {status}"
+would = "Would find: {service}, {amount}, {period}, confidence {confidence}%"
+summary = "New subscriptions: {created}, to review: {review}, updated: {updated}."
+
+[cli.banks]
+help = "Bank templates for importing statements."
+short = "Bank templates"
+line = "{name}: {title} ({format}, {origin})"
+builtin = "built-in"
+user = "yours"
+
+[cli.rates]
+help = "Exchange rates for converting into the base currency."
+short = "Exchange rates"
+header = "Base currency {base}, source {source}, updated {when} {stale}"
+stale = "(stale)"
+line = "1 {code} = {rate} {base} {manual}"
+manual = "(manual rate)"
+update_failed = "Could not update rates; saved and manual rates are used."
+updated = "Rates updated ({source}), currencies: {count}."
+set_done = "Manual rate: 1 {code} = {rate} {base}."
+
+[cli.rates_show]
+help = "Show rates for the currencies of your subscriptions."
+short = "Show"
+
+[cli.rates_update]
+help = "Download fresh rates."
+short = "Update"
+
+[cli.rates_set]
+help = "Set a manual rate (offline fallback)."
+short = "Manual rate"
+
+[cli.export]
+help = "Export to CSV, JSON and an .ics calendar."
+short = "Export"
+written = "Written: {path}"
+ics_written = "Charge calendar: {path}"
+ics_subscribe = "To subscribe in a calendar app, add a local calendar: {url}"
+
+[cli.export_csv]
+help = "Subscriptions as CSV (; separated)."
+short = "CSV"
+
+[cli.export_json]
+help = "Subscriptions as JSON."
+short = "JSON"
+
+[cli.export_ics]
+help = "Charge calendar (.ics). Without --output it updates the file you can subscribe to."
+short = "Calendar"
+
+[cli.budget]
+help = "Budgets: an overall monthly limit and per-category limits."
+short = "Budgets"
+none = "No budgets set."
+none_hint = "Set one: subwatch budget set 20000 (overall) or subwatch budget set 5000 --category video"
+set_done = "Budget saved."
+
+[cli.budget_set]
+help = "Set a monthly limit: overall or for a category."
+short = "Set a limit"
+
+[cli.rules]
+help = "Remembered decisions: what is not a subscription, what to accept right away, renames and categories."
+short = "Rules"
+none = "No rules yet. They appear when you confirm or reject findings."
+line = "{id}. {kind}: {pattern} {value} ({origin})"
+removed = "Rule {id} removed."
+not_found = "There is no rule {id}."
+bad_kind = "Unknown rule type “{value}”. Allowed: {known}"
+added = "Rule added: {kind} — {pattern}"
+
+[cli.rules.kind]
+ignore_service = "not a subscription"
+ignore_sender = "ignore sender"
+accept_service = "accept right away"
+alias = "rename"
+category = "category"
+
+[cli.rules.origin]
+user = "by hand"
+review = "from the review queue"
+
+[cli.rules_list]
+help = "Show rules."
+short = "Show"
+
+[cli.rules_remove]
+help = "Delete a rule."
+short = "Delete"
+
+[cli.rules_add]
+help = "Add a rule by hand."
+short = "Add"
+
+[cli.plugins]
+help = "Source plugins."
+short = "Plugins"
+line = "{name} — {kind}, {state} ({origin})"
+enabled = "enabled"
+disabled = "disabled"
+builtin = "built-in"
+dir = "Your plugins: {path}/*.py"
+
+[cli.plugins.kind]
+messages = "emails"
+transactions = "transactions"
+manual = "manual"
+
+[cli.plugins_list]
+help = "List sources and plugins."
+short = "List"
+
+[cli.ai]
+help = "The AI layer (off by default)."
+short = "AI"
+dry_none = "Nothing would be sent to the model: the rules handled every message."
+dry_header = "Request {n} → {provider}/{model} ({kind}), sender: {sender}"
+local = "local model"
+cloud = "cloud model"
+rules_found = "Rules: {service}, {amount}, {period}, confidence {confidence}%"
+rules_none = "The rules found nothing."
+model_none = "The model found no subscription."
+result = "Result: {service}, {amount}, {period}, confidence {confidence}%"
+disabled = "The AI layer is off."
+enable_hint = "Enable it: subwatch config set ai.enabled true. You can see what would be sent without that: --dry-run"
+unavailable = "The model is unavailable ({reason}). Details: subwatch logs"
+
+[cli.ai_test]
+help = "Run one email (.eml) through the rules and the model."
+short = "Try on an email"
+
+[cli.keybinds]
+help = "Hyprland keybindings from [keybinds] in config.toml."
+short = "Keybindings"
+line = "{combo} — {desc}: {state}"
+free = "free"
+conflict = "taken ({what})"
+no_conflicts = "No conflicts."
+
+[cli.keybinds_apply]
+help = "Write ~/.config/hypr/subwatch.lua, include it and reload Hyprland."
+short = "Apply"
+
+[cli.keybinds_show]
+help = "Show the combinations and whether they are taken."
+short = "Show"
+
+[cli.keybinds_check]
+help = "Check for conflicts with existing bindings."
+short = "Check"
+
+[cli.keybinds_remove]
+help = "Remove the Subwatch keybindings."
+short = "Remove"
+
+[cli.integrate]
+help = "Omarchy integration: timers, bar, menu, keys, launcher, completion."
+short = "Integration"
+
+[cli.integrate_apply]
+help = "Set everything up (or only --only ...). Safe to run again."
+short = "Set up"
+
+[cli.integrate_remove]
+help = "Remove the integration without touching anything outside the Subwatch blocks."
+short = "Remove"
+
+[cli.integrate_status]
+help = "What is set up and what is not."
+short = "Status"
+
+[cli.completion]
+help = "Shell completion for bash, zsh and fish."
+short = "Completion"
+
+[cli.completion_show]
+help = "Print the completion script."
+short = "Show script"
+
+[cli.completion_install]
+help = "Install completion for the available shells."
+short = "Install"
+
+[cli.err]
+not_found = "Subscription “{ref}” not found."
+ambiguous = "“{ref}” matches several subscriptions: {ids}."
+exists = "“{service}” already exists (#{id})."
+need_service = "No service given."
+bad_date = "Could not understand the date “{value}”."
+bad_period = "Could not understand the period “{value}”."
+bad_amount = "Could not understand the amount “{value}”."
+bad_category = "There is no category “{value}”. Available: {known}"
+bad_sort = "Cannot sort by “{value}”. Possible: {known}"
+bad_status = "There is no status “{value}”. Available: {known}"
+bad_route = "No such menu: {value}"
+bad_revoke = "You can revoke gmail, imap, ai or all, not “{value}”."
+bad_shell = "Completion exists for bash, zsh and fish, not for “{value}”."
+bad_component = "Unknown component: {value}. Available: {known}"
+same_record = "That is the same record."
+no_file = "File not found: {path}"
+no_terminal = "Could not find a terminal to open the TUI in."
+
+[cli.hint]
+list = "See the numbers in subwatch list."
+use_id = "Give a number: subwatch show ID."
+edit = "Change it: subwatch edit {id}"
+date_formats = "Examples: 2026-11-01, 01.11.2026, “November 1”, tomorrow, +7d, +1m."
+period_formats = "Examples: 1m, 3m, 1y, 1w, 14d, monthly, yearly, weekly, quarterly."
+amount_formats = "Examples: 3990, “3 990 ₸”, “9,99 €”, “12.99 USD”."
+categories = "Categories are listed in [categories] of config.toml."
+terminal = "Set the terminal command: subwatch config set ui.terminal \"ghostty -e\""
+
+[input]
+today = "today"
+tomorrow = "tomorrow"
+
+[input.period]
+"week" = "1w"
+"month" = "1m"
+"quarter" = "3m"
+"year" = "1y"
+
+[table]
+id = "#"
+service = "Service"
+amount = "Amount"
+period = "Period"
+monthly = "Per month"
+next = "Next charge"
+category = "Category"
+status = "Status"
+date = "Date"
+when = "When"
+month = "Month"
+total = "Total"
+
+[details]
+service = "Service"
+amount = "Amount"
+period = "Period"
+monthly = "Per month"
+next = "Next charge"
+last = "Last charge"
+category = "Category"
+tags = "Tags"
+status = "Status"
+source = "Source"
+confidence = "Confidence"
+trial = "Trial until"
+price_change = "Price"
+price_change_value = "was {old}, now {new} ({date})"
+cancel_url = "Cancel at"
+last_used = "Last used"
+review_reason = "Why in review"
+notes = "Note"
+snippet = "Email fragment"
+history = "Charges"
+
+[status]
+active = "active"
+review = "in review"
+paused = "paused"
+cancelled = "cancelled"
+trial_mark = "(trial)"
+
+[source]
+gmail = "Gmail"
+imap = "IMAP"
+statements = "statements"
+statement = "statement"
+recurrence = "repeats in statements"
+manual = "manual"
+ai = "AI"
+file = "file"
+
+[kind]
+charge = "charge"
+renewal = "renewal"
+trial = "trial"
+cancellation = "cancellation"
+price_change = "price change"
+
+[review.reason]
+amount = "no amount found"
+period = "period unclear"
+unknown_service = "service not in the dictionary"
+low_confidence = "few signs of a subscription"
+
+[action]
+keep = "Keep"
+cancel = "Cancel subscription"
+cancel_long = "Cancel (opens the cancellation page)"
+snooze = "Snooze for {duration}"
+prompt = "{service}: what now?"
+
+[remind]
+summary = "Upcoming charge: {service}"
+body = "{date} ({relative}) you will be charged {amount}."
+trial_summary = "Trial ending: {service}"
+trial_body = "{date} ({relative}) the trial ends, then {amount} will be charged."
+repeat_prefix = "Reminder again — {summary}"
+hint = "Click to keep, cancel or snooze."
+
+[remind.action]
+kept = "OK, keeping {service}"
+kept_body = "No more reminders about this charge."
+snoozed = "Snoozed: {service}"
+snoozed_body = "I will remind you in {duration}."
+cancelled = "{service} marked as cancelled"
+cancelled_body = "There is no cancellation link — cancel it in the service settings. You can undo the mark in the TUI."
+cancelled_opened = "{service}: opened the cancellation page"
+cancelled_opened_body = "The subscription is marked as cancelled. Changed your mind? Restore the status in the TUI."
+missing = "Reminder not found"
+missing_body = "It may be outdated."
+unknown = "Unknown action"
+unknown_body = "keep, cancel or snooze expected."
+
+[bar]
+text_total = "{icon} {total}"
+text_next = "{icon} {service} {when}"
+text_empty = "{icon}"
+tip_total = "Subscriptions: {total} per month, {count}"
+tip_budget_total = "Overall budget"
+tip_budget_ok = "{name}: {spent} of {limit}"
+tip_budget_warn = "{name}: {spent} of {limit} — almost used up"
+tip_budget_over = "{name}: {spent} of {limit} — exceeded!"
+tip_upcoming = "Upcoming charges:"
+tip_item = "{date} · {service} · {amount} ({relative})"
+tip_review = "In review: {count}"
+tip_hint = "Left click — open · right — menu · middle — scan"
+error = "Subwatch: could not get data ({detail})"
+
+[notify.summary]
+title = "Subwatch: new subscriptions"
+new = { one = "{n} new subscription found", other = "{n} new subscriptions found" }
+review = { one = "{n} waits for review", other = "{n} wait for review" }
+
+[notify.price]
+summary = "Price increase: {service}"
+body = "Was {old}, now {new}."
+
+[notify.duplicate]
+summary = "Looks like you pay twice"
+same_service = "“{a}” and “{b}” are two records of one service. Merge: subwatch merge"
+bundle = "“{b}” is already included in “{a}”. Maybe one of them can go."
+similar_name = "“{a}” and “{b}” look like the same subscription."
+
+[notify.zombie]
+summary = "Not used for a while: {service}"
+body = "You have not recorded using “{service}” for {days}. Cancel it?"
+
+[notify.budget]
+summary = "Subscription budget exceeded"
+body = "{name}: {spent} against a limit of {limit}."
+
+[notify.failed]
+summary = "Subwatch: error ({source})"
+
+[auth.gmail]
+title = "Connecting Gmail"
+intro = """Subwatch reads mail through your own Google Cloud project with read-only access (gmail.readonly). It cannot send or delete messages. The token goes to the system keyring and is never written to files.
+
+You do this once; it takes about ten minutes."""
+step_header = "Step {n} of {total}. {title}"
+ask_path = "Path to the downloaded client JSON:"
+opening_browser = "Opening the browser to sign in to Google…"
+copy_url = "Open the link below in a browser on this computer:"
+prompt_url = "Open in a browser: {url}"
+browser_success = "Subwatch has access now. You can close this window."
+extra_scopes = "Google granted extra permissions ({scopes}) — Subwatch does not use them."
+connected = "Gmail connected: {email}"
+saved = "The source is enabled in {path}"
+delete_json = "Delete {path}? The client secret is already in the keyring."
+json_deleted = "File deleted."
+reminder_production = "If the project stayed in Testing mode, Google revokes access after 7 days. Switch it to “In production” (step 5) and run subwatch auth gmail again."
+
+[auth.gmail.step1]
+title = "Project"
+body = "Open https://console.cloud.google.com/projectcreate and create a project, e.g. “subwatch”. No billing is needed."
+
+[auth.gmail.step2]
+title = "Gmail API"
+body = "Enable the Gmail API for the project: https://console.cloud.google.com/apis/library/gmail.googleapis.com → “Enable”."
+
+[auth.gmail.step3]
+title = "Consent screen"
+body = """Open Google Auth Platform → Branding: https://console.cloud.google.com/auth/branding
+  • App name — anything, e.g. “Subwatch”;
+  • User support email and Developer contact — your address.
+In Audience choose “External” and add your Gmail address to Test users."""
+
+[auth.gmail.step4]
+title = "Permission"
+body = "In Data Access click “Add or remove scopes” and add only https://www.googleapis.com/auth/gmail.readonly. Nothing else is needed."
+
+[auth.gmail.step5]
+title = "“In production” mode — important"
+body = """While the project is in Testing mode, Google issues a token for 7 days only and you would have to sign in again. For personal use switch the project to production: Audience → “Publish app” → confirm.
+
+No Google verification is needed for that: the project is yours and so is the only user. When signing in Google shows “Google hasn't verified this app” — this is normal for your own project. Click “Advanced” → “Go to Subwatch (unsafe)”."""
+
+[auth.gmail.step6]
+title = "OAuth client"
+body = "Clients → “Create client” → type “Desktop app” → any name → Create. Download the JSON (“Download JSON”)."
+
+[auth.gmail.step7]
+title = "Sign in"
+body = "Give the path to the downloaded JSON below. A browser opens: sign in to the Gmail account and allow read-only access."
+
+[gmail.err]
+no_token = "Gmail is not connected (no token for “{account}”)."
+refresh = "Google rejected the saved Gmail token ({detail})."
+client_read = "Could not read {path}: {detail}"
+client_json = "{path} is not JSON."
+client_type = "{path} is the wrong client type."
+need_client = "The OAuth client file is required."
+oauth = "Google sign-in did not finish: {detail}"
+no_refresh = "Google did not issue a long-lived token (refresh token)."
+
+[gmail.hint]
+auth = "Connect it: subwatch auth gmail"
+refresh = "This happens when the project is in Testing mode (tokens live 7 days) or access was revoked. Switch the project to “In production” and run subwatch auth gmail."
+client_type = "Create an OAuth client of type “Desktop app” and download its JSON."
+client_flag = "Pass the path: subwatch auth gmail --client-secret client.json"
+oauth = "Try again. If no browser opened, add --no-browser and open the link by hand."
+no_refresh = "Revoke access at https://myaccount.google.com/permissions and sign in again."
+
+[gmail.check]
+ok = "Gmail “{account}”: token in the keyring"
+no_token = "Gmail “{account}”: no token"
+
+[imap.err]
+login = "IMAP “{account}”: the server rejected the login or password ({detail})."
+no_password = "IMAP “{account}”: no password in the keyring."
+
+[imap.hint]
+login = "Use an app password, not the main one. Check it and save again: subwatch auth imap --name {account} ..."
+no_password = "Save the password: subwatch auth imap --name {account} --host ... --user ..."
+
+[imap.check]
+ok = "IMAP “{account}”: password in the keyring"
+no_password = "IMAP “{account}”: no password"
+
+[ai.err]
+http = "The model returned error {status}: {detail}"
+network = "The model is unreachable: {detail}"
+no_base = "No API address set for provider {provider}."
+no_litellm = "Provider {provider} only works through LiteLLM, which is not installed."
+
+[ai.hint]
+network = "For Ollama check that the service runs: systemctl status ollama"
+no_base = "Set the address: subwatch config set ai.api_base http://..."
+no_litellm = "Install with AI support: ./install.sh --with-ai, or pick ollama / an OpenAI-compatible API."
+key = "Save the key: subwatch auth ai"
+
+[crypto.err]
+no_key = "The database is encrypted but its key is not in the keyring."
+format = "The encrypted database file is damaged."
+decrypt = "Could not decrypt the database."
+
+[crypto.hint]
+no_key = "Without the key the database cannot be opened. If the key is lost, delete subwatch.db.enc (the data is lost) or restore the keyring from a backup."
+decrypt = "The keyring key does not fit the file — maybe the key was recreated. Restore the keyring or delete subwatch.db.enc."
+
+[secrets.err]
+no_backend = "No safe secret storage (keyring: {backend})."
+read = "Could not read “{name}” from the keyring: {detail}"
+write = "Could not write “{name}” to the keyring: {detail}"
+
+[scan.err]
+locked = "A scan is already running (process {pid})."
+crashed = "Source {source} failed: {detail}"
+
+[scan.hint]
+locked = "Wait for it to finish or check the log: subwatch logs"
+
+[statements.err]
+template = "Error in bank template {path}: {detail}"
+columns = "The file has no columns: {columns}. Present: {headers}"
+no_pdf = "pdfplumber is needed for PDF."
+pdf = "Could not read PDF {path}: {detail}"
+no_regex = "Template {name} has no line_regex for PDF."
+unknown_format = "Could not tell which bank this is: {path}."
+map_syntax = "Invalid column mapping: “{value}”."
+map_key = "Unknown field “{value}”: date, amount, description, currency, debit, credit, type are allowed."
+no_template = "There is no bank template “{name}”."
+no_headers = "No headers found in {path}."
+inbox = "Statement folder not found: {path}"
+
+[statements.hint]
+bank = "Pick a template (--bank, list: subwatch banks) or map columns by hand: --map \"date=Date,amount=Amount,description=Description\""
+map = "Example: --map \"date=Date,amount=Amount,description=Description\""
+inbox = "Create the folder or fix sources.statements.inbox_dir."
+
+[export.col]
+id = "#"
+service = "Service"
+amount = "Amount"
+currency = "Currency"
+period = "Period"
+monthly_base = "Per month (base currency)"
+next_charge = "Next charge"
+last_charge = "Last charge"
+category = "Category"
+tags = "Tags"
+status = "Status"
+source = "Source"
+confidence = "Confidence"
+cancel_url = "Cancel at"
+notes = "Note"
+
+[export.ics]
+calendar_name = "Subwatch — charges"
+summary = "{service} — {amount}"
+category = "Category: {name}"
+cancel = "Cancel: {url}"
+
+[integrate]
+not_installed = "not set up"
+omarchy_absent = "Omarchy not found — skipping"
+removed_file = "file removed"
+file_written = "file written"
+file_same = "unchanged"
+file_would = "will be written"
+
+[integrate.status]
+changed = "changed"
+unchanged = "ok"
+skipped = "skipped"
+removed = "removed"
+failed = "error"
+planned = "planned"
+
+[integrate.keys]
+generated = "Subwatch: generated by `subwatch keybinds apply`."
+edit_hint = "Change the keys in [keybinds] of ~/.config/subwatch/config.toml, not here."
+include_comment = "Subwatch keybindings (subwatch keybinds apply)."
+was = "{combo} used to be: {what}"
+bad_combo = "“{combo}” ({action}) is not a key combination; example: SUPER + CTRL + U"
+duplicate = "{combo} is assigned to two actions"
+conflict = "{combo} is already taken ({what}) — “{action}” not bound. Pick another combination or set keybinds.override_conflicts = true"
+overridden = "{combo} reassigned (was: {what})"
+written = "bindings written: {count}"
+same = "bindings unchanged"
+would_write = "bindings will be written"
+include_added = "include added to the Hyprland config"
+would_include = "include will be added to the Hyprland config"
+include_removed = "include removed from the Hyprland config"
+no_main = "Hyprland config not found"
+reload_errors = "Hyprland reports errors: {errors}"
+status_ok = "bindings are set up"
+status_missing = "bindings are not set up"
+
+[integrate.keys.desc]
+open_tui = "Subwatch: open"
+upcoming = "Subwatch: upcoming charges"
+menu = "Subwatch: menu"
+rescan = "Subwatch: scan mail"
+add = "Subwatch: add subscription"
+
+[integrate.menu]
+comment = "Subwatch entries. This block is updated by subwatch integrate apply."
+root_desc = "Subscriptions and charges"
+upcoming = "Upcoming charges"
+list = "All subscriptions"
+add = "Add a subscription"
+review = "Review queue"
+spend = "How much I spend per month"
+rescan = "Rescan mail"
+config = "Open settings"
+written = "entry added to the Omarchy menu"
+same = "menu unchanged"
+would = "an entry will be added to the Omarchy menu"
+invalid = "the menu file would not parse after the edit — left as is"
+removed = "entry removed from the Omarchy menu"
+
+[integrate.bar]
+written = "module added to the Omarchy bar ({section} section)"
+same = "bar module unchanged"
+would = "a module will be added to the bar ({section} section)"
+unreadable = "could not read shell.json"
+removed = "module removed from the bar"
+
+[integrate.hook]
+comment = "Subwatch: restores the integration after Omarchy updates."
+written = "post-update hook installed"
+same = "hook unchanged"
+would = "post-update hook will be installed"
+
+[integrate.desktop]
+generic = "Subscription tracker"
+comment = "Subscriptions, charges and reminders"
+keywords = "subscriptions;charges;billing;"
+
+[integrate.walker]
+absent = "Walker is not installed — skipping"
+
+[integrate.waybar]
+comment = "Subwatch module for Waybar."
+absent = "Waybar is not used — skipping"
+written = "module added to the Waybar config"
+same = "Waybar is already set up"
+manual = "unusual Waybar config — add \"custom/subwatch\" to modules-right by hand (snippet in contrib/waybar)"
+unparsable = "could not parse the Waybar config — left as is"
+removed = "module removed from Waybar"
+
+[integrate.systemd]
+scan_desc = "Subwatch: scan mail and statements"
+scan_timer_desc = "Subwatch: scan schedule"
+remind_desc = "Subwatch: charge reminders"
+remind_timer_desc = "Subwatch: reminder checks"
+same = "timers unchanged"
+unavailable = "systemd --user is unavailable — timers not enabled"
+enable_failed = "could not enable {unit}: {detail}"
+bad_schedule = "systemd does not understand the schedule “{value}”. Examples: daily, hourly, \"*-*-* 09:00\", 6h"
+
+[doctor]
+fixed = "Fixed: {count}."
+fix_failed = "Could not fix: {detail}"
+summary_ok = "All good ({ok} checks)."
+summary_warn = "Works, with remarks: ok {ok}, warnings {warn}."
+summary_fail = "Problems found: ok {ok}, warnings {warn}, errors {fail}."
+try_fix = "Some of them can be fixed automatically: subwatch doctor --fix"
+
+[doctor.group]
+env = "Environment"
+config = "Configuration"
+storage = "Data"
+secrets = "Keys and tokens"
+notify = "Notifications"
+systemd = "systemd timers"
+integration = "Desktop integration"
+plugins = "Plugins"
+rates = "Exchange rates"
+scan = "Scanning"
+
+[doctor.env]
+python = "Python {version}"
+on_path = "subwatch on PATH: {path}"
+not_on_path = "subwatch not found on PATH"
+fonts = "fonts with Cyrillic are present"
+no_fonts = "no fonts with Cyrillic found"
+
+[doctor.config]
+valid = "configuration is fine: {path}"
+missing = "no configuration file ({path}), defaults apply"
+invalid = "error in {path}: {errors}"
+perms = "config.toml is readable by other users ({mode})"
+
+[doctor.storage]
+dir_perms = "data directory {path} is accessible to others ({mode})"
+no_db = "no database yet ({path}) — it appears after the first scan or entry"
+db_perms = "the database is readable by other users ({mode})"
+db_ok = "database {path}, permissions {mode}"
+integrity = "database is intact, schema version {version}"
+corrupt = "the database is damaged"
+open_failed = "could not open the database: {detail}"
+key_ok = "database encryption key is in the keyring"
+no_key = "the database is encrypted but the key is not in the keyring"
+
+[doctor.secrets]
+backend = "keyring: {backend}"
+bad_backend = "keyring without safe storage: {backend}"
+gmail_ok = "Gmail “{account}”: token in the keyring"
+gmail_missing = "Gmail is enabled but the token for “{account}” is missing"
+gmail_refresh_ok = "Gmail “{account}”: Google accepts the token"
+gmail_refresh_failed = "Gmail “{account}”: the token does not work ({detail})"
+imap_ok = "IMAP “{account}”: password in the keyring"
+imap_missing = "IMAP “{account}”: no password in the keyring"
+ai_ok = "AI {provider}: key in the keyring"
+ai_missing = "AI {provider}: no key in the keyring"
+no_sources = "no source is connected"
+
+[doctor.notify]
+ok = "notification daemon: {daemon}, via: {backend}"
+no_daemon = "the notification daemon does not respond (via: {backend})"
+disabled = "notifications are off (notifications.backend = none)"
+
+[doctor.systemd]
+unavailable = "systemd --user is unavailable"
+units_ok = "units are in place and match the settings"
+units_stale = "units are missing or outdated"
+timer_ok = "{timer}: enabled, next run {next}"
+timer_off = "{timer}: not enabled"
+last_failed = "the last scan failed ({result})"
+
+[doctor.int]
+bar_ok = "module in the Omarchy bar ({path})"
+bar_missing = "no module in the Omarchy bar ({path})"
+menu_ok = "entry in the Omarchy menu ({path})"
+menu_missing = "no entry in the Omarchy menu ({path})"
+hook_ok = "post-update hook in place"
+hook_missing = "no post-update hook (the integration has to be restored by hand after Omarchy updates)"
+not_omarchy = "Omarchy not detected, its checks are skipped"
+desktop_ok = "application launcher entry in place"
+desktop_missing = "no application launcher entry"
+keys_ok = "keybindings are set up"
+keys_missing = "keybindings are not set up"
+keys_errors = "Hyprland reports errors: {errors}"
+keys_conflict = "{combo} is taken ({what}), “{action}” not bound"
+waybar_ok = "module in Waybar"
+waybar_missing = "no module in Waybar"
+walker_ok = "Walker menu in place"
+walker_missing = "no Walker menu"
+completion_ok = "completion: {shells}"
+completion_missing = "no completion for: {shells}"
+
+[doctor.plugins]
+error = "plugin {path} failed to load: {detail}"
+
+[doctor.rates]
+ok = "rates are available ({source})"
+manual_only = "manual rates are used (currency.manual_rates)"
+missing = "no rate for: {codes}"
+stale = "rates are stale (updated {when})"
+
+[doctor.scan]
+recent = "last scan: {when}"
+old = "mail has not been scanned for a while (last time {when})"
+review = "findings waiting for review: {count}"
+
+[doctor.hint]
+python = "Python 3.12 or newer is required."
+install = "Run ./install.sh from the source directory."
+fonts = "Install a font with Cyrillic, e.g.: omarchy pkg add ttf-jetbrains-mono-nerd"
+config_missing = "Create a commented file: subwatch config reset"
+config_invalid = "Fix the file: subwatch config edit"
+chmod = "Fix the permissions: subwatch doctor --fix"
+corrupt = "Restore from a subwatch.db.v*.bak copy or delete the database (subwatch purge) and scan again."
+keyring = "gnome-keyring or KWallet is required: omarchy pkg add gnome-keyring"
+add_source = "Connect your mail: subwatch auth gmail or subwatch auth imap; or import a statement: subwatch import"
+notify = "Without a notification daemon reminders are invisible. On Omarchy notifications come from omarchy-shell: omarchy restart shell"
+notify_backend = "Enable: subwatch config set notifications.backend auto"
+systemd = "Without systemd --user, scanning and reminders have to be run by hand (subwatch scan, subwatch remind)."
+integrate = "Set it up: subwatch integrate apply (or subwatch doctor --fix)"
+keys_conflict = "Pick another combination: subwatch config set keybinds.open_tui \"SUPER + CTRL + Y\""
+waybar = "Add the module: subwatch integrate apply --only waybar (snippet in contrib/waybar)"
+plugin = "Fix the plugin file or disable it: plugins.disabled"
+rates = "Update: subwatch rates update, or set by hand: subwatch rates set USD 520"
+logs = "Check the log: subwatch logs"
+
+[privacy]
+title = "What Subwatch keeps"
+principles = "Only extracted facts are kept: service, amount, dates, source. Email bodies are not stored, message ids are stored as hashes. Mail is accessed read-only."
+files = "Files:"
+file_line = "  {path} — {size} bytes, permissions {mode}"
+file_missing = "  {path} — none"
+encryption_on = "Database encryption: on (key in the keyring)."
+encryption_off = "Database encryption: off (storage.encrypt)."
+stored = "Records in the database:"
+table_line = "  {name}: {count}"
+snippets_on = "Email fragments are kept (extraction.store_snippets = true), {count} right now."
+snippets_off = "Email fragments are not kept."
+secrets = "Keyring entries (names only):"
+secret_line = "  {name}"
+no_secrets = "  none"
+ai = "AI models:"
+ai_none = "  Nothing has been sent."
+ai_total = "  Requests in total: {total}, to the cloud: {cloud}."
+ai_model = "  {model}: {count}"
+ai_row = "  {ts} · {model} · sender {sender} · {chars} characters · {outcome}"
+
+[privacy.table]
+subscriptions = "subscriptions"
+charges = "charges"
+rules = "rules"
+scan_state = "scan positions"
+processed = "processed messages (hashes)"
+reminders = "reminders"
+events = "events"
+fx_rates = "exchange rates"
+ai_log = "AI request log"
+transactions = "statement transactions (date, amount, payee)"
+imported_files = "imported files"
+
+[tui]
+subtitle = "{total} per month · {count}"
+search_placeholder = "Search by name and tags… Enter — done, Esc — close"
+empty = "Nothing here. a — add a subscription, R — scan mail."
+yes = "Yes"
+no = "No"
+config_reloaded = "Settings reloaded."
+config_opened = "Opened {path} in the editor. Changes are picked up automatically."
+bad_theme = "No theme “{name}”, using the default."
+cancel_confirm = "Mark “{service}” as cancelled?"
+cancel_confirm_url = "Mark “{service}” as cancelled and open the cancellation page?"
+rescan_started = "Scan started."
+rescan_done = "Scan finished: new {created}, to review {review}."
+how_to_quit = "Press {key} to quit."
+
+[tui.tab]
+subs = "Subscriptions"
+review = "Review"
+review_count = "Review ({count})"
+charts = "Charts"
+
+[tui.status]
+sort = "sort: {field} {direction}"
+asc = "↑"
+desc = "↓"
+category = "category: {name}"
+status = "status: {name}"
+search = "search: {text}"
+
+[tui.sort]
+next_charge = "charge date"
+amount = "amount"
+monthly = "per month"
+name = "name"
+category = "category"
+status = "status"
+
+[tui.keys]
+down = "down"
+up = "up"
+top = "top"
+bottom = "bottom"
+page_down = "page down"
+page_up = "page up"
+open = "open"
+back = "back / clear filters"
+search = "search"
+filter = "filter"
+sort = "sort"
+reverse = "reverse order"
+add = "add"
+edit = "edit"
+delete = "delete"
+cancel = "cancel subscription"
+used = "record usage"
+subscriptions = "subscriptions"
+review = "review"
+charts = "charts"
+confirm = "confirm finding"
+reject = "reject finding"
+rescan = "scan"
+config = "settings"
+help = "help"
+quit = "quit"
+
+[tui.review]
+empty = "The review queue is empty — Subwatch is sure about everything."
+why = "Why in review: {reasons}"
+keys = "{confirm} — a subscription, {reject} — not a subscription (remembered)"
+
+[tui.charts]
+by_month = "Spending by month"
+by_category = "By category (per month)"
+budgets = "Budgets"
+forecast = "forecast"
+empty = "Nothing to show yet."
+no_budgets = "No budgets set: [budget] and [categories.*].budget in config.toml."
+
+[tui.filter]
+title = "Filter"
+category = "Category"
+status = "Status"
+any = "any"
+apply = "Apply"
+reset = "Reset"
+
+[tui.form]
+add_title = "New subscription"
+edit_title = "Subscription: {service}"
+service = "Service"
+service_ph = "Netflix"
+amount = "Amount"
+amount_ph = "9.99"
+currency = "Currency"
+period = "Period"
+period_ph = "1m, 3m, 1y"
+next = "Next charge"
+next_ph = "2026-11-01 or November 1"
+category = "Category"
+tags = "Tags"
+tags_ph = "comma separated"
+cancel_url = "Cancellation page"
+url_ph = "https://"
+notes = "Note"
+status = "Status"
+track_usage = "Track usage"
+save = "Save"
+cancel = "Cancel"
+need_service = "Enter a service."
+
+[tui.help]
+title = "Subwatch keys"
+footer = "Keys are set in [ui.keys] of config.toml and are picked up on the fly."
+
+[log]
+scan_source_started = "scanning source {source}"
+scan_source_finished = "source {source} scanned"
+scan_source_crashed = "source {source} failed: {error}"
+scan_failed = "scan error ({source}): {error}"
+scan_finished = "scan finished in {seconds} s: new {created}, to review {review}, errors {errors}"
+imap_folder = "IMAP {account}/{folder}: new messages {new}"
+imap_folder_failed = "IMAP {account}: folder {folder} unavailable ({error})"
+gmail_candidates = "Gmail {account}: candidate messages {count}"
+gmail_history_expired = "Gmail {account}: history expired, searching by date"
+fx_updated = "rates updated: {source}, currencies {count}"
+fx_fetch_failed = "could not get rates from {source}: {error}"
+hook_ok = "hook {hook_event} ran: {command}"
+hook_failed = "hook {hook_event} exited with {code}: {command}"
+hook_timeout = "hook {hook_event} exceeded {timeout} s: {command}"
+reminder_sent = "reminder: {service}, charge on {charge_date}"
+notification_sent = "notification ({backend}): {summary}"
+notification_failed = "could not show a notification ({backend}): {error}"
+notification_suppressed = "notification not shown (disabled): {summary}"
+ai_failed = "AI {provider}: {error}"
+ai_no_key = "AI {provider}: no key in the keyring, AI layer skipped"
+ics_failed = "could not write the calendar: {error}"

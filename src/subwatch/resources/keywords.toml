@@ -1,0 +1,135 @@
+# Words and phrases the extractor looks for, per language (ru, en, kk).
+# Plain strings are matched case-insensitively as substrings; entries in the
+# [months] table are regexes. Users can add their own subscription keywords
+# with extraction.extra_keywords in config.toml.
+
+[subscription]
+ru = [
+    "подписк", "продлен", "автопродлен", "автоплатеж", "автоплатёж", "списан",
+    "чек", "квитанц", "оплат", "платеж", "платёж", "тариф", "ежемесячн",
+    "ежегодн", "абонемент", "пробный период", "счёт", "счет на оплату",
+]
+en = [
+    "subscription", "receipt", "renewal", "renews", "renewed",
+    "invoice", "billing", "payment", "membership", "your plan", "trial",
+    "auto-renew", "charged", "recurring",
+]
+kk = [
+    "жазылым", "төлем", "түбіртек", "ұзарт", "есептен шығар", "тариф",
+    "ай сайын", "сынақ кезеңі", "шот", "автотөлем",
+]
+
+# Phrases that mean money has actually been taken.
+[paid]
+ru = ["оплачен", "списан", "успешно оплач", "ваш чек", "чек об оплате", "электронный чек", "подписка продлена", "продлили подписку", "платёж прошёл", "платеж прошел", "спасибо за оплату", "получили оплату", "чек по операции", "кассовый чек"]
+en = ["payment received", "has been renewed", "was renewed", "has renewed", "renewed successfully", "receipt", "thanks for staying", "you've been charged", "you were charged", "has been charged", "payment successful", "thank you for your payment", "we received your payment", "receipt for", "your receipt", "paid"]
+kk = ["төленді", "төлем сәтті", "ұзартылды", "жаңартылды", "түбіртек", "есептен шығарылды", "төлеміңіз үшін рахмет", "төлем қабылданды"]
+
+[renewal]
+ru = ["будет продлена", "будет списан", "спишем", "предстоящ", "напоминаем", "скоро продлится", "продлится автоматически", "следующее списание", "срок оплаты", "оплатить до", "счёт на оплату", "счет на оплату"]
+en = ["will renew", "will be renewed", "upcoming renewal", "will be charged", "renews on", "is about to renew", "reminder", "payment due", "due date", "invoice is due"]
+kk = ["ұзартылады", "есептен шығарылады", "алдағы төлем", "еске саламыз", "төлем мерзімі"]
+
+[cancellation]
+ru = ["подписка отменена", "отмена подписки", "вы отменили", "подписка прекращена", "не будет продлена", "подписка завершена", "отключили автопродление", "подписка остановлена"]
+en = ["subscription canceled", "subscription cancelled", "has been canceled", "has been cancelled", "you've canceled", "you've cancelled", "will not renew", "membership has ended", "membership canceled", "auto-renew is off"]
+kk = ["жазылым тоқтатылды", "жазылымнан бас тарттыңыз", "жазылым бұзылды", "ұзартылмайды"]
+
+[trial]
+ru = ["пробный период", "бесплатный период", "пробная подписка", "бесплатно до", "пробного периода"]
+en = ["free trial", "trial ends", "trial period", "your trial", "trial will end"]
+kk = ["сынақ кезеңі", "тегін кезең", "сынақ мерзімі"]
+
+[trial_end]
+ru = ["пробный период закончится", "пробный период заканчивается", "бесплатный период закончится", "до окончания пробного", "пробный период до"]
+en = ["trial ends", "trial will end", "trial ends on", "your trial expires", "trial expires"]
+kk = ["сынақ кезеңі аяқталады", "тегін кезең аяқталады"]
+
+[price_change]
+ru = ["изменение цены", "изменение стоимости", "новая цена", "стоимость подписки изменится", "повышение цены", "цена изменится", "стоимость изменится", "подорожа"]
+en = ["price change", "price increase", "new price", "price is changing", "prices are changing", "price update", "will increase"]
+kk = ["баға өзгерісі", "жаңа баға", "құны өзгереді", "баға өседі"]
+
+[price_new]
+ru = ["новая цена", "будет стоить", "составит", "новая стоимость"]
+en = ["new price", "will be", "will increase to", "going up to", "now costs"]
+kk = ["жаңа баға", "болады", "құрайды"]
+
+# One-time purchases, newsletters and service mail. Lower the score.
+[negative]
+ru = ["ваш заказ", "заказ №", "номер заказа", "доставк", "трек-номер", "рассылк", "восстановлени пароля", "восстановление пароля", "код подтверждения", "вход в аккаунт", "новое устройство", "акция", "скидка до"]
+en = ["your order", "order #", "order number", "shipping", "shipped", "tracking number", "newsletter", "password reset", "verification code", "sign-in", "new device", "sale ends", "% off"]
+kk = ["тапсырыс", "жеткізу", "құпия сөзді қалпына", "растау коды", "жаңа құрылғы", "жеңілдік"]
+
+[period_month]
+ru = ["в месяц", "ежемесячн", "/мес", "руб/мес", "₸/мес", "на месяц", "за месяц", "1 месяц", "месячн", "каждый месяц", "мес."]
+en = ["per month", "/month", "/mo", "monthly", "a month", "each month", "every month", "1 month", "month-to-month"]
+kk = ["айына", "ай сайын", "бір айға", "1 ай", "айлық"]
+
+[period_year]
+ru = ["в год", "ежегодн", "/год", "на год", "за год", "годов", "12 месяцев", "1 год"]
+en = ["per year", "/year", "/yr", "yearly", "annual", "annually", "a year", "12 months", "1 year", "every year"]
+kk = ["жылына", "жылдық", "бір жылға", "1 жыл", "12 ай"]
+
+[period_quarter]
+ru = ["в квартал", "ежеквартальн", "3 месяца", "на 3 месяца", "за 3 месяца"]
+en = ["per quarter", "quarterly", "3 months", "every 3 months"]
+kk = ["тоқсан сайын", "3 ай"]
+
+[period_halfyear]
+ru = ["6 месяцев", "полгода", "на полгода"]
+en = ["6 months", "every 6 months", "semi-annual"]
+kk = ["6 ай", "жарты жыл"]
+
+[period_week]
+ru = ["в неделю", "еженедельн", "/нед", "на неделю", "каждую неделю"]
+en = ["per week", "/week", "/wk", "weekly", "every week"]
+kk = ["аптасына", "апта сайын"]
+
+# Phrases that introduce the next charge date.
+[next_date]
+ru = ["следующее списание", "продлевается", "продлится до", "срок оплаты", "оплатить до", "следующий платёж", "следующий платеж", "следующая оплата", "дата следующего", "будет продлена", "продлится", "следующее продление", "спишем", "будет списан", "действует до", "оплачено до", "активна до"]
+en = ["next billing date", "next payment", "next charge", "renews on", "renew on", "will renew on", "next renewal", "payment due", "due date", "renewal date", "next renewal", "billing date", "will be charged on", "valid until", "paid through", "active until"]
+kk = ["келесі төлем", "келесі төлем күні", "ұзартылады", "дейін жарамды", "дейін белсенді", "келесі есептен шығару"]
+
+# Labels near the total amount.
+[amount_label]
+ru = ["итого", "сумма", "к оплате", "списано", "оплачено", "стоимость", "всего", "цена"]
+en = ["total", "amount", "charged", "amount paid", "price", "billed", "you paid"]
+kk = ["барлығы", "сома", "төленді", "құны", "бағасы", "жиыны"]
+
+# Amounts next to these are taxes or discounts, not the price.
+[amount_noise]
+ru = ["ндс", "налог", "скидк", "кешбэк", "кэшбэк", "бонус", "баланс"]
+en = ["tax", "vat", "discount", "credit", "balance", "subtotal", "savings"]
+kk = ["ққс", "салық", "жеңілдік", "кешбэк", "бонус", "баланс"]
+
+# Generic words removed when a service name is guessed from the sender.
+[sender_noise]
+words = [
+    "billing", "noreply", "no-reply", "no_reply", "donotreply", "support", "team", "info",
+    "payments", "payment", "receipts", "receipt", "notifications", "notification", "mailer",
+    "accounts", "account", "hello", "help", "service", "services", "inc", "llc", "ltd",
+    "команда", "служба", "поддержка", "поддержки", "уведомления", "оплата", "сервис",
+]
+
+# Month names; the key is the month number. Regexes, matched as whole words.
+[months]
+1 = ['январ[ьяе]', 'янв', 'jan(?:uary)?', 'қаңтар\w*']
+2 = ['феврал[ьяе]', 'фев', 'feb(?:ruary)?', 'ақпан\w*']
+3 = ['март[ае]?', 'мар', 'mar(?:ch)?', 'наурыз\w*']
+4 = ['апрел[ьяе]', 'апр', 'apr(?:il)?', 'сәуір\w*']
+5 = ['ма[йяе]', 'may', 'мамыр\w*']
+6 = ['июн[ьяе]', 'июн', 'jun(?:e)?', 'маусым\w*']
+7 = ['июл[ьяе]', 'июл', 'jul(?:y)?', 'шілде\w*']
+8 = ['август[ае]?', 'авг', 'aug(?:ust)?', 'тамыз\w*']
+9 = ['сентябр[ьяе]', 'сен', 'сент', 'sep(?:t(?:ember)?)?', 'қыркүйек\w*']
+10 = ['октябр[ьяе]', 'окт', 'oct(?:ober)?', 'қазан\w*']
+11 = ['ноябр[ьяе]', 'ноя', 'нояб', 'nov(?:ember)?', 'қараша\w*']
+12 = ['декабр[ьяе]', 'дек', 'dec(?:ember)?', 'желтоқсан\w*']
+
+# Whole words for the Gmail search query (Gmail matches words, not stems).
+[gmail_query]
+ru = ["подписка", "подписки", "подписку", "продление", "автопродление", "списание", "чек", "квитанция", "оплата", "платеж", "платёж"]
+en = ["receipt", "subscription", "renewal", "invoice", "billing", "membership", "trial"]
+kk = ["жазылым", "төлем", "түбіртек"]

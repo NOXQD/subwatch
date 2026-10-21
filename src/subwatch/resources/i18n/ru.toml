@@ -1,0 +1,1568 @@
+# Русский каталог строк Subwatch. Это эталонный каталог: каждый ключ, который
+# есть в коде, должен быть здесь. Остальные языки могут переводить не всё —
+# недостающие строки берутся отсюда.
+
+[meta]
+name = "Русский"
+plural = "slavic"
+
+[fmt]
+group_separator = "\u00a0"
+decimal_separator = ","
+money = "{amount}\u00a0{symbol}"
+unknown_amount = "сумма неизвестна"
+no_date = "—"
+no_period = "—"
+date = "{day} {month}"
+date_year = "{day} {month} {year}"
+date_short = "{day} {month}"
+date_weekday = "{weekday}, {date}"
+datetime = "{date}, {time}"
+when = "{date}, {relative}"
+percent = "{value}\u00a0%"
+
+[fmt.months]
+genitive = ["января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря"]
+nominative = ["январь", "февраль", "март", "апрель", "май", "июнь", "июль", "август", "сентябрь", "октябрь", "ноябрь", "декабрь"]
+short = ["янв", "фев", "мар", "апр", "май", "июн", "июл", "авг", "сен", "окт", "ноя", "дек"]
+
+[fmt.weekdays]
+full = ["понедельник", "вторник", "среда", "четверг", "пятница", "суббота", "воскресенье"]
+short = ["пн", "вт", "ср", "чт", "пт", "сб", "вс"]
+
+[fmt.rel]
+today = "сегодня"
+tomorrow = "завтра"
+yesterday = "вчера"
+in_days = { one = "через {n} день", few = "через {n} дня", many = "через {n} дней" }
+days_ago = { one = "{n} день назад", few = "{n} дня назад", many = "{n} дней назад" }
+
+[fmt.units]
+day = { one = "{n} день", few = "{n} дня", many = "{n} дней" }
+hour = { one = "{n} час", few = "{n} часа", many = "{n} часов" }
+minute = { one = "{n} минута", few = "{n} минуты", many = "{n} минут" }
+month = { one = "{n} месяц", few = "{n} месяца", many = "{n} месяцев" }
+subscription = { one = "{n} подписка", few = "{n} подписки", many = "{n} подписок" }
+email = { one = "{n} письмо", few = "{n} письма", many = "{n} писем" }
+item = { one = "{n} запись", few = "{n} записи", many = "{n} записей" }
+transaction = { one = "{n} операция", few = "{n} операции", many = "{n} операций" }
+
+[fmt.period]
+every_1_day = "ежедневно"
+every_1_week = "еженедельно"
+every_1_month = "ежемесячно"
+every_1_year = "ежегодно"
+quarterly = "раз в квартал"
+every_n_day = { one = "раз в {n} день", few = "раз в {n} дня", many = "раз в {n} дней" }
+every_n_week = { one = "раз в {n} неделю", few = "раз в {n} недели", many = "раз в {n} недель" }
+every_n_month = { one = "раз в {n} месяц", few = "раз в {n} месяца", many = "раз в {n} месяцев" }
+every_n_year = { one = "раз в {n} год", few = "раз в {n} года", many = "раз в {n} лет" }
+short_day = "день"
+short_week = "нед"
+short_month = "мес"
+short_year = "год"
+short_n = "{n} {unit}"
+
+[category]
+music = "Музыка"
+video = "Видео"
+cloud = "Облако"
+games = "Игры"
+education = "Обучение"
+software = "Софт"
+other = "Прочее"
+
+[config.err]
+header = "Ошибка в конфигурации {path}:"
+header_value = "Неверное значение:"
+line = "  • {key}: {message}"
+missing = "обязательный параметр не задан"
+unknown_key = "неизвестный параметр (опечатка?)"
+int = "ожидается целое число"
+float = "ожидается число"
+number = "ожидается число"
+bool = "ожидается true или false"
+string = "ожидается строка в кавычках"
+list = "ожидается список, например [1, 2] или \"a, b\""
+table = "ожидается таблица (раздел)"
+ge = "должно быть не меньше {ge}"
+le = "должно быть не больше {le}"
+gt = "должно быть больше {gt}"
+lt = "должно быть меньше {lt}"
+literal = "допустимые значения: {expected}"
+or = " или "
+generic = "неверное значение ({detail})"
+duration = "«{value}» — не длительность; примеры: 15m, 4h, 1d, 2w"
+clock = "«{value}» — не время суток; нужен формат ЧЧ:ММ, например 09:30"
+color = "«{value}» — не цвет; нужен формат #rrggbb"
+language = "«{value}» — не код языка (ru, en, kk...)"
+timezone = "неизвестный часовой пояс «{value}»; пример: Asia/Almaty"
+currency = "«{value}» — не код валюты; нужен трёхбуквенный код ISO, например KZT"
+rate = "курс {code} должен быть больше нуля"
+schedule = "расписание не может быть пустым"
+account_name = "имя учётной записи «{value}»: только латиница, цифры, точка, дефис и подчёркивание"
+duplicate_account = "имена учётных записей IMAP должны быть разными"
+thresholds = "review_threshold не может быть больше auto_accept"
+periods = "периоды — целые числа от 1 до 800 дней"
+days_before = "дни до списания — от 0 до 365"
+negative = "значение не может быть отрицательным"
+category_key = "ключ категории «{value}»: только латиница в нижнем регистре, цифры, - и _"
+unknown_category = "правило ссылается на несуществующую категорию «{value}»"
+period = "«{value}» — не период; примеры: 1m, 3m, 1y, 1w, 14d, monthly"
+set_syntax = "ожидается ключ=значение"
+toml = "не удалось разобрать TOML: {detail}"
+toml_at = "синтаксическая ошибка TOML в строке {line}, позиция {column}"
+read = "не удалось прочитать файл: {detail}"
+
+[config.origin]
+cli = "из командной строки"
+env = "из переменной окружения"
+file = "из config.toml"
+default = "по умолчанию"
+
+# ------------------------------------------------------------------ CLI
+
+[cli]
+error_prefix = "Ошибка:"
+hint_prefix = "Что сделать:"
+hint_config_check = "Проверьте файл командой: subwatch config check"
+unexpected = "непредвиденная ошибка ({detail}). Подробности: subwatch logs"
+version_line = "Subwatch {version}"
+yes_answers = "y,yes,д,да"
+yes_no_default_yes = "(Д/н)"
+yes_no_default_no = "(д/Н)"
+
+[cli.chrome]
+usage = "Использование:"
+options_metavar = "[ПАРАМЕТРЫ]"
+subcommand_metavar = "КОМАНДА [АРГУМЕНТЫ]..."
+help_option = "Показать эту справку и выйти."
+arguments = "Аргументы"
+options = "Параметры"
+commands = "Команды"
+error = "Ошибка"
+aborted = "Прервано."
+try_help = "Справка: [blue]{command_path} {help_option}[/]"
+deprecated = "(устарело) "
+default = "[по умолчанию: {}]"
+envvar = "[переменная: {}]"
+required = "[обязательно]"
+range = "[диапазон: {}]"
+dynamic = "(вычисляется)"
+default_inline = "по умолчанию: {default}"
+required_inline = "обязательно"
+envvar_inline = "переменная: {var}"
+missing_command = "Не указана команда."
+no_such_command = "Нет такой команды {name!r}."
+missing_argument = "Не указан аргумент {name}.{rest}"
+missing_option = "Не указан параметр {name}.{rest}"
+missing_parameter = "Не указано значение {name}.{rest}"
+no_such_option = "Нет такого параметра: {name}"
+no_such_option_hint = "Нет такого параметра: {name} (может быть, {options}?)"
+extra_args = "Лишние аргументы: {args}"
+requires_arg = "Параметру {name} нужно значение."
+requires_args = "Параметру {name} нужно значений: {n}."
+no_value = "Параметр {name} не принимает значение."
+invalid_value_for = "Неверное значение {name}: {detail}"
+invalid_value = "Неверное значение: {detail}"
+not_int = "«{value}» — не целое число."
+not_float = "«{value}» — не число."
+not_bool = "«{value}» — ожидается да или нет (true/false)."
+not_choice = "«{value}» — допустимо: {choices}."
+not_in_range = "{value} вне диапазона {range}."
+bad_format = "«{value}» не подходит под формат {formats}."
+path_missing = "Файл «{path}» не найден."
+path_is_dir = "«{path}» — это каталог, а нужен файл."
+
+[cli.app]
+help = """Subwatch — локальный трекер подписок для Omarchy.
+
+Находит подписки в почте (Gmail, IMAP) и банковских выписках, напоминает о списаниях и считает, сколько уходит в месяц. Всё хранится у вас на компьютере.
+
+Без команды открывает TUI."""
+epilog = "Документация: README.md и docs/. Проверка установки: subwatch doctor"
+
+[cli.opt]
+config = "Другой файл конфигурации вместо ~/.config/subwatch/config.toml."
+set = "Переопределить настройку на этот запуск, например --set reminders.time=09:00. Можно несколько раз."
+lang = "Язык интерфейса на этот запуск (ru, en)."
+quiet = "Ничего не печатать, кроме ошибок."
+verbose = "Подробный журнал (уровень debug)."
+version = "Показать версию и выйти."
+tui_add = "Сразу открыть форму добавления подписки."
+tui_review = "Сразу открыть очередь проверки."
+all = "Показать и отменённые подписки."
+status = "Только с этим статусом: active, review, paused, cancelled."
+set_status = "Новый статус: active, review, paused, cancelled."
+category = "Категория: ключ (video) или название (Видео)."
+sort = "Сортировка: next_charge, amount, monthly, name, category, status."
+reverse = "Обратный порядок."
+json = "Вывести JSON вместо таблицы."
+amount = "Сумма, можно с валютой: «3990», «3 990 ₸», «9.99 USD»."
+currency = "Код валюты (KZT, RUB, USD...). По умолчанию — базовая."
+period = "Период: 1m, 3m, 1y, 1w, 14d или словом: месяц, год, неделя."
+next = "Дата следующего списания: 2026-11-01, 01.11.2026, «1 ноября», +7d."
+tag = "Тег. Можно несколько раз."
+cancel_url = "Ссылка на страницу отмены подписки."
+notes = "Заметка."
+trial_until = "Дата окончания пробного периода."
+track_usage = "Отслеживать использование (для поиска «зомби»)."
+service_name = "Новое название сервиса."
+yes = "Не спрашивать подтверждение."
+open_page = "Открыть страницу отмены в браузере, если она известна."
+used_date = "Дата использования (по умолчанию сегодня)."
+days = "На сколько дней вперёд смотреть."
+notify = "Показать результат уведомлением, а не в терминале."
+months_hist = "Сколько последних месяцев показать."
+by = "Группировка: category (по категориям) или month (по месяцам)."
+source = "Сканировать только этот источник (gmail, imap, statements или имя плагина). Можно несколько раз."
+full = "Игнорировать сохранённую позицию и перечитать почту за весь период."
+months = "Глубина поиска в месяцах на этот запуск."
+dry_run = "Ничего не менять, только показать, что было бы сделано."
+ai_dry_run = "Показать, что ушло бы в AI-модель, ничего не отправляя."
+no_ai = "Не использовать AI-слой в этом запуске."
+reprocess = "Разобрать заново и те письма, что уже были обработаны."
+action = "Действие: keep (оставить), cancel (отменить), snooze (отложить)."
+snooze = "На сколько отложить: 3h, 1d, 3d..."
+bar_format = "Формат: waybar (JSON для Waybar и панели Omarchy) или text."
+fix = "Попробовать исправить найденные проблемы."
+online = "Также проверить доступ к Gmail и сети."
+payloads = "Показать сам текст, отправленный в AI (если он сохранялся)."
+purge_all = "Удалить ещё и конфигурацию ~/.config/subwatch."
+follow = "Следить за журналом в реальном времени."
+lines = "Сколько последних строк журнала показать."
+sources = "Показать, откуда взято каждое значение."
+show_source = "Показать, откуда взято значение."
+gmail_account = "Метка учётной записи (если подключаете несколько)."
+client_secret = "Путь к JSON с OAuth-клиентом из Google Cloud."
+no_browser = "Не открывать браузер, а напечатать ссылку."
+imap_name = "Короткое имя учётной записи латиницей, например yandex."
+imap_host = "Адрес IMAP-сервера, например imap.yandex.ru."
+imap_user = "Логин (обычно адрес почты)."
+imap_port = "Порт IMAP."
+imap_no_ssl = "Подключаться без TLS (только для локальных тестовых серверов)."
+imap_starttls = "Включить TLS командой STARTTLS после подключения."
+imap_folder = "Папка для сканирования. Можно несколько раз. По умолчанию INBOX."
+imap_test = "Проверить вход перед сохранением."
+password_stdin = "Прочитать пароль из стандартного ввода (для скриптов)."
+ai_provider = "Провайдер, для которого сохраняется ключ."
+bank = "Шаблон банка (список: subwatch banks)."
+map = "Колонки вручную: «date=Дата,amount=Сумма,description=Описание»."
+date_format = "Формат даты, например %d.%m.%Y."
+delimiter = "Разделитель колонок CSV: «;», «,» или tab."
+encoding = "Кодировка файла: utf-8, cp1251..."
+save_template = "Сохранить разметку колонок как шаблон банка с этим именем."
+force_import = "Импортировать файл, даже если он уже был импортирован."
+output = "Записать в файл вместо вывода в терминал."
+only = "Только этот компонент: systemd, bar, menu, keybinds, launchers, waybar, hook, completion. Можно несколько раз."
+ai_test_dry = "Только показать, что ушло бы в модель."
+
+[cli.arg]
+ref = "Номер подписки или название сервиса."
+service = "Название сервиса."
+keep = "Подписка, которая останется."
+drop = "Подписка, которая будет удалена после переноса истории."
+reminder = "Номер напоминания."
+route = "Подменю: upcoming. Без аргумента — корневое меню."
+key = "Ключ настройки, например reminders.days_before."
+value = "Новое значение."
+reset_key = "Ключ, который вернуть к значению по умолчанию. Без ключа — весь файл."
+revoke_what = "Что отозвать: gmail, imap, ai или all."
+revoke_name = "Имя учётной записи IMAP (по умолчанию все)."
+files = "Файлы выписок (CSV или PDF)."
+code = "Код валюты."
+rate = "Сколько базовой валюты стоит одна единица."
+budget_amount = "Лимит в месяц в базовой валюте. 0 — снять лимит."
+rule_id = "Номер правила (см. subwatch rules list)."
+rule_kind = "Тип: ignore_service, ignore_sender, accept_service, alias, category."
+rule_pattern = "Сервис или адрес отправителя."
+rule_value = "Значение (для alias — новое имя, для category — ключ категории)."
+eml = "Письмо в формате .eml."
+shell = "Оболочка: bash, zsh или fish."
+
+[cli.metavar]
+path = "ПУТЬ"
+key_value = "КЛЮЧ=ЗНАЧЕНИЕ"
+lang = "ЯЗЫК"
+status = "СТАТУС"
+category = "КАТЕГОРИЯ"
+sort = "ПОЛЕ"
+ref = "ПОДПИСКА"
+service = "СЕРВИС"
+amount = "СУММА"
+currency = "ВАЛЮТА"
+period = "ПЕРИОД"
+date = "ДАТА"
+tag = "ТЕГ"
+url = "ССЫЛКА"
+text = "ТЕКСТ"
+n = "N"
+by = "ПО"
+source = "ИСТОЧНИК"
+id = "НОМЕР"
+action = "ДЕЙСТВИЕ"
+duration = "ВРЕМЯ"
+format = "ФОРМАТ"
+route = "МЕНЮ"
+key = "КЛЮЧ"
+value = "ЗНАЧЕНИЕ"
+name = "ИМЯ"
+host = "СЕРВЕР"
+user = "ЛОГИН"
+folder = "ПАПКА"
+what = "ЧТО"
+bank = "БАНК"
+mapping = "КОЛОНКИ"
+char = "СИМВОЛ"
+kind = "ТИП"
+pattern = "ОБРАЗЕЦ"
+component = "КОМПОНЕНТ"
+shell = "ОБОЛОЧКА"
+
+[cli.tui]
+help = "Открыть TUI в этом терминале."
+short = "TUI в этом терминале"
+
+[cli.open]
+help = "Открыть TUI в новом окне терминала (так его открывают панель, меню и горячие клавиши)."
+short = "TUI в новом окне"
+
+[cli.list]
+help = "Список подписок с суммами, периодами и датами списаний."
+short = "Список подписок"
+empty = "Подписок пока нет."
+empty_hint = "Добавьте вручную (subwatch add) или подключите почту: subwatch auth gmail / subwatch auth imap."
+total = "Итого: {total} в месяц ({yearly} в год), {count}."
+unconverted = "Не удалось пересчитать в базовую валюту (нет курса): {services}. Задайте курс: subwatch rates set КОД КУРС"
+review_hint = "Ещё {count} ждёт проверки: subwatch review"
+
+[cli.show]
+help = "Подробности о подписке: суммы, даты, история списаний."
+short = "Карточка подписки"
+
+[cli.add]
+help = "Добавить подписку вручную. Недостающее спросит интерактивно."
+short = "Добавить подписку"
+ask_service = "Сервис:"
+ask_amount = "Сумма (можно с валютой, Enter — пропустить):"
+ask_period = "Период (1m, 3m, 1y, месяц, год):"
+ask_next = "Следующее списание (2026-11-01, «1 ноября», Enter — пропустить):"
+done = "Добавлено: {service} (№ {id})."
+
+[cli.edit]
+help = "Изменить подписку. Меняются только переданные параметры."
+short = "Изменить подписку"
+done = "Сохранено: {service}."
+
+[cli.remove]
+help = "Удалить подписку вместе с историей списаний."
+short = "Удалить подписку"
+confirm = "Удалить «{service}» со всей историей?"
+done = "Удалено: {service}."
+
+[cli.cancel]
+help = "Отметить подписку отменённой и открыть страницу отмены, если она известна."
+short = "Отменить подписку"
+opened = "Открыл страницу отмены: {url}"
+no_url = "Ссылка на отмену для «{service}» неизвестна — отмените в настройках сервиса."
+done = "«{service}» отмечена как отменённая. Напоминаний больше не будет."
+
+[cli.pause]
+help = "Приостановить подписку: она остаётся в списке, но напоминаний нет."
+short = "Приостановить"
+done = "«{service}» приостановлена."
+
+[cli.resume]
+help = "Снова сделать подписку активной."
+short = "Возобновить"
+done = "«{service}» снова активна."
+
+[cli.used]
+help = "Отметить, что подпиской пользовались (нужно для поиска «зомби»)."
+short = "Отметить использование"
+done = "Записал использование «{service}»."
+
+[cli.merge]
+help = "Объединить две записи об одной подписке: история второй переходит к первой."
+short = "Объединить дубли"
+confirm = "Перенести историю «{drop}» в «{keep}» и удалить «{drop}»?"
+done = "«{drop}» объединена с «{keep}»."
+
+[cli.upcoming]
+help = "Ближайшие списания."
+short = "Ближайшие списания"
+title = "Списания в ближайшие {days}:"
+none = "В ближайшие {days} списаний нет."
+notify_title = "Списания в ближайшие {days}"
+notify_line = "{date} · {service} · {amount} ({relative})"
+
+[cli.spend]
+help = "Сколько уходит на подписки: в месяц, по категориям, по месяцам, бюджеты."
+short = "Сколько я трачу"
+total = "{total} в месяц, {yearly} в год ({count})."
+notify_title = "Подписки: траты"
+notify_total = "{total} в месяц · {yearly} в год"
+notify_cat = "{name}: {amount}"
+
+[cli.scan]
+help = "Найти подписки в почте и выписках. Повторные запуски читают только новое."
+short = "Сканировать почту и выписки"
+running = "Сканирую…"
+progress = "Сканирую: {source} — {count}"
+done = "Готово за {seconds} с."
+error_line = "{source}: {message}"
+no_sources = "Ни один источник не подключён."
+no_sources_hint = "Подключите почту (subwatch auth gmail или subwatch auth imap) или импортируйте выписку (subwatch import файл.csv)."
+would_title = "Что было бы сохранено:"
+would_none = "Ничего нового не найдено."
+would_line = "• {service} — {kind}, {amount}, {period}, {category}; уверенность {confidence} % → {status}"
+would_active = "в список"
+would_review = "на проверку"
+would_ignored = "отброшено"
+
+[cli.scan.col]
+source = "Источник"
+seen = "Писем"
+created = "Новых"
+review = "На проверку"
+updated = "Обновлено"
+filtered = "Отфильтровано"
+
+[cli.remind]
+help = "Проверить, не пора ли напомнить о списаниях (запускается таймером)."
+short = "Разослать напоминания"
+none = "Сейчас напоминать не о чем."
+line = "Напомнил: {service}, {date}{repeat}"
+repeat = " (повторно)"
+
+[cli.notify-action]
+help = "Действие по напоминанию: оставить, отменить или отложить."
+short = "Действие по напоминанию"
+
+[cli.notify-wait]
+help = "Служебная команда: ждёт нажатия кнопки в уведомлении."
+short = "Служебная"
+
+[cli.bar]
+help = "Вывод для модуля панели Omarchy или Waybar (JSON)."
+short = "Модуль панели"
+
+[cli.menu]
+help = "Меню Subwatch: открывается в меню Omarchy, а без него — в Walker, fuzzel, wofi, rofi или fzf."
+short = "Меню"
+upcoming_detail = "{date}, {relative} · {amount}"
+open_tui = "Открыть в Subwatch"
+cancel_page = "Открыть страницу отмены"
+mark_used = "Отметить использование"
+
+[cli.doctor]
+help = "Проверить окружение, ключи, права, таймеры и интеграцию с Omarchy и подсказать, как исправить."
+short = "Диагностика"
+
+[cli.privacy]
+help = "Что Subwatch хранит у вас и что когда-либо уходило в облачную модель."
+short = "Приватность"
+
+[cli.purge]
+help = "Удалить все данные и токены Subwatch."
+short = "Удалить все данные"
+confirm = "Удалить базу, кэш, календарь и все ключи в keyring? Конфигурация останется."
+confirm_all = "Удалить базу, кэш, календарь, все ключи в keyring и конфигурацию?"
+removed = "удалено: {item}"
+done = "Все данные Subwatch удалены."
+
+[cli.logs]
+help = "Журнал Subwatch из journald."
+short = "Журнал"
+
+[cli.version]
+help = "Показать версию."
+short = "Версия"
+
+[cli.config]
+help = "Настройки: показать, изменить, проверить."
+short = "Настройки"
+set_done = "{key}: {old} → {new}"
+side_effect = "  {what}"
+env_shadow = "Внимание: переменная {var} задана и перекрывает это значение."
+unset_done = "{key} теперь берётся по умолчанию."
+unset_absent = "{key} и так не задан в файле."
+edit_again = "Открыть файл снова и исправить?"
+restore = "Вернуть файл как было до правки?"
+restored = "Файл восстановлен."
+valid = "Конфигурация в порядке: {path}"
+defaults_only = "Файла конфигурации нет — используются значения по умолчанию."
+env_active = "Действуют переменные окружения: {keys}"
+reset_confirm = "Заменить config.toml стандартным? Старый файл сохранится рядом."
+reset_done = "Конфигурация сброшена. Старая копия: {backup}"
+reset_key = "{key} сброшен к значению по умолчанию."
+no_diff = "Все настройки стандартные."
+diff_line = "{key}: {default} → {current} ({origin})"
+
+[cli.config_path]
+help = "Путь к файлу конфигурации."
+short = "Путь к файлу"
+
+[cli.config_show]
+help = "Все действующие настройки с учётом файла, переменных окружения и флагов."
+short = "Все настройки"
+
+[cli.config_get]
+help = "Значение одной настройки."
+short = "Значение настройки"
+
+[cli.config_set]
+help = "Изменить настройку в config.toml (комментарии сохраняются). Значение проверяется до записи."
+short = "Изменить настройку"
+
+[cli.config_unset]
+help = "Убрать настройку из файла, чтобы действовало значение по умолчанию."
+short = "Убрать настройку"
+
+[cli.config_edit]
+help = "Открыть config.toml в редакторе и проверить после сохранения."
+short = "Открыть в редакторе"
+
+[cli.config_reset]
+help = "Вернуть настройку или весь файл к значениям по умолчанию."
+short = "Сбросить"
+
+[cli.config_diff]
+help = "Чем действующие настройки отличаются от стандартных и откуда взялось каждое отличие."
+short = "Отличия от стандартных"
+
+[cli.config_check]
+help = "Проверить конфигурацию."
+short = "Проверить"
+
+[cli.auth]
+help = "Подключение почты и ключей: Gmail, IMAP, AI. Секреты хранятся только в keyring."
+short = "Доступы"
+imap_intro = "Подключение IMAP: {host}"
+imap_app_password = "Нужен пароль приложения, а не основной пароль почты. Он создаётся в настройках безопасности почтового сервиса."
+imap_password = "Пароль приложения:"
+imap_testing = "Проверяю вход…"
+imap_ok = "Вход выполнен, папок на сервере: {count}."
+imap_missing_folders = "На сервере нет папок: {folders}. Есть, например: {available}"
+imap_saved = "Учётная запись «{name}» сохранена: пароль в keyring, адрес и папки в config.toml."
+next_scan = "Дальше: subwatch scan"
+ai_key = "API-ключ для {provider}:"
+ai_saved = "Ключ {provider} сохранён в keyring."
+status_gmail = "Gmail: {state}, токен: {token} (метка {account})"
+status_imap = "IMAP «{name}»: {user} на {host}, пароль: {token}"
+status_no_imap = "IMAP: учётных записей нет."
+status_ai = "AI ({provider}): ключ {token}"
+on = "включён"
+off = "выключен"
+token_yes = "есть"
+token_no = "нет"
+revoke_confirm = "Отозвать доступ: {what}?"
+revoked_gmail = "Доступ к Gmail отозван в Google и удалён из keyring."
+revoked_gmail_local = "Токен Gmail удалён из keyring (отозвать на стороне Google не получилось — проверьте myaccount.google.com/permissions)."
+revoked_imap = "Пароль «{name}» удалён. Отзовите пароль приложения и в настройках {host}."
+revoked_ai = "Ключ {provider} удалён."
+revoke_done = "Готово."
+
+[cli.auth_gmail]
+help = "Подключить Gmail: пошаговый мастер для своего проекта Google Cloud, доступ только на чтение."
+short = "Подключить Gmail"
+
+[cli.auth_imap]
+help = "Подключить почту по IMAP с паролем приложения."
+short = "Подключить IMAP"
+
+[cli.auth_ai]
+help = "Сохранить API-ключ облачной модели в keyring."
+short = "Ключ AI"
+
+[cli.auth_status]
+help = "Какие источники подключены и есть ли для них ключи."
+short = "Состояние"
+
+[cli.auth_revoke]
+help = "Отозвать доступ и удалить токены: gmail, imap, ai или all."
+short = "Отозвать доступ"
+
+[cli.review]
+help = "Очередь проверки: находки, в которых Subwatch не уверен. Решение запоминается как правило."
+short = "Очередь проверки"
+empty = "Очередь проверки пуста."
+title = "На проверке {count}:"
+hint = "Подтвердить: subwatch review confirm НОМЕР · отклонить навсегда: subwatch review reject НОМЕР"
+item_header = "Находка {n} из {total}"
+prompt = "Это подписка? д — да, н — нет (больше не предлагать), Enter — пропустить, в — выйти:"
+answers_yes = "д,да,y,yes"
+answers_no = "н,нет,n,no"
+answers_quit = "в,выход,q,quit"
+confirmed = "«{service}» добавлена в подписки."
+rejected = "«{service}» больше не будет предлагаться."
+not_in_queue = "«{service}» не в очереди проверки."
+
+[cli.review_list]
+help = "Показать очередь проверки."
+short = "Показать"
+
+[cli.review_confirm]
+help = "Подтвердить находку: это подписка."
+short = "Подтвердить"
+
+[cli.review_reject]
+help = "Отклонить находку: это не подписка, и больше её не предлагать."
+short = "Отклонить"
+
+[cli.import]
+help = "Импорт банковских выписок (CSV, PDF) и поиск повторяющихся списаний."
+short = "Импорт выписки"
+already = "{path} уже импортирован (повторить: --force)."
+unknown = "Формат {path} не узнан. Укажите колонки вручную."
+headers_title = "Колонки в файле:"
+ask_date = "Номер или название колонки с датой:"
+ask_amount = "Колонка с суммой:"
+ask_description = "Колонка с описанием (получатель платежа):"
+ask_currency = "Колонка с валютой (Enter — нет такой):"
+ask_date_format = "Формат даты, например %d.%m.%Y (Enter — угадать):"
+bad_column = "Нет такой колонки, попробуйте ещё раз."
+parsed = "{path}: шаблон «{template}», строк {rows}, списаний {debits}, пропущено {skipped}."
+stored = "Сохранено новых операций: {count}."
+template_saved = "Шаблон сохранён: {path}"
+none_found = "Повторяющихся списаний не найдено. Для надёжного поиска нужны выписки хотя бы за 3 месяца."
+found = "Найдена подписка: {service}, {amount}, {period} — {status}"
+would = "Нашлась бы подписка: {service}, {amount}, {period}, уверенность {confidence} %"
+summary = "Новых подписок: {created}, на проверку: {review}, обновлено: {updated}."
+
+[cli.banks]
+help = "Шаблоны банков для импорта выписок."
+short = "Шаблоны банков"
+line = "{name}: {title} ({format}, {origin})"
+builtin = "встроенный"
+user = "ваш"
+
+[cli.rates]
+help = "Курсы валют для пересчёта в базовую валюту."
+short = "Курсы валют"
+header = "Базовая валюта {base}, источник {source}, обновлено {when} {stale}"
+stale = "(устарели)"
+line = "1 {code} = {rate} {base} {manual}"
+manual = "(ручной курс)"
+update_failed = "Не удалось обновить курсы, используются сохранённые и ручные."
+updated = "Курсы обновлены ({source}), валют: {count}."
+set_done = "Ручной курс: 1 {code} = {rate} {base}."
+
+[cli.rates_show]
+help = "Показать курсы для валют ваших подписок."
+short = "Показать"
+
+[cli.rates_update]
+help = "Скачать свежие курсы."
+short = "Обновить"
+
+[cli.rates_set]
+help = "Задать ручной курс (запасной вариант без сети)."
+short = "Ручной курс"
+
+[cli.export]
+help = "Экспорт в CSV, JSON и календарь .ics."
+short = "Экспорт"
+written = "Записано: {path}"
+ics_written = "Календарь списаний: {path}"
+ics_subscribe = "Чтобы подписаться в календаре, добавьте локальный календарь: {url}"
+
+[cli.export_csv]
+help = "Подписки в CSV (разделитель ;)."
+short = "CSV"
+
+[cli.export_json]
+help = "Подписки в JSON."
+short = "JSON"
+
+[cli.export_ics]
+help = "Календарь списаний .ics. Без --output обновляет файл, на который можно подписаться."
+short = "Календарь"
+
+[cli.budget]
+help = "Бюджеты: общий лимит в месяц и лимиты по категориям."
+short = "Бюджеты"
+none = "Бюджеты не заданы."
+none_hint = "Задать: subwatch budget set 20000 (общий) или subwatch budget set 5000 --category video"
+set_done = "Бюджет сохранён."
+
+[cli.budget_set]
+help = "Задать месячный лимит: общий или для категории."
+short = "Задать лимит"
+
+[cli.rules]
+help = "Запомненные решения: что не считать подпиской, что принимать сразу, переименования и категории."
+short = "Правила"
+none = "Правил пока нет. Они появляются, когда вы подтверждаете или отклоняете находки."
+line = "{id}. {kind}: {pattern} {value} ({origin})"
+removed = "Правило {id} удалено."
+not_found = "Правила {id} нет."
+bad_kind = "Неизвестный тип правила «{value}». Допустимо: {known}"
+added = "Правило добавлено: {kind} — {pattern}"
+
+[cli.rules.kind]
+ignore_service = "не подписка"
+ignore_sender = "игнорировать отправителя"
+accept_service = "принимать сразу"
+alias = "переименование"
+category = "категория"
+
+[cli.rules.origin]
+user = "вручную"
+review = "из очереди проверки"
+
+[cli.rules_list]
+help = "Показать правила."
+short = "Показать"
+
+[cli.rules_remove]
+help = "Удалить правило."
+short = "Удалить"
+
+[cli.rules_add]
+help = "Добавить правило вручную."
+short = "Добавить"
+
+[cli.plugins]
+help = "Источники-плагины."
+short = "Плагины"
+line = "{name} — {kind}, {state} ({origin})"
+enabled = "включён"
+disabled = "выключен"
+builtin = "встроенный"
+dir = "Свои плагины: {path}/*.py"
+
+[cli.plugins.kind]
+messages = "письма"
+transactions = "операции"
+manual = "вручную"
+
+[cli.plugins_list]
+help = "Список источников и плагинов."
+short = "Список"
+
+[cli.ai]
+help = "AI-слой (по умолчанию выключен)."
+short = "AI"
+dry_none = "В модель не ушло бы ничего: все письма разобрали правила."
+dry_header = "Запрос {n} → {provider}/{model} ({kind}), отправитель: {sender}"
+local = "локальная модель"
+cloud = "облачная модель"
+rules_found = "Правила: {service}, {amount}, {period}, уверенность {confidence} %"
+rules_none = "Правила ничего не нашли."
+model_none = "Модель не нашла подписку."
+result = "Итог: {service}, {amount}, {period}, уверенность {confidence} %"
+disabled = "AI-слой выключен."
+enable_hint = "Включить: subwatch config set ai.enabled true. Посмотреть, что ушло бы в модель, можно и без этого: --dry-run"
+unavailable = "Модель недоступна ({reason}). Подробности: subwatch logs"
+
+[cli.ai_test]
+help = "Прогнать одно письмо (.eml) через правила и модель."
+short = "Проверить на письме"
+
+[cli.keybinds]
+help = "Горячие клавиши Hyprland из [keybinds] в config.toml."
+short = "Горячие клавиши"
+line = "{combo} — {desc}: {state}"
+free = "свободно"
+conflict = "занято ({what})"
+no_conflicts = "Конфликтов нет."
+
+[cli.keybinds_apply]
+help = "Записать ~/.config/hypr/subwatch.lua, подключить его и перезагрузить Hyprland."
+short = "Применить"
+
+[cli.keybinds_show]
+help = "Показать сочетания и не заняты ли они."
+short = "Показать"
+
+[cli.keybinds_check]
+help = "Проверить конфликты с уже назначенными клавишами."
+short = "Проверить"
+
+[cli.keybinds_remove]
+help = "Убрать горячие клавиши Subwatch."
+short = "Убрать"
+
+[cli.integrate]
+help = "Интеграция с Omarchy: таймеры, панель, меню, клавиши, ярлык, автодополнение."
+short = "Интеграция"
+
+[cli.integrate_apply]
+help = "Подключить всё (или только --only ...). Повторный запуск безопасен."
+short = "Подключить"
+
+[cli.integrate_remove]
+help = "Убрать интеграцию, ничего не трогая за пределами блоков Subwatch."
+short = "Убрать"
+
+[cli.integrate_status]
+help = "Что подключено, а что нет."
+short = "Состояние"
+
+[cli.completion]
+help = "Автодополнение для bash, zsh и fish."
+short = "Автодополнение"
+
+[cli.completion_show]
+help = "Напечатать скрипт автодополнения."
+short = "Показать скрипт"
+
+[cli.completion_install]
+help = "Установить автодополнение для доступных оболочек."
+short = "Установить"
+
+[cli.err]
+not_found = "Подписка «{ref}» не найдена."
+ambiguous = "«{ref}» подходит под несколько подписок: {ids}."
+exists = "«{service}» уже есть (№ {id})."
+need_service = "Не указан сервис."
+bad_date = "Не понял дату «{value}»."
+bad_period = "Не понял период «{value}»."
+bad_amount = "Не понял сумму «{value}»."
+bad_category = "Нет категории «{value}». Есть: {known}"
+bad_sort = "Нельзя сортировать по «{value}». Можно: {known}"
+bad_status = "Нет статуса «{value}». Есть: {known}"
+bad_route = "Нет такого меню: {value}"
+bad_revoke = "Отозвать можно gmail, imap, ai или all, а не «{value}»."
+bad_shell = "Автодополнение есть для bash, zsh и fish, а не для «{value}»."
+bad_component = "Неизвестный компонент: {value}. Есть: {known}"
+same_record = "Это одна и та же запись."
+no_file = "Файл не найден: {path}"
+no_terminal = "Не нашёл, в каком терминале открыть TUI."
+
+[cli.hint]
+list = "Посмотрите номера в subwatch list."
+use_id = "Укажите номер: subwatch show НОМЕР."
+edit = "Изменить: subwatch edit {id}"
+date_formats = "Примеры: 2026-11-01, 01.11.2026, «1 ноября», завтра, +7d, +1m."
+period_formats = "Примеры: 1m, 3m, 1y, 1w, 14d, месяц, год, неделя, квартал."
+amount_formats = "Примеры: 3990, «3 990 ₸», «9,99 €», «12.99 USD»."
+categories = "Список категорий — в [categories] файла config.toml."
+terminal = "Задайте команду терминала: subwatch config set ui.terminal \"ghostty -e\""
+
+[input]
+today = "сегодня"
+tomorrow = "завтра"
+
+[input.period]
+"неделя" = "1w"
+"еженедельно" = "1w"
+"месяц" = "1m"
+"ежемесячно" = "1m"
+"квартал" = "3m"
+"полгода" = "6m"
+"год" = "1y"
+"ежегодно" = "1y"
+"айына" = "1m"
+"жылына" = "1y"
+
+# ----------------------------------------------------------- shared labels
+
+[table]
+id = "№"
+service = "Сервис"
+amount = "Сумма"
+period = "Период"
+monthly = "В месяц"
+next = "Следующее списание"
+category = "Категория"
+status = "Статус"
+date = "Дата"
+when = "Когда"
+month = "Месяц"
+total = "Итого"
+
+[details]
+service = "Сервис"
+amount = "Сумма"
+period = "Период"
+monthly = "В месяц"
+next = "Следующее списание"
+last = "Последнее списание"
+category = "Категория"
+tags = "Теги"
+status = "Статус"
+source = "Откуда"
+confidence = "Уверенность"
+trial = "Пробный период до"
+price_change = "Цена"
+price_change_value = "было {old}, стало {new} ({date})"
+cancel_url = "Отмена"
+last_used = "Пользовались"
+review_reason = "Почему на проверке"
+notes = "Заметка"
+snippet = "Фрагмент письма"
+history = "Списания"
+
+[status]
+active = "активна"
+review = "на проверке"
+paused = "на паузе"
+cancelled = "отменена"
+trial_mark = "(пробная)"
+
+[source]
+gmail = "Gmail"
+imap = "IMAP"
+statements = "выписки"
+statement = "выписка"
+recurrence = "повторы в выписках"
+manual = "вручную"
+ai = "AI"
+file = "файл"
+
+[kind]
+charge = "списание"
+renewal = "продление"
+trial = "пробный период"
+cancellation = "отмена"
+price_change = "смена цены"
+
+[review.reason]
+amount = "не нашлась сумма"
+period = "не ясен период"
+unknown_service = "сервис не из справочника"
+low_confidence = "мало признаков подписки"
+
+# --------------------------------------------------------------- reminders
+
+[action]
+keep = "Оставить"
+cancel = "Отменить подписку"
+cancel_long = "Отменить (откроется страница отмены)"
+snooze = "Отложить на {duration}"
+prompt = "{service}: что делаем?"
+
+[remind]
+summary = "Скоро списание: {service}"
+body = "{date} ({relative}) спишут {amount}."
+trial_summary = "Кончается пробный период: {service}"
+trial_body = "{date} ({relative}) пробный период закончится, дальше спишут {amount}."
+repeat_prefix = "Напоминаю ещё раз — {summary}"
+hint = "Нажмите, чтобы оставить, отменить или отложить."
+
+[remind.action]
+kept = "Хорошо, оставляем {service}"
+kept_body = "Больше не напомню об этом списании."
+snoozed = "Отложено: {service}"
+snoozed_body = "Напомню через {duration}."
+cancelled = "{service} отмечена как отменённая"
+cancelled_body = "Ссылки на отмену нет — отмените в настройках сервиса. Отметку можно снять в TUI."
+cancelled_opened = "{service}: открыл страницу отмены"
+cancelled_opened_body = "Подписка отмечена как отменённая. Если передумаете — верните статус в TUI."
+missing = "Напоминание не найдено"
+missing_body = "Возможно, оно уже неактуально."
+unknown = "Неизвестное действие"
+unknown_body = "Ожидалось keep, cancel или snooze."
+
+# --------------------------------------------------------------------- bar
+
+[bar]
+text_total = "{icon} {total}"
+text_next = "{icon} {service} {when}"
+text_empty = "{icon}"
+tip_total = "Подписки: {total} в месяц, {count}"
+tip_budget_total = "Общий бюджет"
+tip_budget_ok = "{name}: {spent} из {limit}"
+tip_budget_warn = "{name}: {spent} из {limit} — почти исчерпан"
+tip_budget_over = "{name}: {spent} из {limit} — превышен!"
+tip_upcoming = "Ближайшие списания:"
+tip_item = "{date} · {service} · {amount} ({relative})"
+tip_review = "На проверке: {count}"
+tip_hint = "ЛКМ — открыть · ПКМ — меню · СКМ — сканировать"
+error = "Subwatch: не удалось получить данные ({detail})"
+
+# ---------------------------------------------------------- notifications
+
+[notify.summary]
+title = "Subwatch: новые подписки"
+new = { one = "найдена {n} новая подписка", few = "найдено {n} новых подписки", many = "найдено {n} новых подписок" }
+review = { one = "{n} ждёт проверки", few = "{n} ждут проверки", many = "{n} ждут проверки" }
+
+[notify.price]
+summary = "Подорожание: {service}"
+body = "Было {old}, стало {new}."
+
+[notify.duplicate]
+summary = "Похоже, вы платите дважды"
+same_service = "«{a}» и «{b}» — две записи об одном сервисе. Объединить: subwatch merge"
+bundle = "«{b}» уже входит в «{a}». Возможно, одну из подписок можно отменить."
+similar_name = "«{a}» и «{b}» похожи на одну и ту же подписку."
+
+[notify.zombie]
+summary = "Давно не пользовались: {service}"
+body = "Вы не отмечали использование «{service}» уже {days}. Может, отменить?"
+
+[notify.budget]
+summary = "Бюджет на подписки превышен"
+body = "{name}: {spent} при лимите {limit}."
+
+[notify.failed]
+summary = "Subwatch: ошибка ({source})"
+
+# ------------------------------------------------------------- gmail wizard
+
+[auth.gmail]
+title = "Подключение Gmail"
+intro = """Subwatch читает почту через ваш собственный проект Google Cloud с доступом только на чтение (gmail.readonly). Писать и удалять письма он не может. Токен попадёт в системный keyring, в файлы он не пишется.
+
+Настройка делается один раз и занимает минут десять."""
+step_header = "Шаг {n} из {total}. {title}"
+ask_path = "Путь к скачанному JSON-файлу клиента:"
+opening_browser = "Открываю браузер для входа в Google…"
+copy_url = "Откройте ссылку ниже в браузере на этом компьютере:"
+prompt_url = "Откройте в браузере: {url}"
+browser_success = "Subwatch получил доступ. Окно можно закрыть."
+extra_scopes = "Google выдал лишние разрешения ({scopes}) — Subwatch ими не пользуется."
+connected = "Gmail подключён: {email}"
+saved = "Источник включён в {path}"
+delete_json = "Удалить файл {path}? Секрет клиента уже сохранён в keyring."
+json_deleted = "Файл удалён."
+reminder_production = "Если проект остался в режиме Testing, Google отзовёт доступ через 7 дней. Переведите его в «In production» (шаг 5) и выполните subwatch auth gmail ещё раз."
+
+[auth.gmail.step1]
+title = "Проект"
+body = "Откройте https://console.cloud.google.com/projectcreate и создайте проект, например «subwatch». Платёжные данные не нужны."
+
+[auth.gmail.step2]
+title = "Gmail API"
+body = "Включите Gmail API для этого проекта: https://console.cloud.google.com/apis/library/gmail.googleapis.com → «Enable»."
+
+[auth.gmail.step3]
+title = "Экран согласия"
+body = """Откройте Google Auth Platform → Branding: https://console.cloud.google.com/auth/branding
+  • App name — любое, например «Subwatch»;
+  • User support email и Developer contact — ваш адрес.
+В разделе Audience выберите тип «External» и добавьте свой адрес Gmail в Test users."""
+
+[auth.gmail.step4]
+title = "Разрешение"
+body = "В разделе Data Access нажмите «Add or remove scopes» и добавьте только https://www.googleapis.com/auth/gmail.readonly. Больше ничего не нужно."
+
+[auth.gmail.step5]
+title = "Режим «In production» — важно"
+body = """Пока проект в режиме Testing, Google выдаёт токен всего на 7 дней, потом придётся входить заново. Для личного использования переведите проект в боевой режим: Audience → «Publish app» → подтвердите.
+
+Проверка приложения Google при этом не нужна: проект ваш, пользователь — вы. При входе Google покажет экран «Google hasn't verified this app» — это нормально для своего проекта. Нажмите «Advanced» → «Go to Subwatch (unsafe)»."""
+
+[auth.gmail.step6]
+title = "OAuth-клиент"
+body = "Clients → «Create client» → тип «Desktop app» → имя любое → Create. Скачайте JSON (кнопка «Download JSON»)."
+
+[auth.gmail.step7]
+title = "Вход"
+body = "Укажите путь к скачанному JSON ниже. Откроется браузер: войдите в нужный аккаунт Gmail и разрешите доступ на чтение."
+
+[gmail.err]
+no_token = "Gmail не подключён (нет токена для «{account}»)."
+refresh = "Google не принял сохранённый токен Gmail ({detail})."
+client_read = "Не удалось прочитать {path}: {detail}"
+client_json = "{path} — не JSON."
+client_type = "{path} — не тот тип клиента."
+need_client = "Нужен файл OAuth-клиента."
+oauth = "Вход в Google не завершён: {detail}"
+no_refresh = "Google не выдал постоянный токен (refresh token)."
+
+[gmail.hint]
+auth = "Подключите: subwatch auth gmail"
+refresh = "Так бывает, если проект в режиме Testing (токен живёт 7 дней) или доступ отозван. Переведите проект в «In production» и выполните subwatch auth gmail."
+client_type = "Создайте OAuth-клиент с типом «Desktop app» и скачайте его JSON."
+client_flag = "Передайте путь: subwatch auth gmail --client-secret client.json"
+oauth = "Попробуйте ещё раз. Если браузер не открылся — добавьте --no-browser и откройте ссылку вручную."
+no_refresh = "Отзовите доступ на https://myaccount.google.com/permissions и пройдите вход заново."
+
+[gmail.check]
+ok = "Gmail «{account}»: токен в keyring"
+no_token = "Gmail «{account}»: нет токена"
+
+[imap.err]
+login = "IMAP «{account}»: сервер не принял логин или пароль ({detail})."
+no_password = "IMAP «{account}»: нет пароля в keyring."
+
+[imap.hint]
+login = "Нужен пароль приложения, а не основной. Проверьте и сохраните заново: subwatch auth imap --name {account} ..."
+no_password = "Сохраните пароль: subwatch auth imap --name {account} --host ... --user ..."
+
+[imap.check]
+ok = "IMAP «{account}»: пароль в keyring"
+no_password = "IMAP «{account}»: нет пароля"
+
+[ai.err]
+http = "Модель ответила ошибкой {status}: {detail}"
+network = "Модель недоступна: {detail}"
+no_base = "Для провайдера {provider} не задан адрес API."
+no_litellm = "Провайдер {provider} работает только через LiteLLM, а он не установлен."
+
+[ai.hint]
+network = "Для Ollama проверьте, что сервис запущен: systemctl status ollama"
+no_base = "Укажите адрес: subwatch config set ai.api_base http://..."
+no_litellm = "Установите с поддержкой AI: ./install.sh --with-ai или выберите ollama / openai-совместимый API."
+key = "Сохраните ключ: subwatch auth ai"
+
+[crypto.err]
+no_key = "База зашифрована, но ключа в keyring нет."
+format = "Зашифрованный файл базы повреждён."
+decrypt = "Не удалось расшифровать базу."
+
+[crypto.hint]
+no_key = "Без ключа базу не открыть. Если ключ потерян, удалите subwatch.db.enc (данные пропадут) или верните keyring из резервной копии."
+decrypt = "Ключ в keyring не подходит к файлу — возможно, ключ пересоздан. Восстановите keyring или удалите subwatch.db.enc."
+
+[secrets.err]
+no_backend = "Нет надёжного хранилища секретов (keyring: {backend})."
+read = "Не удалось прочитать «{name}» из keyring: {detail}"
+write = "Не удалось записать «{name}» в keyring: {detail}"
+
+[scan.err]
+locked = "Сканирование уже идёт (процесс {pid})."
+crashed = "Источник {source} упал с ошибкой: {detail}"
+
+[scan.hint]
+locked = "Дождитесь окончания или посмотрите журнал: subwatch logs"
+
+[statements.err]
+template = "Ошибка в шаблоне банка {path}: {detail}"
+columns = "В файле нет колонок: {columns}. Есть: {headers}"
+no_pdf = "Для PDF нужен pdfplumber."
+pdf = "Не удалось прочитать PDF {path}: {detail}"
+no_regex = "В шаблоне {name} нет line_regex для PDF."
+unknown_format = "Не понял, какой это банк: {path}."
+map_syntax = "Неверная разметка колонок: «{value}»."
+map_key = "Неизвестное поле «{value}»: можно date, amount, description, currency, debit, credit, type."
+no_template = "Нет шаблона банка «{name}»."
+no_headers = "В файле {path} не нашлось заголовков."
+inbox = "Папка для выписок не найдена: {path}"
+
+[statements.hint]
+bank = "Укажите шаблон (--bank, список: subwatch banks) или колонки вручную: --map \"date=Дата,amount=Сумма,description=Описание\""
+map = "Пример: --map \"date=Дата,amount=Сумма,description=Описание\""
+inbox = "Создайте папку или поправьте sources.statements.inbox_dir."
+
+[export.col]
+id = "№"
+service = "Сервис"
+amount = "Сумма"
+currency = "Валюта"
+period = "Период"
+monthly_base = "В месяц (базовая валюта)"
+next_charge = "Следующее списание"
+last_charge = "Последнее списание"
+category = "Категория"
+tags = "Теги"
+status = "Статус"
+source = "Источник"
+confidence = "Уверенность"
+cancel_url = "Отмена"
+notes = "Заметка"
+
+[export.ics]
+calendar_name = "Subwatch — списания"
+summary = "{service} — {amount}"
+category = "Категория: {name}"
+cancel = "Отменить: {url}"
+
+# ------------------------------------------------------------- integration
+
+[integrate]
+not_installed = "не подключено"
+omarchy_absent = "Omarchy не найдена — пропускаю"
+removed_file = "файл удалён"
+file_written = "файл записан"
+file_same = "без изменений"
+file_would = "будет записан"
+
+[integrate.status]
+changed = "изменено"
+unchanged = "в порядке"
+skipped = "пропущено"
+removed = "убрано"
+failed = "ошибка"
+planned = "будет"
+
+[integrate.keys]
+generated = "Subwatch: файл создан командой `subwatch keybinds apply`."
+edit_hint = "Клавиши меняются в [keybinds] файла ~/.config/subwatch/config.toml, а не здесь."
+include_comment = "Горячие клавиши Subwatch (subwatch keybinds apply)."
+was = "{combo} раньше было: {what}"
+bad_combo = "«{combo}» ({action}) — не сочетание клавиш; пример: SUPER + CTRL + U"
+duplicate = "{combo} назначено двум действиям"
+conflict = "{combo} уже занято ({what}) — «{action}» не назначено. Выберите другое сочетание или keybinds.override_conflicts = true"
+overridden = "{combo} переназначено (было: {what})"
+written = "бинды записаны: {count}"
+same = "бинды без изменений"
+would_write = "будут записаны бинды"
+include_added = "подключение добавлено в конфиг Hyprland"
+would_include = "будет добавлено подключение в конфиг Hyprland"
+include_removed = "подключение убрано из конфига Hyprland"
+no_main = "конфиг Hyprland не найден"
+reload_errors = "Hyprland сообщает об ошибках: {errors}"
+status_ok = "бинды подключены"
+status_missing = "бинды не подключены"
+
+[integrate.keys.desc]
+open_tui = "Subwatch: открыть"
+upcoming = "Subwatch: ближайшие списания"
+menu = "Subwatch: меню"
+rescan = "Subwatch: сканировать почту"
+add = "Subwatch: добавить подписку"
+
+[integrate.menu]
+comment = "Пункты Subwatch. Блок обновляется командой subwatch integrate apply."
+root_desc = "Подписки и списания"
+upcoming = "Ближайшие списания"
+list = "Все подписки"
+add = "Добавить подписку"
+review = "Очередь проверки"
+spend = "Сколько я трачу в месяц"
+rescan = "Пересканировать почту"
+config = "Открыть настройки"
+written = "пункт добавлен в меню Omarchy"
+same = "меню без изменений"
+would = "будет добавлен пункт в меню Omarchy"
+invalid = "после правки файл меню не разбирается — оставил как было"
+removed = "пункт убран из меню Omarchy"
+
+[integrate.bar]
+written = "модуль добавлен в панель Omarchy (секция {section})"
+same = "модуль панели без изменений"
+would = "будет добавлен модуль в панель (секция {section})"
+unreadable = "не удалось прочитать shell.json"
+removed = "модуль убран из панели"
+
+[integrate.hook]
+comment = "Subwatch: восстанавливает интеграцию после обновлений Omarchy."
+written = "хук post-update установлен"
+same = "хук без изменений"
+would = "будет установлен хук post-update"
+
+[integrate.desktop]
+generic = "Трекер подписок"
+comment = "Подписки, списания и напоминания"
+keywords = "подписки;списания;подписка;subscriptions;жазылым;"
+
+[integrate.walker]
+absent = "Walker не установлен — пропускаю"
+
+[integrate.waybar]
+comment = "Модуль Subwatch для Waybar."
+absent = "Waybar не используется — пропускаю"
+written = "модуль добавлен в конфиг Waybar"
+same = "Waybar уже настроен"
+manual = "конфиг Waybar необычный — добавьте \"custom/subwatch\" в modules-right вручную (сниппет в contrib/waybar)"
+unparsable = "не удалось разобрать конфиг Waybar — оставил как было"
+removed = "модуль убран из Waybar"
+
+[integrate.systemd]
+scan_desc = "Subwatch: сканирование почты и выписок"
+scan_timer_desc = "Subwatch: расписание сканирования"
+remind_desc = "Subwatch: напоминания о списаниях"
+remind_timer_desc = "Subwatch: проверка напоминаний"
+same = "таймеры без изменений"
+unavailable = "systemd --user недоступен — таймеры не включены"
+enable_failed = "не удалось включить {unit}: {detail}"
+bad_schedule = "systemd не понимает расписание «{value}». Примеры: daily, hourly, \"*-*-* 09:00\", 6h"
+
+# ------------------------------------------------------------------ doctor
+
+[doctor]
+fixed = "Исправлено: {count}."
+fix_failed = "Не удалось исправить: {detail}"
+summary_ok = "Всё в порядке ({ok} проверок)."
+summary_warn = "Работает, но есть замечания: в порядке {ok}, предупреждений {warn}."
+summary_fail = "Есть проблемы: в порядке {ok}, предупреждений {warn}, ошибок {fail}."
+try_fix = "Часть проблем можно исправить автоматически: subwatch doctor --fix"
+
+[doctor.group]
+env = "Окружение"
+config = "Конфигурация"
+storage = "Данные"
+secrets = "Ключи и токены"
+notify = "Уведомления"
+systemd = "Таймеры systemd"
+integration = "Интеграция с рабочим столом"
+plugins = "Плагины"
+rates = "Курсы валют"
+scan = "Сканирование"
+
+[doctor.env]
+python = "Python {version}"
+on_path = "subwatch в PATH: {path}"
+not_on_path = "subwatch не найден в PATH"
+fonts = "есть шрифты с кириллицей"
+no_fonts = "не найдено шрифтов с кириллицей"
+
+[doctor.config]
+valid = "конфигурация в порядке: {path}"
+missing = "файла конфигурации нет ({path}), действуют значения по умолчанию"
+invalid = "ошибка в {path}: {errors}"
+perms = "config.toml доступен другим пользователям ({mode})"
+
+[doctor.storage]
+dir_perms = "каталог данных {path} доступен другим ({mode})"
+no_db = "базы ещё нет ({path}) — появится после первого сканирования или добавления"
+db_perms = "база доступна другим пользователям ({mode})"
+db_ok = "база {path}, права {mode}"
+integrity = "база цела, схема версии {version}"
+corrupt = "база повреждена"
+open_failed = "не удалось открыть базу: {detail}"
+key_ok = "ключ шифрования базы в keyring"
+no_key = "база зашифрована, но ключа в keyring нет"
+
+[doctor.secrets]
+backend = "keyring: {backend}"
+bad_backend = "keyring без надёжного хранилища: {backend}"
+gmail_ok = "Gmail «{account}»: токен в keyring"
+gmail_missing = "Gmail включён, но токена «{account}» нет"
+gmail_refresh_ok = "Gmail «{account}»: Google принимает токен"
+gmail_refresh_failed = "Gmail «{account}»: токен не работает ({detail})"
+imap_ok = "IMAP «{account}»: пароль в keyring"
+imap_missing = "IMAP «{account}»: пароля в keyring нет"
+ai_ok = "AI {provider}: ключ в keyring"
+ai_missing = "AI {provider}: ключа в keyring нет"
+no_sources = "ни один источник не подключён"
+
+[doctor.notify]
+ok = "демон уведомлений: {daemon}, способ: {backend}"
+no_daemon = "демон уведомлений не отвечает (способ: {backend})"
+disabled = "уведомления выключены (notifications.backend = none)"
+
+[doctor.systemd]
+unavailable = "systemd --user недоступен"
+units_ok = "юниты на месте и совпадают с настройками"
+units_stale = "юниты отсутствуют или устарели"
+timer_ok = "{timer}: включён, следующий запуск {next}"
+timer_off = "{timer}: не включён"
+last_failed = "последний запуск сканирования завершился неудачно ({result})"
+
+[doctor.int]
+bar_ok = "модуль в панели Omarchy ({path})"
+bar_missing = "модуля нет в панели Omarchy ({path})"
+menu_ok = "пункт в меню Omarchy ({path})"
+menu_missing = "пункта нет в меню Omarchy ({path})"
+hook_ok = "хук post-update на месте"
+hook_missing = "нет хука post-update (после обновлений Omarchy интеграцию придётся восстанавливать вручную)"
+not_omarchy = "Omarchy не обнаружена, её проверки пропущены"
+desktop_ok = "ярлык приложения на месте"
+desktop_missing = "нет ярлыка приложения"
+keys_ok = "горячие клавиши подключены"
+keys_missing = "горячие клавиши не подключены"
+keys_errors = "Hyprland сообщает об ошибках: {errors}"
+keys_conflict = "{combo} занято ({what}), «{action}» не назначено"
+waybar_ok = "модуль в Waybar"
+waybar_missing = "модуля нет в Waybar"
+walker_ok = "меню Walker на месте"
+walker_missing = "нет меню Walker"
+completion_ok = "автодополнение: {shells}"
+completion_missing = "нет автодополнения для: {shells}"
+
+[doctor.plugins]
+error = "плагин {path} не загрузился: {detail}"
+
+[doctor.rates]
+ok = "курсы есть ({source})"
+manual_only = "используются ручные курсы (currency.manual_rates)"
+missing = "нет курса для: {codes}"
+stale = "курсы устарели (обновлены {when})"
+
+[doctor.scan]
+recent = "последнее сканирование: {when}"
+old = "почту давно не сканировали (последний раз {when})"
+review = "на проверке находок: {count}"
+
+[doctor.hint]
+python = "Нужен Python 3.12 или новее."
+install = "Запустите ./install.sh из каталога с исходниками."
+fonts = "Поставьте шрифт с кириллицей, например: omarchy pkg add ttf-jetbrains-mono-nerd"
+config_missing = "Создать файл с комментариями: subwatch config reset"
+config_invalid = "Исправьте файл: subwatch config edit"
+chmod = "Исправить права: subwatch doctor --fix"
+corrupt = "Восстановите из копии subwatch.db.v*.bak или удалите базу (subwatch purge) и просканируйте заново."
+keyring = "Нужен gnome-keyring или KWallet: omarchy pkg add gnome-keyring"
+add_source = "Подключите почту: subwatch auth gmail или subwatch auth imap; или импортируйте выписку: subwatch import"
+notify = "Без демона уведомлений напоминания не будут видны. В Omarchy уведомления показывает omarchy-shell: omarchy restart shell"
+notify_backend = "Включить: subwatch config set notifications.backend auto"
+systemd = "Без systemd --user сканирование и напоминания нужно запускать вручную (subwatch scan, subwatch remind)."
+integrate = "Подключить: subwatch integrate apply (или subwatch doctor --fix)"
+keys_conflict = "Выберите другое сочетание: subwatch config set keybinds.open_tui \"SUPER + CTRL + Y\""
+waybar = "Добавьте модуль: subwatch integrate apply --only waybar (сниппет в contrib/waybar)"
+plugin = "Исправьте файл плагина или отключите его: plugins.disabled"
+rates = "Обновить: subwatch rates update, или задайте вручную: subwatch rates set USD 520"
+logs = "Посмотрите журнал: subwatch logs"
+
+# ----------------------------------------------------------------- privacy
+
+[privacy]
+title = "Что хранит Subwatch"
+principles = "Хранятся только извлечённые факты: сервис, сумма, даты, источник. Тексты писем не сохраняются, идентификаторы писем хранятся как хэши. Почта читается только на чтение."
+files = "Файлы:"
+file_line = "  {path} — {size} байт, права {mode}"
+file_missing = "  {path} — нет"
+encryption_on = "Шифрование базы: включено (ключ в keyring)."
+encryption_off = "Шифрование базы: выключено (storage.encrypt)."
+stored = "Записи в базе:"
+table_line = "  {name}: {count}"
+snippets_on = "Фрагменты писем сохраняются (extraction.store_snippets = true), сейчас их {count}."
+snippets_off = "Фрагменты писем не сохраняются."
+secrets = "Записи в keyring (только имена):"
+secret_line = "  {name}"
+no_secrets = "  нет"
+ai = "AI-модели:"
+ai_none = "  Ничего не отправлялось."
+ai_total = "  Запросов всего: {total}, из них в облако: {cloud}."
+ai_model = "  {model}: {count}"
+ai_row = "  {ts} · {model} · отправитель {sender} · {chars} символов · {outcome}"
+
+[privacy.table]
+subscriptions = "подписки"
+charges = "списания"
+rules = "правила"
+scan_state = "позиции сканирования"
+processed = "обработанные письма (хэши)"
+reminders = "напоминания"
+events = "события"
+fx_rates = "курсы валют"
+ai_log = "журнал запросов к AI"
+transactions = "операции из выписок (дата, сумма, получатель)"
+imported_files = "импортированные файлы"
+
+# --------------------------------------------------------------------- TUI
+
+[tui]
+subtitle = "{total} в месяц · {count}"
+search_placeholder = "Поиск по названию и тегам… Enter — готово, Esc — закрыть"
+empty = "Здесь пусто. a — добавить подписку, R — сканировать почту."
+yes = "Да"
+no = "Нет"
+config_reloaded = "Настройки перечитаны."
+config_opened = "Открыл {path} в редакторе. Изменения подхватятся сами."
+bad_theme = "Нет темы «{name}», включаю стандартную."
+cancel_confirm = "Отметить «{service}» отменённой?"
+cancel_confirm_url = "Отметить «{service}» отменённой и открыть страницу отмены?"
+rescan_started = "Сканирование запущено."
+rescan_done = "Сканирование закончено: новых {created}, на проверку {review}."
+how_to_quit = "Выход — клавиша {key}."
+
+[tui.tab]
+subs = "Подписки"
+review = "Проверка"
+review_count = "Проверка ({count})"
+charts = "Графики"
+
+[tui.status]
+sort = "сортировка: {field} {direction}"
+asc = "↑"
+desc = "↓"
+category = "категория: {name}"
+status = "статус: {name}"
+search = "поиск: {text}"
+
+[tui.sort]
+next_charge = "дата списания"
+amount = "сумма"
+monthly = "в месяц"
+name = "название"
+category = "категория"
+status = "статус"
+
+[tui.keys]
+down = "вниз"
+up = "вверх"
+top = "в начало"
+bottom = "в конец"
+page_down = "страница вниз"
+page_up = "страница вверх"
+open = "открыть"
+back = "назад / сбросить фильтры"
+search = "поиск"
+filter = "фильтр"
+sort = "сортировка"
+reverse = "обратный порядок"
+add = "добавить"
+edit = "изменить"
+delete = "удалить"
+cancel = "отменить подписку"
+used = "отметить использование"
+subscriptions = "подписки"
+review = "проверка"
+charts = "графики"
+confirm = "подтвердить находку"
+reject = "отклонить находку"
+rescan = "сканировать"
+config = "настройки"
+help = "справка"
+quit = "выход"
+
+[tui.review]
+empty = "Очередь проверки пуста — Subwatch во всём уверен."
+why = "Почему на проверке: {reasons}"
+keys = "{confirm} — это подписка, {reject} — не подписка (запомнится)"
+
+[tui.charts]
+by_month = "Траты по месяцам"
+by_category = "По категориям (в месяц)"
+budgets = "Бюджеты"
+forecast = "прогноз"
+empty = "Пока нечего показать."
+no_budgets = "Бюджеты не заданы: [budget] и [categories.*].budget в config.toml."
+
+[tui.filter]
+title = "Фильтр"
+category = "Категория"
+status = "Статус"
+any = "любая"
+apply = "Применить"
+reset = "Сбросить"
+
+[tui.form]
+add_title = "Новая подписка"
+edit_title = "Подписка: {service}"
+service = "Сервис"
+service_ph = "Netflix"
+amount = "Сумма"
+amount_ph = "3 990"
+currency = "Валюта"
+period = "Период"
+period_ph = "1m, 3m, 1y"
+next = "Следующее списание"
+next_ph = "2026-11-01 или 1 ноября"
+category = "Категория"
+tags = "Теги"
+tags_ph = "через запятую"
+cancel_url = "Страница отмены"
+url_ph = "https://"
+notes = "Заметка"
+status = "Статус"
+track_usage = "Отслеживать использование"
+save = "Сохранить"
+cancel = "Отмена"
+need_service = "Укажите сервис."
+
+[tui.help]
+title = "Клавиши Subwatch"
+footer = "Клавиши меняются в [ui.keys] файла config.toml, изменения подхватываются на лету."
+
+# ----------------------------------------------------------------- journal
+
+[log]
+scan_source_started = "сканирую источник {source}"
+scan_source_finished = "источник {source} просканирован"
+scan_source_crashed = "источник {source} упал: {error}"
+scan_failed = "ошибка сканирования ({source}): {error}"
+scan_finished = "сканирование закончено за {seconds} с: новых {created}, на проверку {review}, ошибок {errors}"
+imap_folder = "IMAP {account}/{folder}: новых писем {new}"
+imap_folder_failed = "IMAP {account}: папка {folder} недоступна ({error})"
+gmail_candidates = "Gmail {account}: писем-кандидатов {count}"
+gmail_history_expired = "Gmail {account}: история устарела, ищу по дате"
+fx_updated = "курсы обновлены: {source}, валют {count}"
+fx_fetch_failed = "не удалось получить курсы из {source}: {error}"
+hook_ok = "хук {hook_event} выполнен: {command}"
+hook_failed = "хук {hook_event} завершился с кодом {code}: {command}"
+hook_timeout = "хук {hook_event} не уложился в {timeout} с: {command}"
+reminder_sent = "напоминание: {service}, списание {charge_date}"
+notification_sent = "уведомление ({backend}): {summary}"
+notification_failed = "не удалось показать уведомление ({backend}): {error}"
+notification_suppressed = "уведомление не показано (выключены): {summary}"
+ai_failed = "AI {provider}: {error}"
+ai_no_key = "AI {provider}: нет ключа в keyring, AI-слой пропущен"
+ics_failed = "не удалось записать календарь: {error}"

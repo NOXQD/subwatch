@@ -1,0 +1,16 @@
+# Выгрузка операций Т-Банка (Тинькофф) в CSV: «Операции → Выписка → CSV».
+title = "Т-Банк (CSV)"
+format = "csv"
+encoding = "cp1251"
+delimiter = ";"
+date_format = "%d.%m.%Y %H:%M:%S"
+debit_negative = true
+detect_headers = ["Дата операции", "Сумма операции", "Описание"]
+include_types = ["OK"]
+
+[columns]
+date = "Дата операции"
+amount = "Сумма операции"
+currency = "Валюта операции"
+description = "Описание"
+type = "Статус"

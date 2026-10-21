@@ -1,0 +1,134 @@
+# Currency reference data.
+# symbol  - how the amount is shown
+# aliases - tokens recognised in emails and statements (case-insensitive)
+# decimals - minor units
+
+[KZT]
+symbol = "₸"
+aliases = ["₸", "kzt", "тг", "тг.", "тенге", "теңге", "tenge"]
+decimals = 2
+
+[RUB]
+symbol = "₽"
+aliases = ["₽", "rub", "rur", "руб", "руб.", "рублей", "рубля", "рубль", "р."]
+decimals = 2
+
+[USD]
+symbol = "$"
+aliases = ["$", "us$", "usd", "долл.", "доллар", "долларов", "доллара"]
+decimals = 2
+
+[EUR]
+symbol = "€"
+aliases = ["€", "eur", "евро"]
+decimals = 2
+
+[GBP]
+symbol = "£"
+aliases = ["£", "gbp"]
+decimals = 2
+
+[UAH]
+symbol = "₴"
+aliases = ["₴", "uah", "грн", "грн."]
+decimals = 2
+
+[BYN]
+symbol = "Br"
+aliases = ["byn", "бел. руб.", "бел.руб."]
+decimals = 2
+
+[KGS]
+symbol = "сом"
+aliases = ["kgs", "сом"]
+decimals = 2
+
+[UZS]
+symbol = "сўм"
+aliases = ["uzs", "сўм", "сум", "so'm"]
+decimals = 2
+
+[TJS]
+symbol = "смн"
+aliases = ["tjs", "сомони"]
+decimals = 2
+
+[AMD]
+symbol = "֏"
+aliases = ["֏", "драм"]
+decimals = 2
+
+[GEL]
+symbol = "₾"
+aliases = ["₾", "лари"]
+decimals = 2
+
+[AZN]
+symbol = "₼"
+aliases = ["₼", "azn", "манат"]
+decimals = 2
+
+[TRY]
+symbol = "₺"
+aliases = ["₺", "лир"]
+decimals = 2
+
+[CNY]
+symbol = "¥"
+aliases = ["¥", "cny", "rmb", "юань", "юаней"]
+decimals = 2
+
+[JPY]
+symbol = "JP¥"
+aliases = ["jp¥", "jpy", "иен"]
+decimals = 0
+
+[INR]
+symbol = "₹"
+aliases = ["₹", "inr"]
+decimals = 2
+
+[PLN]
+symbol = "zł"
+aliases = ["zł", "pln"]
+decimals = 2
+
+[CZK]
+symbol = "Kč"
+aliases = ["kč", "czk"]
+decimals = 2
+
+[CHF]
+symbol = "CHF"
+aliases = ["chf"]
+decimals = 2
+
+[SEK]
+symbol = "kr"
+aliases = ["sek"]
+decimals = 2
+
+[NOK]
+symbol = "kr"
+aliases = ["nok"]
+decimals = 2
+
+[CAD]
+symbol = "CA$"
+aliases = ["ca$", "cad"]
+decimals = 2
+
+[AUD]
+symbol = "A$"
+aliases = ["a$", "aud"]
+decimals = 2
+
+[AED]
+symbol = "AED"
+aliases = ["aed", "дирхам"]
+decimals = 2
+
+[KRW]
+symbol = "₩"
+aliases = ["₩", "krw"]
+decimals = 0

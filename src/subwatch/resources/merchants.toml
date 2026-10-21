@@ -1,0 +1,746 @@
+# Built-in dictionary of known services.
+#
+# [<id>]
+# name       - canonical name shown to the user
+# category   - category key (music, video, cloud, games, education, software, other)
+# senders    - sender domains or addresses; a domain also matches its subdomains
+# patterns   - case-insensitive regexes for statement descriptors, subjects and bodies
+# shared     - true when the sender domain hosts many services (google.com,
+#              apple.com...): then a pattern hit is required to pick this entry
+# generic    - umbrella entry used only when nothing more specific matched
+# period     - default billing period when the message does not say
+# cancel_url - where to cancel
+# includes   - ids of services that come bundled (for duplicate detection)
+#
+# Users extend or override entries in ~/.config/subwatch/merchants.toml with
+# the same format.
+
+# ----------------------------------------------------------------- video
+
+[netflix]
+name = "Netflix"
+category = "video"
+senders = ["netflix.com", "mailer.netflix.com"]
+patterns = ['netflix']
+cancel_url = "https://www.netflix.com/cancelplan"
+period = "1m"
+
+[youtube_premium]
+name = "YouTube Premium"
+category = "video"
+senders = ["youtube.com"]
+patterns = ['youtube\s*premium', 'youtubepremium', 'google\s*\*\s*youtube']
+shared = true
+cancel_url = "https://www.youtube.com/paid_memberships"
+period = "1m"
+includes = ["youtube_music"]
+
+[kinopoisk]
+name = "Кинопоиск"
+category = "video"
+senders = ["kinopoisk.ru", "hd.kinopoisk.ru"]
+patterns = ['kinopoisk', 'кинопоиск']
+cancel_url = "https://hd.kinopoisk.ru/subscriptions"
+period = "1m"
+
+[okko]
+name = "Okko"
+category = "video"
+senders = ["okko.tv"]
+patterns = ['\bokko\b']
+cancel_url = "https://okko.tv/settings/subscriptions"
+period = "1m"
+
+[ivi]
+name = "Иви"
+category = "video"
+senders = ["ivi.ru"]
+patterns = ['\bivi\b', '\bиви\b']
+cancel_url = "https://www.ivi.ru/profile/subscriptions"
+period = "1m"
+
+[wink]
+name = "Wink"
+category = "video"
+senders = ["wink.ru"]
+patterns = ['\bwink\b']
+period = "1m"
+
+[start]
+name = "START"
+category = "video"
+senders = ["start.ru"]
+patterns = ['start\.ru', 'онлайн-кинотеатр start']
+period = "1m"
+
+[premier]
+name = "PREMIER"
+category = "video"
+senders = ["premier.one"]
+patterns = ['premier\.one']
+period = "1m"
+
+[amediateka]
+name = "Амедиатека"
+category = "video"
+senders = ["amediateka.ru"]
+patterns = ['amediateka', 'амедиатек']
+period = "1m"
+
+[disney_plus]
+name = "Disney+"
+category = "video"
+senders = ["disneyplus.com"]
+patterns = ['disney\s*\+', 'disney\s*plus']
+cancel_url = "https://www.disneyplus.com/account/subscription"
+period = "1m"
+
+[apple_tv]
+name = "Apple TV+"
+category = "video"
+senders = ["apple.com", "email.apple.com"]
+patterns = ['apple\s*tv\s*\+', 'apple\s*tv\s*plus']
+shared = true
+cancel_url = "https://apps.apple.com/account/subscriptions"
+period = "1m"
+
+[max]
+name = "Max"
+category = "video"
+senders = ["max.com", "hbomax.com"]
+patterns = ['hbo\s*max', '\bmax\.com']
+period = "1m"
+
+[prime_video]
+name = "Amazon Prime"
+category = "video"
+senders = ["amazon.com", "amazon.de", "primevideo.com"]
+patterns = ['amazon\s*prime', 'prime\s*video', 'amzn\s*prime']
+shared = true
+cancel_url = "https://www.amazon.com/mc"
+period = "1m"
+
+[crunchyroll]
+name = "Crunchyroll"
+category = "video"
+senders = ["crunchyroll.com"]
+patterns = ['crunchyroll']
+period = "1m"
+
+[kion]
+name = "KION"
+category = "video"
+senders = ["kion.ru"]
+patterns = ['\bkion\b']
+period = "1m"
+
+# ----------------------------------------------------------------- music
+
+[spotify]
+name = "Spotify"
+category = "music"
+senders = ["spotify.com"]
+patterns = ['spotify']
+cancel_url = "https://www.spotify.com/account/subscription/"
+period = "1m"
+
+[apple_music]
+name = "Apple Music"
+category = "music"
+senders = ["apple.com", "email.apple.com"]
+patterns = ['apple\s*music']
+shared = true
+cancel_url = "https://apps.apple.com/account/subscriptions"
+period = "1m"
+
+[youtube_music]
+name = "YouTube Music"
+category = "music"
+senders = ["youtube.com"]
+patterns = ['youtube\s*music']
+shared = true
+cancel_url = "https://www.youtube.com/paid_memberships"
+period = "1m"
+
+[yandex_music]
+name = "Яндекс Музыка"
+category = "music"
+senders = ["music.yandex.ru"]
+patterns = ['яндекс\s*музык', 'yandex\s*music']
+shared = true
+period = "1m"
+
+[vk_music]
+name = "VK Музыка"
+category = "music"
+senders = ["vk.com", "vk.company", "boom.ru"]
+patterns = ['vk\s*музык', 'vk\s*music', '\bboom\b', 'vk\.com\s*\*?\s*music']
+shared = true
+cancel_url = "https://vk.com/settings?act=payments"
+period = "1m"
+
+[deezer]
+name = "Deezer"
+category = "music"
+senders = ["deezer.com"]
+patterns = ['deezer']
+period = "1m"
+
+[tidal]
+name = "Tidal"
+category = "music"
+senders = ["tidal.com"]
+patterns = ['\btidal\b']
+period = "1m"
+
+[soundcloud]
+name = "SoundCloud Go"
+category = "music"
+senders = ["soundcloud.com"]
+patterns = ['soundcloud']
+period = "1m"
+
+# --------------------------------------------------------------- bundles
+
+[yandex_plus]
+name = "Яндекс Плюс"
+category = "video"
+senders = ["plus.yandex.ru", "yandex.ru", "yandex.kz", "ya.ru"]
+patterns = ['яндекс\s*плюс', 'yandex\s*plus', 'yandex\s*\*\s*plus', 'плюс\s*мульти', 'ya\s*plus']
+cancel_url = "https://plus.yandex.ru/my"
+shared = true
+period = "1m"
+includes = ["kinopoisk", "yandex_music"]
+
+[apple_one]
+name = "Apple One"
+category = "software"
+senders = ["apple.com", "email.apple.com"]
+patterns = ['apple\s*one']
+shared = true
+cancel_url = "https://apps.apple.com/account/subscriptions"
+period = "1m"
+includes = ["apple_music", "apple_tv", "icloud"]
+
+[sberprime]
+name = "СберПрайм"
+category = "other"
+senders = ["sberbank.ru", "sber.ru"]
+patterns = ['сберпрайм', 'sberprime', 'сбер\s*прайм']
+period = "1m"
+includes = ["okko"]
+
+[mts_premium]
+name = "МТС Premium"
+category = "video"
+senders = ["mts.ru"]
+patterns = ['мтс\s*premium', 'mts\s*premium']
+shared = true
+period = "1m"
+includes = ["kion"]
+
+[tpro]
+name = "T-Pro"
+category = "other"
+senders = ["tbank.ru", "tinkoff.ru"]
+patterns = ['t-pro', 'тинькофф\s*pro', 'tinkoff\s*pro']
+period = "1m"
+
+# ----------------------------------------------------------------- cloud
+
+[icloud]
+name = "iCloud+"
+category = "cloud"
+senders = ["apple.com", "email.apple.com", "icloud.com"]
+patterns = ['icloud\s*\+?', 'icloud\s*storage', 'хранилище icloud']
+shared = true
+cancel_url = "https://support.apple.com/ru-ru/HT207594"
+period = "1m"
+
+[google_one]
+name = "Google One"
+category = "cloud"
+senders = ["google.com"]
+patterns = ['google\s*one', 'google\s*\*\s*google\s*one', 'google\s*storage']
+shared = true
+cancel_url = "https://one.google.com/storage/management"
+period = "1m"
+
+[dropbox]
+name = "Dropbox"
+category = "cloud"
+senders = ["dropbox.com", "dropboxmail.com"]
+patterns = ['dropbox']
+cancel_url = "https://www.dropbox.com/account/plan"
+period = "1m"
+
+[yandex_360]
+name = "Яндекс 360"
+category = "cloud"
+senders = ["360.yandex.ru"]
+patterns = ['яндекс\s*360', 'yandex\s*360', 'яндекс\s*диск', 'yandex\s*disk']
+shared = true
+cancel_url = "https://360.yandex.ru/premium-plans"
+period = "1m"
+
+[mailru_cloud]
+name = "Облако Mail"
+category = "cloud"
+senders = ["cloud.mail.ru", "mail.ru"]
+patterns = ['облако\s*mail', 'cloud\.mail\.ru', 'mail\.ru\s*cloud']
+shared = true
+period = "1m"
+
+[proton]
+name = "Proton"
+category = "cloud"
+senders = ["proton.me", "protonmail.com"]
+patterns = ['proton\s*(mail|pass|drive|vpn|unlimited)?', '\bproton\b']
+cancel_url = "https://account.proton.me/dashboard"
+period = "1m"
+
+[mega]
+name = "MEGA"
+category = "cloud"
+senders = ["mega.nz", "mega.io"]
+patterns = ['mega\.nz', 'mega\.io']
+period = "1m"
+
+[pcloud]
+name = "pCloud"
+category = "cloud"
+senders = ["pcloud.com"]
+patterns = ['pcloud']
+period = "1y"
+
+# -------------------------------------------------------------- software
+
+[github]
+name = "GitHub"
+category = "software"
+senders = ["github.com"]
+patterns = ['github(?!\s*copilot)']
+cancel_url = "https://github.com/settings/billing"
+generic = true
+period = "1m"
+
+[github_copilot]
+name = "GitHub Copilot"
+category = "software"
+senders = ["github.com"]
+patterns = ['github\s*copilot', '\bcopilot\s*(pro|individual|business)']
+shared = true
+cancel_url = "https://github.com/settings/copilot"
+period = "1m"
+
+[jetbrains]
+name = "JetBrains"
+category = "software"
+senders = ["jetbrains.com"]
+patterns = ['jetbrains', 'intellij', 'pycharm', 'webstorm', 'all\s*products\s*pack']
+cancel_url = "https://account.jetbrains.com/licenses"
+period = "1y"
+
+[chatgpt]
+name = "ChatGPT Plus"
+category = "software"
+senders = ["openai.com", "tm.openai.com"]
+patterns = ['chatgpt', 'openai']
+cancel_url = "https://chatgpt.com/#settings/Subscription"
+period = "1m"
+
+[claude]
+name = "Claude"
+category = "software"
+senders = ["anthropic.com", "mail.anthropic.com"]
+patterns = ['claude\s*(pro|max|team)', 'anthropic']
+cancel_url = "https://claude.ai/settings/billing"
+period = "1m"
+
+[cursor]
+name = "Cursor"
+category = "software"
+senders = ["cursor.com", "cursor.sh", "anysphere.inc"]
+patterns = ['cursor\s*(pro|business)', 'anysphere']
+period = "1m"
+
+[perplexity]
+name = "Perplexity Pro"
+category = "software"
+senders = ["perplexity.ai"]
+patterns = ['perplexity']
+period = "1m"
+
+[midjourney]
+name = "Midjourney"
+category = "software"
+senders = ["midjourney.com"]
+patterns = ['midjourney']
+period = "1m"
+
+[microsoft_365]
+name = "Microsoft 365"
+category = "software"
+senders = ["microsoft.com", "email.microsoft.com", "microsoftstore.com"]
+patterns = ['microsoft\s*365', 'office\s*365', 'msft\s*\*\s*365', 'onedrive']
+shared = true
+cancel_url = "https://account.microsoft.com/services"
+period = "1y"
+
+[adobe]
+name = "Adobe Creative Cloud"
+category = "software"
+senders = ["adobe.com", "mail.adobe.com"]
+patterns = ['adobe', 'creative\s*cloud', 'photoshop', 'lightroom']
+cancel_url = "https://account.adobe.com/plans"
+period = "1m"
+
+[notion]
+name = "Notion"
+category = "software"
+senders = ["notion.so", "makenotion.com"]
+patterns = ['notion']
+cancel_url = "https://www.notion.so/my-account"
+period = "1m"
+
+[figma]
+name = "Figma"
+category = "software"
+senders = ["figma.com"]
+patterns = ['figma']
+period = "1m"
+
+[onepassword]
+name = "1Password"
+category = "software"
+senders = ["1password.com"]
+patterns = ['1password']
+period = "1y"
+
+[bitwarden]
+name = "Bitwarden"
+category = "software"
+senders = ["bitwarden.com"]
+patterns = ['bitwarden']
+period = "1y"
+
+[nordvpn]
+name = "NordVPN"
+category = "software"
+senders = ["nordvpn.com", "nordaccount.com"]
+patterns = ['nordvpn', 'nord\s*security', 'nordaccount']
+period = "1y"
+
+[expressvpn]
+name = "ExpressVPN"
+category = "software"
+senders = ["expressvpn.com"]
+patterns = ['expressvpn']
+period = "1m"
+
+[surfshark]
+name = "Surfshark"
+category = "software"
+senders = ["surfshark.com"]
+patterns = ['surfshark']
+period = "1y"
+
+[setapp]
+name = "Setapp"
+category = "software"
+senders = ["setapp.com", "macpaw.com"]
+patterns = ['setapp']
+period = "1m"
+
+[grammarly]
+name = "Grammarly"
+category = "software"
+senders = ["grammarly.com"]
+patterns = ['grammarly']
+period = "1m"
+
+[canva]
+name = "Canva Pro"
+category = "software"
+senders = ["canva.com"]
+patterns = ['canva']
+period = "1m"
+
+[zoom]
+name = "Zoom"
+category = "software"
+senders = ["zoom.us"]
+patterns = ['zoom\.us', 'zoom\s*(pro|workplace|one)']
+period = "1m"
+
+[todoist]
+name = "Todoist"
+category = "software"
+senders = ["todoist.com", "doist.com"]
+patterns = ['todoist']
+period = "1y"
+
+[obsidian]
+name = "Obsidian"
+category = "software"
+senders = ["obsidian.md"]
+patterns = ['obsidian\s*(sync|publish)']
+period = "1m"
+
+[telegram_premium]
+name = "Telegram Premium"
+category = "software"
+senders = ["telegram.org"]
+patterns = ['telegram\s*premium', 'телеграм\s*премиум']
+period = "1m"
+
+[discord_nitro]
+name = "Discord Nitro"
+category = "games"
+senders = ["discord.com", "discordapp.com"]
+patterns = ['discord\s*nitro', 'nitro\s*basic']
+period = "1m"
+
+# ----------------------------------------------------------------- games
+
+[xbox_game_pass]
+name = "Xbox Game Pass"
+category = "games"
+senders = ["xbox.com", "microsoft.com", "email.microsoft.com"]
+patterns = ['game\s*pass', 'xbox\s*(live|game)']
+shared = true
+cancel_url = "https://account.microsoft.com/services"
+period = "1m"
+
+[ps_plus]
+name = "PlayStation Plus"
+category = "games"
+senders = ["playstation.com", "sonyentertainmentnetwork.com", "email.sonyentertainmentnetwork.com"]
+patterns = ['playstation\s*plus', 'ps\s*plus', 'playstation\s*network']
+cancel_url = "https://store.playstation.com/subscriptions"
+period = "1m"
+
+[nintendo_online]
+name = "Nintendo Switch Online"
+category = "games"
+senders = ["nintendo.com", "nintendo.net"]
+patterns = ['nintendo\s*switch\s*online']
+period = "1y"
+
+[ea_play]
+name = "EA Play"
+category = "games"
+senders = ["ea.com"]
+patterns = ['ea\s*play']
+period = "1m"
+
+[ubisoft_plus]
+name = "Ubisoft+"
+category = "games"
+senders = ["ubisoft.com"]
+patterns = ['ubisoft\s*\+', 'ubisoft\s*plus']
+period = "1m"
+
+[geforce_now]
+name = "GeForce NOW"
+category = "games"
+senders = ["nvidia.com"]
+patterns = ['geforce\s*now']
+period = "1m"
+
+# ------------------------------------------------------------- education
+
+[coursera]
+name = "Coursera Plus"
+category = "education"
+senders = ["coursera.org"]
+patterns = ['coursera']
+period = "1m"
+
+[duolingo]
+name = "Duolingo Super"
+category = "education"
+senders = ["duolingo.com"]
+patterns = ['duolingo']
+cancel_url = "https://www.duolingo.com/settings/super"
+period = "1y"
+
+[skillbox]
+name = "Skillbox"
+category = "education"
+senders = ["skillbox.ru"]
+patterns = ['skillbox']
+period = "1m"
+
+[practicum]
+name = "Яндекс Практикум"
+category = "education"
+senders = ["practicum.yandex.ru", "practicum.yandex.com"]
+patterns = ['яндекс\s*практикум', 'yandex\s*practicum']
+period = "1m"
+
+[skyeng]
+name = "Skyeng"
+category = "education"
+senders = ["skyeng.ru"]
+patterns = ['skyeng']
+period = "1m"
+
+[udemy]
+name = "Udemy Personal Plan"
+category = "education"
+senders = ["udemy.com"]
+patterns = ['udemy']
+period = "1m"
+
+[linkedin_premium]
+name = "LinkedIn Premium"
+category = "education"
+senders = ["linkedin.com"]
+patterns = ['linkedin\s*premium', 'linkedin\s*learning']
+period = "1m"
+
+[brilliant]
+name = "Brilliant"
+category = "education"
+senders = ["brilliant.org"]
+patterns = ['brilliant\.org']
+period = "1y"
+
+[babbel]
+name = "Babbel"
+category = "education"
+senders = ["babbel.com"]
+patterns = ['babbel']
+period = "1m"
+
+# ----------------------------------------------------------------- other
+
+[patreon]
+name = "Patreon"
+category = "other"
+senders = ["patreon.com"]
+patterns = ['patreon']
+period = "1m"
+
+[boosty]
+name = "Boosty"
+category = "other"
+senders = ["boosty.to"]
+patterns = ['boosty']
+period = "1m"
+
+[uber_one]
+name = "Uber One"
+category = "other"
+senders = ["uber.com"]
+patterns = ['uber\s*one']
+period = "1m"
+
+[wolt_plus]
+name = "Wolt+"
+category = "other"
+senders = ["wolt.com"]
+patterns = ['wolt\s*\+', 'wolt\s*plus']
+period = "1m"
+
+[glovo_prime]
+name = "Glovo Prime"
+category = "other"
+senders = ["glovoapp.com"]
+patterns = ['glovo\s*prime']
+period = "1m"
+
+[beeline_kz]
+name = "Beeline"
+category = "other"
+senders = ["beeline.kz", "beeline.ru"]
+patterns = ['beeline', 'билайн']
+period = "1m"
+
+[kcell]
+name = "Kcell"
+category = "other"
+senders = ["kcell.kz"]
+patterns = ['kcell']
+period = "1m"
+
+[activ]
+name = "activ"
+category = "other"
+senders = ["activ.kz"]
+patterns = ['activ\.kz']
+period = "1m"
+
+[tele2_kz]
+name = "Tele2"
+category = "other"
+senders = ["tele2.kz", "tele2.ru"]
+patterns = ['tele2', 'теле2']
+period = "1m"
+
+[altel]
+name = "ALTEL"
+category = "other"
+senders = ["altel.kz"]
+patterns = ['altel']
+period = "1m"
+
+[kazakhtelecom]
+name = "Казахтелеком"
+category = "other"
+senders = ["telecom.kz"]
+patterns = ['kazakhtelecom', 'казахтелеком', 'telecom\.kz']
+period = "1m"
+
+[megafon]
+name = "МегаФон"
+category = "other"
+senders = ["megafon.ru"]
+patterns = ['megafon', 'мегафон']
+period = "1m"
+
+[mts]
+name = "МТС"
+category = "other"
+senders = ["mts.ru"]
+patterns = ['\bмтс\b(?!\s*premium)', '\bmts\b(?!\s*premium)']
+generic = true
+period = "1m"
+
+# ------------------------------------------------- umbrellas (generic)
+
+[google_play]
+name = "Google Play"
+category = "software"
+senders = ["google.com", "payments.google.com"]
+patterns = ['google\s*play', 'google\s*\*']
+generic = true
+cancel_url = "https://play.google.com/store/account/subscriptions"
+period = "1m"
+
+[apple]
+name = "Apple"
+category = "software"
+senders = ["apple.com", "email.apple.com", "itunes.com"]
+patterns = ['apple\.com/bill', 'itunes', 'app\s*store']
+generic = true
+cancel_url = "https://apps.apple.com/account/subscriptions"
+period = "1m"
+
+[microsoft]
+name = "Microsoft"
+category = "software"
+senders = ["microsoft.com", "email.microsoft.com"]
+patterns = ['microsoft', '\bmsft\b']
+generic = true
+cancel_url = "https://account.microsoft.com/services"
+period = "1m"
+
+[yandex]
+name = "Яндекс"
+category = "other"
+senders = ["yandex.ru", "yandex.kz", "ya.ru"]
+patterns = ['\byandex\b', '\bяндекс\b']
+generic = true
+period = "1m"

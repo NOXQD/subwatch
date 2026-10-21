@@ -1,0 +1,12 @@
+# Generic "Date,Amount,Description" export with negative debits
+# (Revolut, Wise and many others look like this).
+title = "Универсальная таблица (Date, Amount, Description)"
+format = "csv"
+debit_negative = true
+detect_headers = ["Date", "Amount", "Description"]
+
+[columns]
+date = "Date"
+amount = "Amount"
+description = "Description"
+currency = "Currency"
