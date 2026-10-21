@@ -191,8 +191,8 @@ class Ingestor:
         # More evidence for the same service makes us more confident.
         was_review = sub.status == "review"
         if was_review:
-            boosted = min(1.0, max(sub.confidence, det.confidence) + 0.1)
-            sub.confidence = round(boosted, 3)
+            boosted = round(min(1.0, max(sub.confidence, det.confidence) + 0.1), 3)
+            sub.confidence = boosted
             if status == "active" or boosted >= self.config.extraction.auto_accept:
                 sub.status = "active"
                 sub.review_reason = None

@@ -331,13 +331,16 @@ def detect_template(path: Path, text: str | None, templates: dict[str, BankTempl
         return None
     if text is None:
         return None
-    for skip in range(0, 15):
-        lines = text.splitlines()[skip:]
-        if not lines:
-            break
-        header = lines[0]
-        for tpl in templates.values():
-            if tpl.format == "csv" and tpl.detect_headers and all(h in header for h in tpl.detect_headers):
+    # Most specific template first: more required headers, user templates win ties.
+    candidates = sorted((t for t in templates.values() if t.format == "csv" and t.detect_headers),
+                        key=lambda t: (len(t.detect_headers), t.user), reverse=True)
+    lines = text.splitlines()
+    for skip in range(0, min(15, len(lines))):
+        header = lines[skip]
+        delim = _sniff(header, "auto")
+        cells = {c.strip().strip('"').strip() for c in next(csv.reader([header], delimiter=delim), [])}
+        for tpl in candidates:
+            if all(h in cells for h in tpl.detect_headers):
                 if tpl.skip_rows != skip:
                     tpl = BankTemplate(**{**tpl.__dict__, "skip_rows": skip})
                 return tpl
