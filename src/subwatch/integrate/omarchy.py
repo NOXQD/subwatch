@@ -82,21 +82,16 @@ def _menu_block(config: Config) -> str:
     return make_block(lines, "//", indent="  ")
 
 
-def _insert_before_last_brace(text: str, block: str) -> str:
-    end = text.rfind("}")
-    if end < 0:
+def _insert_after_first_brace(text: str, block: str) -> str:
+    """Put our block first inside the root object.
+
+    Every line of the block ends with a comma, so whatever follows (the
+    user's entries or the closing brace) stays valid and untouched.
+    """
+    brace = text.find("{")
+    if brace < 0:
         return "{\n" + block + "}\n"
-    head = text[:end]
-    # Make sure the last real entry is followed by a comma.
-    lines = head.rstrip().split("\n")
-    for i in range(len(lines) - 1, -1, -1):
-        stripped = lines[i].strip()
-        if not stripped or stripped.startswith("//"):
-            continue
-        if not stripped.endswith((",", "{")):
-            lines[i] = lines[i].rstrip() + ","
-        break
-    return "\n".join(lines).rstrip() + "\n" + block + text[end:]
+    return text[: brace + 1] + "\n" + block.rstrip("\n") + text[brace + 1:]
 
 
 def _menu_valid(text: str) -> bool:
@@ -120,7 +115,7 @@ def apply_menu(config: Config, dry_run: bool = False) -> Step:
         base = strip_block(old, "//") if has_block(old, "//") else old
         if not base.strip():
             base = "{\n}\n"
-        return _insert_before_last_brace(base, _menu_block(config))
+        return _insert_after_first_brace(base, _menu_block(config))
 
     status = update_file(path, transform, validate=_menu_valid, dry_run=dry_run)
     key = {"changed": "integrate.menu.written", "unchanged": "integrate.menu.same",

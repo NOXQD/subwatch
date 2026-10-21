@@ -205,8 +205,8 @@ def remove_waybar(dry_run: bool = False) -> list[Step]:
     if cfg is not None:
         text = cfg.read_text(encoding="utf-8")
         new = re.sub(r'"custom/subwatch",\s*', "", text)
-        new = re.sub(r'"~/.config/waybar/subwatch.jsonc",\s*', "", new)
-        new = re.sub(r'\n\s*"include": \[\],', "", new)
+        new = re.sub(r'\n[ \t]*"include": \["~/\.config/waybar/subwatch\.jsonc"\],?', "", new)
+        new = re.sub(r'"~/\.config/waybar/subwatch\.jsonc",\s*|,\s*"~/\.config/waybar/subwatch\.jsonc"', "", new)
         if new != text:
             if not dry_run:
                 from .common import backup_file

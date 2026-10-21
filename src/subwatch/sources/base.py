@@ -81,6 +81,10 @@ def load_builtin() -> None:
 def load_plugins(config: Config, directory: Path | None = None) -> dict[str, str]:
     """Import every *.py in the plugins dir. Returns {file: error} for failures."""
     PLUGIN_ERRORS.clear()
+    # Forget plugins loaded earlier: a removed or disabled file must not keep running.
+    for name in [n for n, cls in REGISTRY.items() if not cls.builtin]:
+        del REGISTRY[name]
+        PLUGIN_FILES.pop(name, None)
     if not config.plugins.enabled:
         return {}
     directory = directory or paths.plugins_dir()

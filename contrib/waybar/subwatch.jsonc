@@ -1,0 +1,20 @@
+// Модуль Subwatch для Waybar (Omarchy 3.x и другие системы с Waybar).
+//
+// 1. Скопируйте файл в ~/.config/waybar/subwatch.jsonc.
+// 2. В ~/.config/waybar/config.jsonc добавьте
+//      "include": ["~/.config/waybar/subwatch.jsonc"],
+//    и "custom/subwatch" в modules-right (или другую секцию).
+// 3. Стили — в subwatch.css рядом.
+//
+// То же самое делает команда: subwatch integrate apply --only waybar
+{
+  "custom/subwatch": {
+    "exec": "subwatch bar",
+    "return-type": "json",
+    "interval": 300,
+    "tooltip": true,
+    "on-click": "subwatch open",
+    "on-click-right": "subwatch menu",
+    "on-click-middle": "systemctl --user start --no-block subwatch-scan.service"
+  }
+}

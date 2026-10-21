@@ -1,0 +1,24 @@
+/* Subwatch для Waybar. Добавьте в ~/.config/waybar/style.css:
+   @import "subwatch.css";
+   Классы модуля: subwatch, next (показано ближайшее списание), soon (сегодня
+   или завтра), warn-budget, over-budget, empty, error. */
+
+#custom-subwatch {
+  padding: 0 8px;
+}
+
+#custom-subwatch.soon {
+  font-weight: bold;
+}
+
+#custom-subwatch.warn-budget {
+  color: #e0af68;
+}
+
+#custom-subwatch.over-budget {
+  color: #f7768e;
+}
+
+#custom-subwatch.empty {
+  opacity: 0.5;
+}
