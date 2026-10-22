@@ -98,18 +98,29 @@ Panel {
         else if (key === "k") root.move(-1)
       }
 
-      PopupContent {
-        id: content
-        width: parent.width
-        info: root.info
-        palette: root.hostWidget ? root.hostWidget.palette : ({})
-        scanning: root.hostWidget ? root.hostWidget.scanning : false
-        cursor: root.cursor
-        opacity: root.reveal
-        transform: Translate { y: (1 - root.reveal) * Style.space(6) }
-        onOpenSettings: function(page, extra) { if (root.hostWidget) root.hostWidget.openSettings(page, extra) }
-        onScanRequested: if (root.hostWidget) root.hostWidget.scan()
-        onTuiRequested: if (root.hostWidget) root.hostWidget.openTui()
+      // Scrolls when the card is taller than the screen allows.
+      Flickable {
+        id: scroller
+        anchors.fill: parent
+        contentWidth: width
+        contentHeight: content.implicitHeight
+        clip: true
+        interactive: contentHeight > height + 1
+        boundsBehavior: Flickable.StopAtBounds
+
+        PopupContent {
+          id: content
+          width: scroller.width
+          info: root.info
+          palette: root.hostWidget ? root.hostWidget.palette : ({})
+          scanning: root.hostWidget ? root.hostWidget.scanning : false
+          cursor: root.cursor
+          opacity: root.reveal
+          transform: Translate { y: (1 - root.reveal) * Style.space(6) }
+          onOpenSettings: function(page, extra) { if (root.hostWidget) root.hostWidget.openSettings(page, extra) }
+          onScanRequested: if (root.hostWidget) root.hostWidget.scan()
+          onTuiRequested: if (root.hostWidget) root.hostWidget.openTui()
+        }
       }
     }
   }

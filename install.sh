@@ -154,7 +154,7 @@ if (( INTEGRATION )); then
       echo "  ${dim}[dry-run]${reset} subwatch integrate apply"
     fi
   else
-    subwatch integrate apply || warn "часть интеграции не удалась — см. subwatch doctor"
+    subwatch integrate apply --restart-shell || warn "часть интеграции не удалась — см. subwatch doctor"
   fi
 fi
 

@@ -290,3 +290,22 @@ def test_generated_commands_actually_run(monkeypatch):
     commands.append(shlex.split(hook.split("&&", 1)[1].split("||")[0])[1:])
     for args in commands:
         assert _run_cli(args) == 0, args
+
+
+def test_block_stays_put_when_other_tools_add_theirs(desktop):
+    """Another installer appends its block after ours: re-applying must not
+    move ours to the end or pile up blank lines."""
+    main = desktop / "hyprland.lua"
+    hyprland.apply(Config(), binds=BINDS, reload=False)
+    other = "\n-- >>> altscape >>>\nrequire(\"hypr.altscape\")\n-- <<< altscape <<<\n"
+    main.write_text(main.read_text(encoding="utf-8") + other, encoding="utf-8")
+    once = main.read_text(encoding="utf-8")
+    for _ in range(3):
+        steps = hyprland.apply(Config(), binds=BINDS, reload=False)
+        assert all(s.key != "integrate.keys.include_added" for s in steps)
+    assert main.read_text(encoding="utf-8") == once
+    assert once.index(">>> subwatch >>>") < once.index(">>> altscape >>>")
+    # Blank lines a previous version left above the block are tidied up.
+    main.write_text(once.replace("\n-- >>> subwatch", "\n\n\n\n-- >>> subwatch"), encoding="utf-8")
+    hyprland.apply(Config(), binds=BINDS, reload=False)
+    assert "\n\n\n-- >>> subwatch" not in main.read_text(encoding="utf-8")

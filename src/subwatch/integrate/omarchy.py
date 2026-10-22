@@ -27,6 +27,7 @@ from .common import (
     backup_file,
     has_block,
     make_block,
+    replace_block,
     strip_block,
     strip_jsonc,
     subwatch_exe,
@@ -132,9 +133,9 @@ def apply_menu(config: Config, dry_run: bool = False) -> Step:
         return remove_menu(dry_run)
 
     def transform(old: str) -> str:
-        base = strip_block(old, "//") if has_block(old, "//") else old
-        if not base.strip():
-            base = "{\n}\n"
+        if has_block(old, "//"):
+            return replace_block(old, "//", _menu_block(config)).replace("{\n\n  // >>>", "{\n  // >>>", 1)
+        base = old if old.strip() else "{\n}\n"
         return _insert_after_first_brace(base, _menu_block(config))
 
     status = update_file(path, transform, validate=_menu_valid, dry_run=dry_run)
@@ -267,6 +268,18 @@ def _shell_ipc(*args: str) -> None:
                        timeout=10, check=False)
 
 
+def restart_shell() -> bool:
+    """Restart omarchy-shell so it compiles the updated plugin. Only inside a
+    running session; Omarchy's own script takes care of a locked screen."""
+    import subprocess
+
+    if not (shutil.which("omarchy-restart-shell") and os.environ.get("HYPRLAND_INSTANCE_SIGNATURE")):
+        return False
+    done = subprocess.run(["omarchy-restart-shell"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+                          timeout=60, check=False)
+    return done.returncode == 0
+
+
 def _sync_plugin(dry_run: bool) -> bool:
     write, stale = _plugin_changes()
     if dry_run or (not write and not stale):
@@ -274,15 +287,21 @@ def _sync_plugin(dry_run: bool) -> bool:
     target = plugin_dir()
     if target.exists() and not _ours(target) and (target / "manifest.json").exists():
         raise OSError(str(target))
-    for rel, data in write.items():
-        path = target / rel
+    # Build the new copy next to the old one and swap directories, so the
+    # shell reloads the plugin once instead of once per file. Hidden names
+    # are ignored by the shell's plugin scanner.
+    staging = target.with_name(f".{target.name}.new")
+    previous = target.with_name(f".{target.name}.old")
+    shutil.rmtree(staging, ignore_errors=True)
+    shutil.rmtree(previous, ignore_errors=True)
+    for rel, data in plugin_files().items():
+        path = staging / rel
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_bytes(data)
-    for rel in stale:
-        (target / rel).unlink()
-    for folder in sorted((p for p in target.rglob("*") if p.is_dir()), reverse=True):
-        if not any(folder.iterdir()):
-            folder.rmdir()
+    if target.exists():
+        target.rename(previous)
+    staging.rename(target)
+    shutil.rmtree(previous, ignore_errors=True)
     return True
 
 
@@ -293,6 +312,7 @@ def _apply_plugin(config: Config, dry_run: bool) -> Step:
     data, existed = _load_shell_json()
     if data is None:
         return Step("bar", "failed", "integrate.bar.unreadable", {}, path)
+    first_install = not plugin_dir().exists()
     try:
         files_changed = _sync_plugin(dry_run)
     except OSError:
@@ -326,7 +346,7 @@ def _apply_plugin(config: Config, dry_run: bool) -> Step:
             backup_file(path)
         write_text(path, json.dumps(data, ensure_ascii=False, indent=2) + "\n")
     barcache.invalidate()
-    key = "integrate.plugin.written" if layout_changed else "integrate.plugin.updated"
+    key = "integrate.plugin.updated" if files_changed and not first_install else "integrate.plugin.written"
     return Step("bar", "changed", key, {"section": section}, path)
 
 

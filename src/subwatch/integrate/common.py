@@ -80,6 +80,18 @@ def strip_block(text: str, comment: str) -> str:
     return block_pattern(comment).sub("\n", text).rstrip("\n") + "\n" if text.strip() else ""
 
 
+def replace_block(text: str, comment: str, block: str) -> str:
+    """Put a new version of our block where the old one stands.
+
+    Other tools append their own blocks after ours, so moving ours to the
+    end on every run would rewrite the file each time. Blank lines right
+    before the block are squeezed to one.
+    """
+    c = re.escape(comment)
+    pattern = re.compile(rf"\n*[ \t]*{c} {re.escape(BEGIN)}.*?{c} {re.escape(END)}[ \t]*\n?", re.S)
+    return pattern.sub(lambda m: ("\n\n" if m.start() > 0 else "") + block, text, count=1)
+
+
 def make_block(lines: list[str], comment: str, indent: str = "") -> str:
     body = "\n".join(indent + line if line else line for line in lines)
     return f"{indent}{comment} {BEGIN}\n{body}\n{indent}{comment} {END}\n"

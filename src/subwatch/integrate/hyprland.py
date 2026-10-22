@@ -22,7 +22,17 @@ from pathlib import Path
 from .. import paths
 from ..config.schema import Config
 from ..i18n import t
-from .common import Step, backup_file, has_block, make_block, strip_block, subwatch_exe, update_file, write_text
+from .common import (
+    Step,
+    backup_file,
+    has_block,
+    make_block,
+    replace_block,
+    strip_block,
+    subwatch_exe,
+    update_file,
+    write_text,
+)
 
 MODS = {"SHIFT": 1, "CAPS": 2, "CTRL": 4, "CONTROL": 4, "ALT": 8, "MOD2": 16, "MOD3": 32,
         "SUPER": 64, "WIN": 64, "LOGO": 64, "MOD4": 64, "MOD5": 128}
@@ -157,6 +167,8 @@ def render_lua(items: list[Planned], override: bool) -> str:
             lines.append(f"hl.unbind({_lua_string(str(item.combo))})")
         lines.append(f"o.bind({_lua_string(str(item.combo))}, {_lua_string(item.description)}, "
                      f"{_lua_string(item.command)})")
+    lines += ["", f"-- {t('integrate.keys.window_rule')}",
+              'o.window({ class = "^org.quickshell$", title = "^Subwatch$" }, { float = true, center = true })']
     return "\n".join(lines) + "\n"
 
 
@@ -182,10 +194,11 @@ LUA_INCLUDE = 'if package.searchpath("hypr.subwatch", package.path) then require
 
 def _include_transform(old: str, kind: str) -> str:
     comment = "--" if kind == "lua" else "#"
-    text = strip_block(old, comment) if has_block(old, comment) else old
     line = LUA_INCLUDE if kind == "lua" else "source = ~/.config/hypr/subwatch.conf"
     block = make_block([f"{comment} {t('integrate.keys.include_comment')}", line], comment)
-    return text.rstrip("\n") + "\n\n" + block
+    if has_block(old, comment):
+        return replace_block(old, comment, block)
+    return old.rstrip("\n") + "\n\n" + block
 
 
 def validate_reload() -> list[str]:

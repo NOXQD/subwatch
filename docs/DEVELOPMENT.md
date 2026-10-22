@@ -34,8 +34,11 @@ src/subwatch/
   integrate/           systemd, панель и меню Omarchy, Hyprland, Waybar, ярлыки
   cli/                 команды (typer) и перевод интерфейса typer/click
   tui/                 Textual
+  gui/                 данные для виджета и окна, описание настроек, gui-server
+  ops.py, userinput.py правки подписок и разбор ввода, общие для CLI, TUI и окна
   resources/           справочник сервисов, ключевые слова, валюты, шаблоны банков,
                        стандартный config.toml, каталоги строк
+  resources/omarchy/plugin/   QML-плагин для omarchy-shell: виджет, карточка, окно
 ```
 
 Путь письма: источник отдаёт `RawMessage` → `extract.engine.analyse`
@@ -58,3 +61,19 @@ src/subwatch/
   который показывает, что настройка меняет поведение.
 - Ошибки для пользователя — `SubwatchError("ключ", hint="ключ подсказки")`.
 - Деньги — `Decimal`, даты — через `clock.today()` / `clock.now()`.
+
+## Виджет и окно
+
+QML лежит в `src/subwatch/resources/omarchy/plugin/` и ставится командой
+`subwatch integrate apply --only bar`; путь к `subwatch` и каталог кэша
+плагин получает из `Env.js`, который пишется при установке. Тексты — из
+таблицы `[gui.ui]` каталога строк, их присылает Python
+(`subwatch bar --format panel` для карточки, команда `hello` gui-server для
+окна).
+
+`tests/test_gui.py` проверяет бэкенд окна, описание настроек (у каждого
+параметра есть подпись на обоих языках), установку плагина и компилирует
+все QML-файлы в Quickshell без экрана (`QT_QPA_PLATFORM=offscreen`), если
+Quickshell и оболочка Omarchy есть в системе. После правки QML на живой
+системе нужен `omarchy restart shell`: оболочка не перечитывает уже
+скомпилированные файлы.

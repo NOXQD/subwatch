@@ -393,7 +393,7 @@ ColumnLayout {
     spacing: Style.space(6)
 
     Repeater {
-      model: root.info && root.info.insights ? root.info.insights : []
+      model: root.info && root.info.insights ? root.info.insights.slice(0, 3) : []
       delegate: RowLayout {
         required property var modelData
         Layout.fillWidth: true
@@ -469,6 +469,7 @@ ColumnLayout {
       font.pixelSize: Style.font.caption
     }
     Button {
+      visible: !root.empty
       text: root.tr("add")
       iconText: "\u{F0415}"
       bordered: true

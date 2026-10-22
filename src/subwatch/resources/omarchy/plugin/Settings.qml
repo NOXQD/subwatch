@@ -1,5 +1,6 @@
 import QtQuick
 import Quickshell
+import Quickshell.Hyprland
 import qs.Commons
 import qs.Commons as Commons
 
@@ -41,13 +42,23 @@ Item {
     else close()
   }
 
+  // Open on the monitor in focus, sized to it: big enough for two columns,
+  // never taller than most of the screen.
+  readonly property var targetScreen: {
+    var name = Hyprland.focusedMonitor ? Hyprland.focusedMonitor.name : ""
+    for (var i = 0; i < Quickshell.screens.length; i++)
+      if (Quickshell.screens[i].name === name) return Quickshell.screens[i]
+    return Quickshell.screens.length ? Quickshell.screens[0] : null
+  }
+
   FloatingWindow {
     id: window
     title: "Subwatch"
     color: Commons.Color.background
-    implicitWidth: 1180
-    implicitHeight: 780
-    minimumSize: Qt.size(920, 580)
+    screen: root.targetScreen
+    implicitWidth: root.targetScreen ? Math.min(1180, Math.round(root.targetScreen.width * 0.86)) : 1100
+    implicitHeight: root.targetScreen ? Math.min(800, Math.round(root.targetScreen.height * 0.86)) : 720
+    minimumSize: Qt.size(Math.min(860, implicitWidth), Math.min(540, implicitHeight))
     visible: false
 
     onVisibleChanged: {

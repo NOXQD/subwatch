@@ -700,8 +700,9 @@ def register(app: typer.Typer, make, opt, arg) -> None:
     def integrate_apply(
         only: Annotated[Optional[list[str]], opt("--only", key="only", metavar="component")] = None,
         dry_run: Annotated[bool, opt("--dry-run", key="dry_run")] = False,
+        restart_shell: Annotated[bool, opt("--restart-shell", key="restart_shell")] = False,
     ) -> None:
-        from ..integrate import COMPONENTS, apply_all
+        from ..integrate import COMPONENTS, apply_all, omarchy
         from .render import print_steps
 
         bad = [o for o in only or [] if o not in COMPONENTS]
@@ -714,6 +715,12 @@ def register(app: typer.Typer, make, opt, arg) -> None:
         from .. import bar
 
         bar.invalidate_cache()
+        # The running shell keeps compiled QML until it restarts.
+        if any(s.key == "integrate.plugin.updated" for s in steps):
+            if restart_shell and omarchy.restart_shell():
+                say(t("cli.integrate.shell_restarted"), "dim")
+            elif not State.quiet:
+                say(t("cli.integrate.restart_hint"), "yellow")
         if any(s.status == "failed" for s in steps):
             raise typer.Exit(1)
 

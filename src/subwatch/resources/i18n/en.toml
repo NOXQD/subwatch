@@ -212,6 +212,7 @@ source = "Scan only this source (gmail, imap, statements or a plugin name). Repe
 full = "Ignore the saved position and re-read the whole period."
 months = "Search depth in months for this run."
 dry_run = "Change nothing, only show what would be done."
+restart_shell = "Restart the Omarchy shell if the widget was updated (otherwise the new code loads after a restart)."
 ai_dry_run = "Show what would be sent to the AI model without sending anything."
 no_ai = "Do not use the AI layer in this run."
 reprocess = "Re-read messages that were already processed."
@@ -794,6 +795,8 @@ help = "Remove the Subwatch keybindings."
 short = "Remove"
 
 [cli.integrate]
+shell_restarted = "Omarchy shell restarted — the new widget is in place"
+restart_hint = "Widget updated: the Omarchy shell picks it up after a restart — omarchy restart shell"
 help = "Omarchy integration: timers, bar, menu, keys, launcher, completion."
 short = "Integration"
 
@@ -1194,6 +1197,8 @@ no_main = "Hyprland config not found"
 reload_errors = "Hyprland reports errors: {errors}"
 status_ok = "bindings are set up"
 status_missing = "bindings are not set up"
+
+window_rule = "The Subwatch window floats, centred on the screen."
 
 [integrate.keys.desc]
 open_tui = "Subwatch: open"
