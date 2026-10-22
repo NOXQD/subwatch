@@ -124,7 +124,7 @@ SPEC="$SRC_DIR"
 (( WITH_AI )) && SPEC="$SRC_DIR[ai]"
 PY_ARGS=()
 [[ -n $PYTHON ]] && PY_ARGS=(--python "$PYTHON")
-run uv tool install --force --quiet "${PY_ARGS[@]}" "$SPEC"
+run uv tool install --force --reinstall-package subwatch --quiet "${PY_ARGS[@]}" "$SPEC"
 if (( ! DRY_RUN )); then
   command -v subwatch >/dev/null 2>&1 || die "subwatch не найден после установки. Проверьте, что $BIN_DIR есть в PATH"
   ok "$(subwatch version) → $(command -v subwatch)"
