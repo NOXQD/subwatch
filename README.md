@@ -65,7 +65,7 @@ $ subwatch upcoming --days 14
 установки зависимостей.
 
 ```bash
-git clone <адрес репозитория> subwatch
+git clone https://github.com/NOXQD/subwatch.git
 cd subwatch
 ./install.sh
 ```

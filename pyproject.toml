@@ -6,6 +6,7 @@ readme = "README.md"
 requires-python = ">=3.12"
 license = "MIT"
 authors = [{ name = "NOXQD" }]
+keywords = ["omarchy", "hyprland", "subscriptions", "quickshell", "budget"]
 dependencies = [
     "pydantic>=2.9",
     "typer>=0.15",
@@ -19,6 +20,10 @@ dependencies = [
     "pdfplumber>=0.11",
     "cryptography>=43",
 ]
+
+[project.urls]
+Homepage = "https://github.com/NOXQD/subwatch"
+Issues = "https://github.com/NOXQD/subwatch/issues"
 
 [project.optional-dependencies]
 ai = ["litellm>=1.50"]
