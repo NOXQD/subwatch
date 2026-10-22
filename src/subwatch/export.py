@@ -5,7 +5,7 @@ from __future__ import annotations
 import csv
 import io
 import json
-from datetime import date, datetime, timedelta, timezone
+from datetime import UTC, date, datetime, timedelta
 from pathlib import Path
 from typing import Any
 
@@ -100,7 +100,7 @@ def ics_path(config: Config) -> Path:
 def build_ics(subs: list[Subscription], config: Config, today: date | None = None) -> str:
     today = today or clock.today()
     horizon = add_months(today, config.export.ics_months_ahead)
-    stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+    stamp = datetime.now(UTC).strftime("%Y%m%dT%H%M%SZ")
     statuses = {"active"} | ({"review"} if config.export.ics_include_review else set())
     lines = [
         "BEGIN:VCALENDAR",

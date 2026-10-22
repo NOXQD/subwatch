@@ -16,19 +16,21 @@ import hashlib
 import io
 import re
 import tomllib
+from collections.abc import Iterator
 from dataclasses import dataclass, field
 from datetime import date, datetime
 from decimal import Decimal
 from importlib import resources
 from pathlib import Path
-from typing import Any, Iterator
+from typing import Any
 
 from .. import paths
 from ..config.schema import Config
 from ..errors import SubwatchError
 from ..extract.merchants import normalize_descriptor
+from ..i18n import t
 from ..models import Transaction
-from ..money import is_valid_code, parse_number, resolve_currency
+from ..money import currency_token_pattern, is_valid_code, parse_number, resolve_currency
 from .base import Source, SourceContext, source
 
 COMMON_DATE_FORMATS = ("%d.%m.%Y", "%d.%m.%y", "%Y-%m-%d", "%d/%m/%Y", "%m/%d/%Y", "%d.%m.%Y %H:%M:%S",
@@ -194,7 +196,7 @@ class ParseResult:
 def _amount_and_currency(raw: str, default_currency: str) -> tuple[Decimal | None, str]:
     raw = (raw or "").strip()
     currency = default_currency
-    m = re.search(r"[A-Za-z]{3}|[₸₽$€£₴]|тг|руб", raw)
+    m = re.search(r"[A-Za-z]{3}|" + currency_token_pattern(), raw, re.IGNORECASE)
     if m:
         code = resolve_currency(m.group(0)) or (m.group(0).upper() if is_valid_code(m.group(0).upper()) else None)
         if code:
@@ -348,7 +350,8 @@ def detect_template(path: Path, text: str | None, templates: dict[str, BankTempl
 
 
 def template_from_mapping(mapping: str, base: BankTemplate | None = None, **overrides: Any) -> BankTemplate:
-    tpl = BankTemplate(name="custom", title="custom") if base is None else BankTemplate(**base.__dict__)
+    tpl = BankTemplate(name="custom", title=t("statements.custom_title")) if base is None \
+        else BankTemplate(**base.__dict__)
     for part in mapping.split(","):
         key, sep, value = part.partition("=")
         if not sep:

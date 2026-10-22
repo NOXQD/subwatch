@@ -39,9 +39,7 @@ days_ago = { one = "{n} day ago", other = "{n} days ago" }
 day = { one = "{n} day", other = "{n} days" }
 hour = { one = "{n} hour", other = "{n} hours" }
 minute = { one = "{n} minute", other = "{n} minutes" }
-month = { one = "{n} month", other = "{n} months" }
 subscription = { one = "{n} subscription", other = "{n} subscriptions" }
-email = { one = "{n} email", other = "{n} emails" }
 item = { one = "{n} item", other = "{n} items" }
 transaction = { one = "{n} transaction", other = "{n} transactions" }
 
@@ -1100,6 +1098,9 @@ crashed = "Source {source} failed: {detail}"
 
 [scan.hint]
 locked = "Wait for it to finish or check the log: subwatch logs"
+
+[statements]
+custom_title = "manual column mapping"
 
 [statements.err]
 template = "Error in bank template {path}: {detail}"

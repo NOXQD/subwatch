@@ -220,7 +220,10 @@ def register(app: typer.Typer, make, opt, arg) -> None:
                               starttls=starttls, folders=list(folder or ["INBOX"]))
         say(t("cli.auth.imap_intro", host=host), "bold")
         say(t("cli.auth.imap_app_password"), "dim")
-        password = sys.stdin.readline().rstrip("\n") if password_stdin else ask(t("cli.auth.imap_password"), secret=True)
+        if password_stdin:
+            password = sys.stdin.readline().rstrip("\n")
+        else:
+            password = ask(t("cli.auth.imap_password"), secret=True)
         if not password:
             raise typer.Abort()
         if test:
@@ -464,7 +467,9 @@ def register(app: typer.Typer, make, opt, arg) -> None:
 
     @sub(export, "ics", "export_ics")
     @handle_errors
-    def export_ics(output: Annotated[Optional[Path], opt("--output", "-o", key="output", metavar="path")] = None) -> None:
+    def export_ics(
+        output: Annotated[Optional[Path], opt("--output", "-o", key="output", metavar="path")] = None,
+    ) -> None:
         _export("ics", output, False)
 
     # ------------------------------------------------------------- budget

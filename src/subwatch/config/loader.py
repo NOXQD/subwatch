@@ -18,9 +18,10 @@ import copy
 import os
 import re
 import tomllib
+from collections.abc import Mapping
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any, Mapping, get_args, get_origin
+from typing import Any, get_args, get_origin
 
 from pydantic import BaseModel, ValidationError
 

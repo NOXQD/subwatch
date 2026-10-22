@@ -18,11 +18,12 @@ import re
 import urllib.error
 import urllib.parse
 import urllib.request
+from collections.abc import Callable
 from dataclasses import dataclass, field
 from datetime import date, datetime, timedelta
 from decimal import Decimal, InvalidOperation
 from importlib import resources
-from typing import Any, Callable
+from typing import Any
 
 from . import clock, log, secrets
 from .config.schema import AIConfig, Config

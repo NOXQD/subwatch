@@ -4,8 +4,8 @@ import json
 import re
 
 import pytest
-
 from conftest import write_config
+
 from subwatch.__main__ import main
 
 

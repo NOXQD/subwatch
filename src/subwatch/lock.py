@@ -6,8 +6,8 @@ import fcntl
 import os
 import shutil
 import subprocess
+from collections.abc import Iterator
 from contextlib import contextmanager
-from typing import Iterator
 
 from . import paths
 from .errors import LockedError

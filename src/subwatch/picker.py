@@ -55,7 +55,7 @@ def choose(prompt: str, options: list[Option], preferred: str = "auto") -> str |
         return None
     lines = [_line(o, tool == "omarchy") for o in options]
     by_line = {}
-    for opt, line in zip(options, lines):
+    for opt, line in zip(options, lines, strict=True):
         by_line[line] = opt.value
         by_line[line.split("\t", 1)[-1]] = opt.value
         by_line[opt.label] = opt.value

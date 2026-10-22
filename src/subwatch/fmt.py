@@ -65,7 +65,8 @@ def weekday_name(d: date, short: bool = False) -> str:
 
 
 def format_date(d: date | datetime | None, year: str = "auto", weekday: bool = False) -> str:
-    """22 октября / 22 октября 2027. year: auto|always|never."""
+    """Day and month, plus the year when it is not the current one.
+    year: auto | always | never."""
     if d is None:
         return t("fmt.no_date")
     if isinstance(d, datetime):
@@ -107,7 +108,7 @@ def format_relative_days(n: int) -> str:
 
 
 def format_when(d: date | None, style: str = "both") -> str:
-    """Date for lists: absolute, relative or both ("22 октября, через 3 дня")."""
+    """Date for lists: absolute, relative or both, per ui.date_style."""
     if d is None:
         return t("fmt.no_date")
     rel = format_relative_days(days_until(d))

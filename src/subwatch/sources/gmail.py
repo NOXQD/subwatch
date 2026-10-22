@@ -11,9 +11,10 @@ from __future__ import annotations
 
 import base64
 import json
+from collections.abc import Iterator
 from datetime import date, datetime, timedelta
 from email.utils import parseaddr, parsedate_to_datetime
-from typing import Any, Iterator
+from typing import Any
 
 from .. import clock, log, secrets
 from ..config.schema import Config, GmailConfig

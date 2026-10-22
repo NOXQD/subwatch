@@ -5,9 +5,9 @@ import json
 from datetime import date
 
 import pytest
-
 from conftest import write_config
 from fixtures.emails import EMAILS
+
 from subwatch import secrets
 from subwatch.app import AppContext
 from subwatch.config.schema import Config

@@ -273,8 +273,10 @@ def list_command(
     from ..fmt import format_money
 
     say("")
-    say(t("cli.list.total", total=format_money(tot.monthly, cfg.currency.base),
-          yearly=format_money(tot.yearly, cfg.currency.base), count=tn("fmt.units.subscription", tot.count)))
+    places = cfg.ui.money_decimals
+    say(t("cli.list.total", total=format_money(tot.monthly, cfg.currency.base, places),
+          yearly=format_money(tot.yearly, cfg.currency.base, places),
+          count=tn("fmt.units.subscription", tot.count)))
     if tot.unconverted:
         warn(t("cli.list.unconverted", services=", ".join(s.service for s in tot.unconverted)))
     review = len(a.store.review_queue())
@@ -645,7 +647,7 @@ def spend_command(
         table.add_column(t("table.total"), justify="right")
         table.add_column("")
         peak = max((v for _, v, _, _ in hist), default=0)
-        for month, value, forecast, _ in hist:
+        for month, value, _forecast, _ in hist:
             label = f"{month_name(month.month, 'nominative')} {month.year}"
             table.add_row(label, format_money(value, base, 0), bar_line(value, peak, 24))
         console.print(table)
@@ -841,7 +843,7 @@ def bar_command(
             bar.write_cache(data, a.db_path, a.loaded.path)
         a.close()
         State.app = None
-    except Exception as exc:  # noqa: BLE001
+    except Exception as exc:
         data = {"text": " !", "tooltip": t("bar.error", detail=str(exc)), "class": ["subwatch", "error"]}
     if fmt == "text":
         sys.stdout.write(data["text"] + "\n")
@@ -936,7 +938,7 @@ def doctor_command(
                 try:
                     if c.fix():
                         fixed += 1
-                except Exception as exc:  # noqa: BLE001
+                except Exception as exc:
                     warn(t("doctor.fix_failed", detail=str(exc)))
         if fixed:
             say(t("doctor.fixed", count=fixed), "green")

@@ -15,13 +15,12 @@ from typing import Any
 
 from . import clock
 from .analysis import budget_status, over_budget, totals, upcoming
+from .barcache import invalidate as invalidate_cache  # noqa: F401
+from .barcache import read as read_cache  # noqa: F401
+from .barcache import write as write_cache  # noqa: F401
 from .config.schema import Config
 from .fmt import format_date, format_money, format_relative_days
 from .i18n import t, tn
-
-from .barcache import invalidate as invalidate_cache  # noqa: E402,F401
-from .barcache import read as read_cache  # noqa: E402,F401
-from .barcache import write as write_cache  # noqa: E402,F401
 
 
 def bar_data(subs, config: Config, rates, review_count: int = 0, today: date | None = None) -> dict[str, Any]:

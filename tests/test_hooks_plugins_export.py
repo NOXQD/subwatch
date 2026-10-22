@@ -4,6 +4,7 @@ from datetime import date
 from decimal import Decimal
 
 from conftest import write_config
+
 from subwatch import paths
 from subwatch.app import AppContext
 from subwatch.config.schema import Config

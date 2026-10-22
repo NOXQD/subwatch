@@ -38,9 +38,9 @@ def apply_side_effects(old: Config, new: Config):
         steps += hyprland.apply(new)
     if omarchy.bar_installed() and _changed(old, new, "bar.interval"):
         steps.append(omarchy.apply_bar(new))
-    if omarchy.menu_installed() or (omarchy.is_omarchy() and _changed(old, new, "menu.enabled")):
-        if language or _changed(old, new, "menu.enabled"):
-            steps.append(omarchy.apply_menu(new) if new.menu.enabled else omarchy.remove_menu())
+    menu_changed = _changed(old, new, "menu.enabled")
+    if (omarchy.menu_installed() or (omarchy.is_omarchy() and menu_changed)) and (language or menu_changed):
+        steps.append(omarchy.apply_menu(new) if new.menu.enabled else omarchy.remove_menu())
     if language and launchers.desktop_file().exists():
         steps += launchers.apply()
     return [s for s in steps if s.status not in ("unchanged",)]

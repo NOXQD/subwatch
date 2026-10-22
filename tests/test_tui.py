@@ -7,6 +7,7 @@ from datetime import date
 from decimal import Decimal
 
 from conftest import write_config
+
 from subwatch.app import AppContext
 from subwatch.models import Subscription
 from subwatch.period import Period
@@ -105,7 +106,7 @@ def test_review_confirm_with_keys():
         await pilot.pause()
         assert app.review == []
         assert any(s.service == "Мегадиск" and s.status == "active" for s in app.subs)
-    ctx = run_app(t)
+    run_app(t)
     ctx2 = AppContext.load()
     assert ctx2.store.has_rule("accept_service", "мегадиск")
     ctx2.close()

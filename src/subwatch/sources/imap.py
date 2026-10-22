@@ -10,10 +10,10 @@ from __future__ import annotations
 
 import socket
 import ssl
+from collections.abc import Iterator
 from datetime import date
 from email import message_from_bytes, policy
 from email.utils import parseaddr
-from typing import Iterator
 
 from .. import log, secrets
 from ..config.schema import Config, ImapAccount

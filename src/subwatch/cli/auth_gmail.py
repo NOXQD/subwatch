@@ -52,7 +52,7 @@ def run_wizard(app, account: str, client_secret: Path | None, no_browser: bool, 
     if flow_factory is None:
         from google_auth_oauthlib.flow import InstalledAppFlow
 
-        def flow_factory(cfg):  # noqa: E306
+        def flow_factory(cfg):
             return InstalledAppFlow.from_client_config(cfg, SCOPES)
 
     flow = flow_factory(client)

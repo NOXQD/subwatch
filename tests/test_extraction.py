@@ -4,8 +4,8 @@ from datetime import date
 from decimal import Decimal
 
 import pytest
-
 from fixtures.emails import EMAILS
+
 from subwatch.config.schema import Config
 from subwatch.extract.engine import Context, analyse
 from subwatch.extract.merchants import MerchantBook

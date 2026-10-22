@@ -81,10 +81,7 @@ def sender_excluded(sender: str, ctx: Context) -> bool:
     sender = (sender or "").lower()
     domain = sender.rpartition("@")[2]
     patterns = list(ctx.config.filters.exclude_senders) + list(ctx.learned.ignore_senders)
-    for pat in patterns:
-        if glob_match(pat, sender) or glob_match(pat, domain):
-            return True
-    return False
+    return any(glob_match(pat, sender) or glob_match(pat, domain) for pat in patterns)
 
 
 def service_excluded(service: str, ctx: Context) -> bool:
@@ -96,7 +93,7 @@ def service_excluded(service: str, ctx: Context) -> bool:
 
 def _looks_english(text: str) -> bool:
     latin = len(re.findall(r"[A-Za-z]", text))
-    cyr = len(re.findall(r"[Ѐ-ӿ]", text))
+    cyr = len(re.findall(r"[\u0400-\u04FF]", text))
     return latin > cyr * 2
 
 

@@ -20,7 +20,14 @@ from .. import paths
 from ..config.schema import Config
 from ..i18n import t
 from .common import (
-    Step, backup_file, has_block, make_block, strip_block, strip_jsonc, subwatch_exe, update_file,
+    Step,
+    backup_file,
+    has_block,
+    make_block,
+    strip_block,
+    strip_jsonc,
+    subwatch_exe,
+    update_file,
     write_text,
 )
 

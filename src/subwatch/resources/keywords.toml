@@ -133,3 +133,31 @@ words = [
 ru = ["подписка", "подписки", "подписку", "продление", "автопродление", "списание", "чек", "квитанция", "оплата", "платеж", "платёж"]
 en = ["receipt", "subscription", "renewal", "invoice", "billing", "membership", "trial"]
 kk = ["жазылым", "төлем", "түбіртек"]
+
+# Prefixes card processors and banks put before the merchant name in
+# statement descriptors (regex fragments).
+[descriptor_prefix]
+words = ['paypal', 'pp', 'sq', 'sp', 'tst', 'google', 'apple\.com/bill', 'amzn\s*mktp', 'amazon', 'yandex', 'www']
+ru = ['оплата\s+услуг', 'покупка', 'оплата']
+kk = ['сатып\s+алу', 'төлем']
+
+# Year word in Kazakh dates: "2026 жылғы 22 қазан", "2026 ж. 22 қазан".
+[date_year_word]
+kk = ['ж(?:ылғы|\.)?']
+
+# Redaction (regex fragments): greeting lines and postal address lines are
+# dropped entirely; "card ending in 1234" phrases are masked.
+[redact_greeting]
+ru = ['здравствуй\w*', 'добрый\s+(?:день|вечер|утро)', 'привет\w*', 'уважаем\w*']
+en = ['hi', 'hello', 'hey', 'dear', 'good\s+(?:morning|afternoon|evening)']
+kk = ['сәлем\w*', 'қайырлы\s+(?:күн|кеш|таң)', 'құрметті']
+
+[redact_address]
+ru = ['ул\.', 'улица', 'проспект', 'пр-т', 'пр\.', 'д\.\s*\d', 'дом\s+\d', 'кв\.', 'квартира', 'мкр', 'микрорайон', 'адрес']
+en = ['address', 'street', 'st\.', 'avenue', 'ave\.', 'road', 'suite', 'apt\.', 'zip', 'postal code']
+kk = ['көшесі', 'даңғылы', 'пәтер', 'мекенжай']
+
+[redact_card_tail]
+ru = ['оканчивающ\w*\s+на', 'заканчивающ\w*\s+на']
+en = ['ending in', 'ends in']
+kk = ['соңы']

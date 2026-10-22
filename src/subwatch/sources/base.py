@@ -13,10 +13,11 @@ from __future__ import annotations
 import importlib.util
 import sys
 import traceback
+from collections.abc import Callable, Iterable, Iterator
 from dataclasses import dataclass, field
 from datetime import date
 from pathlib import Path
-from typing import Any, Callable, Iterable, Iterator
+from typing import Any
 
 from .. import paths
 from ..config.schema import Config

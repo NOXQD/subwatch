@@ -147,14 +147,12 @@ class SubwatchApp(App):
                     yield DataTable(id="subs-table", cursor_type="row", zebra_stripes=True)
                     with DetailsPane(classes="details"):
                         yield Static("", id="subs-details")
-            with TabPane(t("tui.tab.review"), id="review"):
-                with Horizontal(id="review-row"):
-                    yield DataTable(id="review-table", cursor_type="row", zebra_stripes=True)
-                    with DetailsPane(classes="details"):
-                        yield Static("", id="review-details")
-            with TabPane(t("tui.tab.charts"), id="charts"):
-                with VerticalScroll(id="charts-scroll"):
-                    yield Static("", id="charts-body")
+            with TabPane(t("tui.tab.review"), id="review"), Horizontal(id="review-row"):
+                yield DataTable(id="review-table", cursor_type="row", zebra_stripes=True)
+                with DetailsPane(classes="details"):
+                    yield Static("", id="review-details")
+            with TabPane(t("tui.tab.charts"), id="charts"), VerticalScroll(id="charts-scroll"):
+                yield Static("", id="charts-body")
         yield Input(placeholder=t("tui.search_placeholder"), id="search", disabled=True)
         yield Footer()
 
@@ -324,18 +322,25 @@ class SubwatchApp(App):
             return
         cfg = self.ctx.config
         monthly = self.rates.convert(sub.monthly_amount, sub.currency) if sub.monthly_amount is not None else None
+        def row(label_key: str, value: str) -> str:
+            return f"{escape(t(label_key))}: {escape(value)}"
+
+        def money(amount, currency) -> str:
+            return format_money(amount, currency) if amount is not None else "—"
+
+        source = t("source." + sub.source) if not sub.source.startswith("plugin") else sub.source
         rows = [
             f"[b]{escape(sub.service)}[/b]",
             "",
-            f"{escape(t('details.amount'))}: {escape(format_money(sub.amount, sub.currency) if sub.amount is not None else '—')}",
-            f"{escape(t('details.period'))}: {escape(format_period(sub.period))}",
-            f"{escape(t('details.monthly'))}: {escape(format_money(monthly, cfg.currency.base) if monthly is not None else '—')}",
-            f"{escape(t('details.next'))}: {escape(format_when(sub.next_charge) if sub.next_charge else '—')}",
-            f"{escape(t('details.last'))}: {escape(format_date(sub.last_charge) if sub.last_charge else '—')}",
-            f"{escape(t('details.category'))}: {escape(cfg.category_name(sub.category))}",
-            f"{escape(t('details.status'))}: {escape(t('status.' + sub.status))}",
-            f"{escape(t('details.source'))}: {escape(t('source.' + sub.source) if not sub.source.startswith('plugin') else sub.source)}",
-            f"{escape(t('details.confidence'))}: {round(sub.confidence * 100)} %",
+            row("details.amount", money(sub.amount, sub.currency)),
+            row("details.period", format_period(sub.period)),
+            row("details.monthly", money(monthly, cfg.currency.base)),
+            row("details.next", format_when(sub.next_charge) if sub.next_charge else "—"),
+            row("details.last", format_date(sub.last_charge) if sub.last_charge else "—"),
+            row("details.category", cfg.category_name(sub.category)),
+            row("details.status", t("status." + sub.status)),
+            row("details.source", source),
+            row("details.confidence", f"{round(sub.confidence * 100)} %"),
         ]
         if sub.tags:
             rows.append(f"{escape(t('details.tags'))}: {escape(', '.join(sub.tags))}")
@@ -347,7 +352,7 @@ class SubwatchApp(App):
                         new=format_money(sub.amount, sub.currency),
                         date=format_date(sub.price_changed_at))) + "[/]")
         if sub.track_usage:
-            rows.append(f"{escape(t('details.last_used'))}: {escape(format_date(sub.last_used) if sub.last_used else '—')}")
+            rows.append(row("details.last_used", format_date(sub.last_used) if sub.last_used else "—"))
         if sub.cancel_url:
             rows.append(f"{escape(t('details.cancel_url'))}: {escape(sub.cancel_url)}")
         if sub.notes:

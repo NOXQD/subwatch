@@ -41,9 +41,7 @@ days_ago = { one = "{n} день назад", few = "{n} дня назад", man
 day = { one = "{n} день", few = "{n} дня", many = "{n} дней" }
 hour = { one = "{n} час", few = "{n} часа", many = "{n} часов" }
 minute = { one = "{n} минута", few = "{n} минуты", many = "{n} минут" }
-month = { one = "{n} месяц", few = "{n} месяца", many = "{n} месяцев" }
 subscription = { one = "{n} подписка", few = "{n} подписки", many = "{n} подписок" }
-email = { one = "{n} письмо", few = "{n} письма", many = "{n} писем" }
 item = { one = "{n} запись", few = "{n} записи", many = "{n} записей" }
 transaction = { one = "{n} операция", few = "{n} операции", many = "{n} операций" }
 
@@ -1120,6 +1118,9 @@ crashed = "Источник {source} упал с ошибкой: {detail}"
 
 [scan.hint]
 locked = "Дождитесь окончания или посмотрите журнал: subwatch logs"
+
+[statements]
+custom_title = "ручная разметка колонок"
 
 [statements.err]
 template = "Ошибка в шаблоне банка {path}: {detail}"

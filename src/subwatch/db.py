@@ -12,11 +12,12 @@ import json
 import os
 import shutil
 import sqlite3
+from collections.abc import Iterable, Iterator
 from contextlib import contextmanager
 from datetime import date, datetime, timedelta
 from decimal import Decimal
 from pathlib import Path
-from typing import Any, Iterable, Iterator
+from typing import Any
 
 from . import clock, paths
 from .config.schema import Config
@@ -467,7 +468,8 @@ class Store:
             " source_ref, kind, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
             (
                 charge.subscription_id, charge.date.isoformat(), str(charge.amount),
-                charge.currency, charge.source, charge.source_ref, charge.kind,
+                charge.currency, charge.source,
+                hash_key(charge.source_ref) if charge.source_ref else None, charge.kind,
                 clock.iso(clock.now()),
             ),
         )

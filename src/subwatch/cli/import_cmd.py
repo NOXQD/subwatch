@@ -50,7 +50,12 @@ def run_import(app, files: list[Path], bank, mapping, date_format, delimiter, en
     from ..recurrence import detect_recurring
     from ..scan import react
     from ..sources.statements import (
-        BankTemplate, detect_template, file_sha256, load_templates, read_statement, template_from_mapping,
+        BankTemplate,
+        detect_template,
+        file_sha256,
+        load_templates,
+        read_statement,
+        template_from_mapping,
     )
 
     cfg = app.config

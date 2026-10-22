@@ -11,10 +11,10 @@ from __future__ import annotations
 import json
 import urllib.request
 import xml.etree.ElementTree as ET
+from collections.abc import Callable
 from dataclasses import dataclass
 from datetime import datetime, timedelta
 from decimal import Decimal, InvalidOperation
-from typing import Callable
 
 from . import clock, log
 from .config.schema import Config

@@ -19,6 +19,7 @@ from .. import paths
 from ..models import service_key
 from ..period import Period, PeriodError
 from .keywords import _raw as _keywords_raw
+from .keywords import regex_group
 
 
 @dataclass
@@ -200,17 +201,14 @@ def default_book() -> MerchantBook:
 
 # ------------------------------------------------------- descriptor cleanup
 
-_PREFIX = re.compile(
-    r"^(?:paypal|pp|sq|sp|tst|google|apple\.com/bill|amzn\s*mktp|amazon|yandex|www|"
-    r"оплата\s+услуг|покупка|оплата)\s*[*:\s]\s*",
-    re.IGNORECASE,
-)
+_PREFIX = re.compile(r"^" + regex_group("descriptor_prefix") + r"\s*[*:\s]\s*", re.IGNORECASE)
 _REF = re.compile(r"\*[\w-]*\d[\w-]*|#\s*\d+|\b\d{4,}\b|\b[a-z]*\d{3,}[a-z0-9]*\b", re.IGNORECASE)
 _DOMAIN_TAIL = re.compile(r"\.(?:com|net|org|io|ru|kz|co|me|tv|app|ai|so|us|uk|de)\b", re.IGNORECASE)
 _COUNTRIES = (
-    "KZ RU US CA GB UK NL IE DE FR SE CZ LU CY AE SG BY UA KG UZ AM GE TR CN JP ES IT PL AU CH "
-    "AT BE DK FI NO PT IL IN HK KR USA KAZ RUS GBR NLD IRL"
-).split()
+    "KZ", "RU", "US", "CA", "GB", "UK", "NL", "IE", "DE", "FR", "SE", "CZ", "LU", "CY", "AE", "SG",
+    "BY", "UA", "KG", "UZ", "AM", "GE", "TR", "CN", "JP", "ES", "IT", "PL", "AU", "CH", "AT", "BE",
+    "DK", "FI", "NO", "PT", "IL", "IN", "HK", "KR", "USA", "KAZ", "RUS", "GBR", "NLD", "IRL",
+)
 _COUNTRY_TAIL = re.compile(r"\s+(?:" + "|".join(_COUNTRIES) + r")$")
 
 

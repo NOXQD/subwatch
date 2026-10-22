@@ -69,7 +69,7 @@ def currency_decimals(code: str) -> int:
 
 
 def resolve_currency(token: str) -> str | None:
-    """Map a symbol/word found in text ("тг", "$", "руб.") to an ISO code."""
+    """Map a currency symbol or word found in text to an ISO code."""
     if not token:
         return None
     key = token.strip().lower()

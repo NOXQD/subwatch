@@ -8,7 +8,13 @@ from subwatch.app import AppContext
 from subwatch.config.schema import Config
 from subwatch.errors import SubwatchError
 from subwatch.sources.statements import (
-    BankTemplate, detect_template, load_templates, parse_pdf_text, pdf_text, read_statement, template_from_mapping,
+    BankTemplate,
+    detect_template,
+    load_templates,
+    parse_pdf_text,
+    pdf_text,
+    read_statement,
+    template_from_mapping,
 )
 
 TBANK_HEADER = ('"Дата операции";"Дата платежа";"Номер карты";"Статус";"Сумма операции";"Валюта операции";'
@@ -164,6 +170,7 @@ def test_import_finds_subscriptions_and_is_idempotent(tmp_path, capsys):
 
 def test_statements_inbox_dir_is_scanned(tmp_path):
     from conftest import write_config
+
     from subwatch.scan import run_job
 
     inbox = tmp_path / "inbox"

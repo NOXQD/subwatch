@@ -41,5 +41,20 @@ testpaths = ["tests"]
 addopts = "-q"
 
 [tool.ruff]
-line-length = 100
+line-length = 120
 target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "SIM", "RUF100"]
+ignore = [
+    "UP045",  # typer options read better as Optional[...]
+    "UP037",
+    "SIM105",
+    "SIM108",
+    "B008",   # typer.Option(...) defaults are the typer way
+    "UP047",
+    "SIM115", # the lock file must stay open while the lock is held
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["E501"]

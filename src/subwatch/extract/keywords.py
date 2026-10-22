@@ -4,10 +4,10 @@ from __future__ import annotations
 
 import re
 import tomllib
+from collections.abc import Iterable
 from dataclasses import dataclass
 from functools import lru_cache
 from importlib import resources
-from typing import Iterable
 
 
 @lru_cache(maxsize=1)
@@ -60,6 +60,16 @@ class Keywords:
 
     def any(self, text_cf: str, name: str) -> bool:
         return any(phrase in text_cf for phrase in self.group(name))
+
+
+def regex_group(name: str, languages: Iterable[str] = ("ru", "en", "kk")) -> str:
+    """Alternation of the regex fragments stored in a keywords.toml table."""
+    table = _raw().get(name, {})
+    parts = list(table.get("words", []))
+    for lang in languages:
+        parts.extend(table.get(lang, []))
+    parts.sort(key=len, reverse=True)
+    return "(?:" + "|".join(parts) + ")" if parts else "(?!)"
 
 
 @lru_cache(maxsize=1)

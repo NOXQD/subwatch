@@ -4,7 +4,7 @@ list` and in statistics like every other origin."""
 
 from __future__ import annotations
 
-from typing import Iterator
+from collections.abc import Iterator
 
 from ..config.schema import Config
 from ..models import RawMessage

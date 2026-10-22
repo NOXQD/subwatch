@@ -10,7 +10,7 @@ from functools import lru_cache
 
 from ..money import ISO_CODE_PATTERN, currency_token_pattern, is_known_currency, parse_number, resolve_currency
 from ..period import Period
-from .keywords import Keywords, month_alternation, month_number
+from .keywords import Keywords, month_alternation, month_number, regex_group
 
 
 @dataclass(frozen=True)
@@ -105,7 +105,6 @@ def find_period(text_cf: str, kw: Keywords, near: int | None = None) -> Period |
     found: list[tuple[int, int, Period]] = []
     for priority, (group, period) in enumerate(_PERIOD_GROUPS):
         for hit in kw.find(text_cf, group):
-            # "12 месяцев" must not also count as a monthly hit.
             found.append((hit.pos, priority, period))
     if not found:
         return None
@@ -124,7 +123,8 @@ def _date_regexes() -> tuple[tuple[str, re.Pattern[str]], ...]:
     month = month_alternation()
     return (
         ("iso", re.compile(r"(?<!\d)(\d{4})-(\d{1,2})-(\d{1,2})(?!\d)")),
-        ("kk", re.compile(rf"(?<!\d)(\d{{4}})\s*ж(?:ылғы|\.)?\s*(\d{{1,2}})\s*({month})(?!\w)", re.I)),
+        ("kk", re.compile(rf"(?<!\d)(\d{{4}})\s*{regex_group('date_year_word')}\s*(\d{{1,2}})\s*({month})(?!\w)",
+                          re.I)),
         ("dmy_word", re.compile(rf"(?<!\d)(\d{{1,2}})(?:st|nd|rd|th)?\s+({month})(?!\w)\.?,?(?:\s+(\d{{4}}))?", re.I)),
         ("mdy_word", re.compile(rf"\b({month})(?!\w)\.?\s+(\d{{1,2}})(?:st|nd|rd|th)?(?:,?\s+(\d{{4}}))?(?!\d)", re.I)),
         ("numeric", re.compile(r"(?<![\d.])(\d{1,2})([./])(\d{1,2})\2(\d{4}|\d{2})(?![\d])")),
@@ -147,7 +147,7 @@ def _make(y: int, m: int, d: int) -> date | None:
 
 
 def find_dates(text: str, reference: date, english_numeric: bool = False) -> list[DateHit]:
-    """All dates in the text. Years missing in "22 октября" are resolved to the
+    """All dates in the text. A date without a year ("22 Oct") resolves to its
     first occurrence on or after `reference`."""
     out: dict[int, DateHit] = {}
     for kind, rx in _date_regexes():

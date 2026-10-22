@@ -7,10 +7,11 @@ import shutil
 import stat
 import subprocess
 import sys
+from collections.abc import Callable
 from dataclasses import dataclass, field
 from datetime import timedelta
 from pathlib import Path
-from typing import Any, Callable
+from typing import Any
 
 from . import clock, paths, secrets
 from .config.loader import ConfigError, load_config
@@ -132,14 +133,16 @@ def check_storage(config: Config) -> list[Check]:
 def check_secrets(config: Config, online: bool = False) -> list[Check]:
     out = []
     ok, backend = secrets.backend_ok()
-    out.append(Check("secrets", "ok" if ok else "fail", "doctor.secrets.backend" if ok else "doctor.secrets.bad_backend",
+    out.append(Check("secrets", "ok" if ok else "fail",
+                     "doctor.secrets.backend" if ok else "doctor.secrets.bad_backend",
                      {"backend": backend}, None if ok else "doctor.hint.keyring"))
     if not ok:
         return out
     gm = config.sources.gmail
     if gm.enabled:
         has = secrets.exists(secrets.gmail_token_name(gm.account))
-        out.append(Check("secrets", "ok" if has else "fail", "doctor.secrets.gmail_ok" if has else "doctor.secrets.gmail_missing",
+        out.append(Check("secrets", "ok" if has else "fail",
+                         "doctor.secrets.gmail_ok" if has else "doctor.secrets.gmail_missing",
                          {"account": gm.account}, None if has else "gmail.hint.auth"))
         if has and online:
             from .errors import SubwatchError
@@ -202,8 +205,10 @@ def check_systemd(config: Config) -> list[Check]:
                          "doctor.systemd.timer_ok" if good else "doctor.systemd.timer_off",
                          {"timer": timer, "next": _usec_text(nxt)}, None if good else "doctor.hint.integrate",
                          fix=None if good else (lambda: _integrate(config, ["systemd"]))))
-    result = subprocess.run(["systemctl", "--user", "show", "subwatch-scan.service", "--property=Result",
-                             "--value"], capture_output=True, text=True, timeout=5) if shutil.which("systemctl") else None
+    result = None
+    if shutil.which("systemctl"):
+        result = subprocess.run(["systemctl", "--user", "show", "subwatch-scan.service", "--property=Result",
+                                 "--value"], capture_output=True, text=True, timeout=5, check=False)
     if result is not None and result.stdout.strip() not in ("", "success"):
         out.append(Check("systemd", "warn", "doctor.systemd.last_failed", {"result": result.stdout.strip()},
                          "doctor.hint.logs"))
@@ -229,7 +234,8 @@ def check_integration(config: Config) -> list[Check]:
         bar_ok = omarchy.bar_installed()
         out.append(Check("integration", "ok" if bar_ok else "fail",
                          "doctor.int.bar_ok" if bar_ok else "doctor.int.bar_missing",
-                         {"path": paths.contract_home(omarchy.shell_file())}, None if bar_ok else "doctor.hint.integrate",
+                         {"path": paths.contract_home(omarchy.shell_file())},
+                         None if bar_ok else "doctor.hint.integrate",
                          fix=None if bar_ok else (lambda: _integrate(config, ["bar"]))))
         if config.menu.enabled:
             menu_ok = omarchy.menu_installed()

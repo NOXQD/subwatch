@@ -3,7 +3,7 @@ from decimal import Decimal
 
 from subwatch import clock
 from subwatch.config.schema import Config
-from subwatch.fx import get_rates, parse_cbr, parse_nbk, parse_inverse_json, source_chain
+from subwatch.fx import get_rates, parse_cbr, parse_inverse_json, parse_nbk, source_chain
 
 NBK = """<?xml version="1.0" encoding="utf-8"?><rates><date>22.10.2026</date>
 <item><fullname>ДОЛЛАР США</fullname><title>USD</title><description>520.50</description><quant>1</quant></item>

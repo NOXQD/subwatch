@@ -5,9 +5,10 @@ from __future__ import annotations
 import time
 import traceback
 from collections import Counter
+from collections.abc import Callable
 from dataclasses import dataclass, field
 from datetime import timedelta
-from typing import Any, Callable
+from typing import Any
 
 from . import analysis, clock, hooks, log, reminders
 from .ai import AIExtractor, merge

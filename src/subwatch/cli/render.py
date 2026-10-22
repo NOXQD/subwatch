@@ -81,7 +81,8 @@ def subscription_details(sub: Subscription, config: Config, rates: Rates, charge
     if sub.track_usage:
         rows.append((t("details.last_used"), format_date(sub.last_used) if sub.last_used else "—"))
     if sub.review_reason:
-        rows.append((t("details.review_reason"), ", ".join(t(f"review.reason.{r}") for r in sub.review_reason.split(","))))
+        reasons = ", ".join(t(f"review.reason.{r}") for r in sub.review_reason.split(","))
+        rows.append((t("details.review_reason"), reasons))
     if sub.notes:
         rows.append((t("details.notes"), sub.notes))
     if sub.snippet:

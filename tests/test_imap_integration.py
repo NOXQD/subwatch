@@ -5,10 +5,10 @@ never modified."""
 from datetime import date
 
 import pytest
-
 from conftest import write_config
 from fixtures.emails import EMAILS, Email
 from mock_imap import MockImapServer, ServerState
+
 from subwatch import secrets
 from subwatch.app import AppContext
 from subwatch.scan import run_job

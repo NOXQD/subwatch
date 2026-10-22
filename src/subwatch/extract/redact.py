@@ -9,29 +9,18 @@ from __future__ import annotations
 
 import re
 
-from .keywords import Keywords
+from .keywords import Keywords, regex_group
 
 EMAIL = re.compile(r"[\w.+-]+@[\w-]+(?:\.[\w-]+)+")
 URL = re.compile(r"https?://([^/\s?#]+)[^\s]*", re.IGNORECASE)
 IBAN = re.compile(r"\b[A-Z]{2}\d{2}[A-Z0-9]{10,30}\b")
 MASKED_CARD = re.compile(
-    r"(?:[*•xX]{2,}[\s-]?){1,3}\d{4}\b|\*\d{4}\b|"
-    r"(?:ending in|оканчивающ\w* на|заканчивающ\w* на|соңы)\s*\d{4}",
+    r"(?:[*•xX]{2,}[\s-]?){1,3}\d{4}\b|\*\d{4}\b|" + regex_group("redact_card_tail") + r"\s*\d{4}",
     re.IGNORECASE,
 )
 DIGIT_RUN = re.compile(r"(?<![\w.,])\+?\(?\d[\d \-().]{6,}\d(?![\w])")
-GREETING = re.compile(
-    r"^\s*(здравствуй\w*|добрый (день|вечер|утро)|привет\w*|уважаем\w*|"
-    r"hi|hello|hey|dear|good (morning|afternoon|evening)|"
-    r"сәлем\w*|қайырлы (күн|кеш|таң)|құрметті)\b",
-    re.IGNORECASE,
-)
-ADDRESS = re.compile(
-    r"\b(ул\.|улица|проспект|пр-т|пр\.|д\.\s*\d|дом\s+\d|кв\.|квартира|мкр|микрорайон|"
-    r"street|st\.|avenue|ave\.|road|suite|apt\.|zip|postal code|"
-    r"көшесі|даңғылы|пәтер)\b|\b\d{6}\b(?=.*(?:г\.|город|қаласы|city))",
-    re.IGNORECASE,
-)
+GREETING = re.compile(r"^\s*" + regex_group("redact_greeting") + r"(?!\w)", re.IGNORECASE)
+ADDRESS = re.compile(r"(?<!\w)" + regex_group("redact_address") + r"(?!\w)", re.IGNORECASE)
 
 
 def _digits(s: str) -> int:

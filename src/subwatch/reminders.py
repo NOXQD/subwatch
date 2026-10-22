@@ -75,9 +75,7 @@ def _rule_matches(rule: ReminderRule, sub: Subscription, amount: Decimal | None)
         return False
     if rule.min_amount is not None and (amount is None or amount < rule.min_amount):
         return False
-    if rule.max_amount is not None and (amount is None or amount > rule.max_amount):
-        return False
-    return True
+    return rule.max_amount is None or (amount is not None and amount <= rule.max_amount)
 
 
 def effective_settings(sub: Subscription, config: Config, rates: Rates | None = None) -> Effective:

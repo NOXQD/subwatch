@@ -4,12 +4,18 @@ import tomllib
 from importlib import resources
 
 import pytest
-
 from conftest import write_config
+
 from subwatch import paths
 from subwatch.config import editor
 from subwatch.config.loader import (
-    ConfigError, ConfigWatcher, cli_overrides, env_overrides, field_annotation, flatten, load_config,
+    ConfigError,
+    ConfigWatcher,
+    cli_overrides,
+    env_overrides,
+    field_annotation,
+    flatten,
+    load_config,
 )
 from subwatch.config.schema import Config
 
@@ -163,7 +169,9 @@ def test_categories_always_have_other_and_names():
     cfg = Config.model_validate({"categories": {"health": {"icon": "x"}}})
     assert "other" in cfg.categories and cfg.categories["health"].name == "health"
     assert Config().categories["video"].name == "Видео"
-    with pytest.raises(Exception):
+    from pydantic import ValidationError
+
+    with pytest.raises(ValidationError):
         Config.model_validate({"category_rules": [{"category": "missing"}]})
 
 

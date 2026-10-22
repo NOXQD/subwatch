@@ -29,7 +29,7 @@ class Chain:
 
     @property
     def gaps(self) -> list[int]:
-        return [(b.date - a.date).days for a, b in zip(self.items, self.items[1:])]
+        return [(b.date - a.date).days for a, b in zip(self.items, self.items[1:], strict=False)]
 
 
 def tolerance_days(period: int, config: Config) -> int:
