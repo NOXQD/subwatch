@@ -255,7 +255,7 @@ def hook_script() -> str:
     return (
         "#!/bin/bash\n"
         f"# {t('integrate.hook.comment')}\n"
-        f"[[ -x {exe} ]] && {exe} integrate apply --quiet || true\n"
+        f"[[ -x {exe} ]] && {exe} --quiet integrate apply || true\n"
     )
 
 

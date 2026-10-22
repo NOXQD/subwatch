@@ -180,7 +180,7 @@ def test_systemd_units_follow_config(tmp_path):
     hourly = systemd.render(Config.model_validate({"scan": {"schedule": "6h"}, "reminders": {"check_interval": "2h"}}))
     assert "OnUnitActiveSec=6h" in hourly["subwatch-scan.timer"]
     assert "OnCalendar=0/2:00:00" in hourly["subwatch-remind.timer"]
-    assert "ExecStart=" in units["subwatch-scan.service"] and "scan --quiet" in units["subwatch-scan.service"]
+    assert "ExecStart=" in units["subwatch-scan.service"] and "--quiet scan" in units["subwatch-scan.service"]
 
 
 def test_systemd_apply_with_fake_systemctl(monkeypatch):
@@ -253,7 +253,7 @@ def test_post_update_hook_script(desktop):
     omarchy.apply_hook()
     script = omarchy.hook_file()
     assert script.stat().st_mode & 0o111
-    assert "integrate apply --quiet" in script.read_text(encoding="utf-8")
+    assert "--quiet integrate apply" in script.read_text(encoding="utf-8")
 
 
 def test_full_apply_and_remove_leave_user_files_intact(desktop):
@@ -264,3 +264,29 @@ def test_full_apply_and_remove_leave_user_files_intact(desktop):
     remove_all()
     for p, text in before.items():
         assert Path(p).read_text(encoding="utf-8").strip() == text.strip()
+
+
+def _run_cli(args):
+    from subwatch.__main__ import main
+
+    try:
+        main(args)
+    except SystemExit as exc:
+        return exc.code or 0
+    return 0
+
+
+def test_generated_commands_actually_run(monkeypatch):
+    """Every command line we put into units and hooks must parse and succeed."""
+    import shlex
+
+    monkeypatch.setattr(systemd, "systemd_available", lambda: False)
+    units = systemd.render(Config())
+    commands = []
+    for name in ("subwatch-scan.service", "subwatch-remind.service"):
+        line = next(x for x in units[name].splitlines() if x.startswith("ExecStart="))
+        commands.append(shlex.split(line.split("=", 1)[1])[1:])
+    hook = omarchy.hook_script().splitlines()[-1]
+    commands.append(shlex.split(hook.split("&&", 1)[1].split("||")[0])[1:])
+    for args in commands:
+        assert _run_cli(args) == 0, args
