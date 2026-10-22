@@ -127,12 +127,13 @@ class ImapSource(Source):
                         data = headers.get(uid) or {}
                         raw_headers = data.get(HEADER_KEY) or b""
                         key = f"imap:{account.name}:{folder}:{uidvalidity}:{uid}"
-                        if ctx.store.is_processed("imap", key):
+                        if not ctx.reprocess and ctx.store.is_processed("imap", key):
                             continue
                         _, sender = parseaddr(_header_value(raw_headers, "From"))
                         subject = _header_value(raw_headers, "Subject")
                         if ctx.prefilter and not ctx.prefilter(sender.lower(), subject):
                             ctx.store.mark_processed("imap", key, "prefiltered")
+                            ctx.skipped += 1
                             continue
                         body_key = b"BODY[]<0>"
                         fetched = retry(

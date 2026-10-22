@@ -99,7 +99,7 @@ def run_import(app, files: list[Path], bank, mapping, date_format, delimiter, en
                 tpl.currency = currency.upper()
         result = read_statement(path, cfg, tpl, templates)
         say(t("cli.import.parsed", path=path.name, template=result.template.title or result.template.name,
-              rows=result.rows, debits=tn("fmt.units.transaction", len(result.transactions)),
+              rows=result.rows, debits=len(result.transactions),
               skipped=result.skipped))
         if save_template and (mapping or tpl is not None):
             target = paths.banks_dir() / f"{save_template}.toml"
@@ -113,7 +113,7 @@ def run_import(app, files: list[Path], bank, mapping, date_format, delimiter, en
         if not dry_run:
             inserted = store.add_transactions(result.transactions)
             store.mark_imported(sha, path.name, result.template.name, result.rows, len(result.transactions))
-            say(t("cli.import.stored", count=tn("fmt.units.transaction", inserted)), "dim")
+            say(t("cli.import.stored", count=inserted), "dim")
         all_new += result.transactions
     if not all_new and not dry_run:
         return
@@ -159,5 +159,5 @@ def run_import(app, files: list[Path], bank, mapping, date_format, delimiter, en
          review=stats.get("review", 0), updated=stats.get("updated", 0) + stats.get("duplicate", 0)))
     console.print()
     if stats.get("review"):
-        say(t("cli.list.review_hint", count=tn("fmt.units.item", stats["review"])), "yellow")
+        say(tn("cli.list.review_hint", stats["review"]), "yellow")
     raise typer.Exit(0)

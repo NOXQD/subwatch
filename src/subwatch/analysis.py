@@ -114,7 +114,9 @@ def find_duplicates(subs: list[Subscription], config: Config, book: MerchantBook
             if ka == kb:
                 out.append(Duplicate(a, b, "same_service"))
             elif kb in partners:
-                out.append(Duplicate(a, b, "bundle"))
+                # Put the bundle first: "b is already included in a".
+                pair = (a, b) if book.includes(a.service, b.service) else (b, a)
+                out.append(Duplicate(pair[0], pair[1], "bundle"))
             elif difflib.SequenceMatcher(None, ka, kb).ratio() >= config.detection.duplicate_similarity:
                 out.append(Duplicate(a, b, "similar_name"))
     return out

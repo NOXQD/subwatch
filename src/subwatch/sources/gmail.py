@@ -238,7 +238,7 @@ class GmailSource(Source):
         log.debug("gmail_candidates", account=account, count=len(ids), history=via_history)
         for mid in ids:
             key = f"gmail:{account}:{mid}"
-            if ctx.store.is_processed("gmail", key):
+            if not ctx.reprocess and ctx.store.is_processed("gmail", key):
                 continue
             if via_history:
                 meta = call(service.users().messages().get(
@@ -255,6 +255,7 @@ class GmailSource(Source):
                 _, sender = parseaddr(hdr.get("from", ""))
                 if ctx.prefilter and not ctx.prefilter(sender.lower(), hdr.get("subject", "")):
                     ctx.store.mark_processed("gmail", key, "prefiltered")
+                    ctx.skipped += 1
                     continue
             item = call(service.users().messages().get(userId="me", id=mid, format="full",
                                                       fields=FULL_FIELDS))

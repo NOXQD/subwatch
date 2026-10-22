@@ -161,3 +161,16 @@ kk = ['көшесі', 'даңғылы', 'пәтер', 'мекенжай']
 ru = ['оканчивающ\w*\s+на', 'заканчивающ\w*\s+на']
 en = ['ending in', 'ends in']
 kk = ['соңы']
+
+# Messages with these phrases are never sent to an AI model: security codes,
+# password resets, sign-in alerts.
+[never_send]
+ru = ["код подтверждения", "одноразовый код", "код для входа", "пароль", "восстановление доступа", "вход в аккаунт", "новый вход"]
+en = ["verification code", "one-time code", "security code", "password", "sign-in", "sign in attempt", "login code", "2fa"]
+kk = ["растау коды", "бір реттік код", "құпия сөз", "кіру коды"]
+
+# A short number right after these words is a code and gets masked.
+[redact_code_word]
+ru = ['код\w*', 'пин-?код']
+en = ['code', 'pin', 'otp']
+kk = ['коды', 'код']

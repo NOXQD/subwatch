@@ -131,6 +131,11 @@ class MerchantBook:
     def find_service(self, name: str) -> Merchant | None:
         return self.by_key.get(service_key(name))
 
+    def includes(self, container: str, member: str) -> bool:
+        """True when `member` comes bundled with `container`."""
+        c, m = self.find_service(container), self.find_service(member)
+        return bool(c and m and m.id in c.includes)
+
     def bundle_partners(self, name: str) -> set[str]:
         """Service keys that are bundled with (or include) this service."""
         m = self.find_service(name)

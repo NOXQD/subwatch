@@ -71,6 +71,7 @@ class Analysis:
     signals: bool
     text: str
     skipped: str | None = None
+    ai_allowed: bool = False  # worth asking a model, and safe to send
 
 
 def glob_match(pattern: str, value: str) -> bool:
@@ -136,6 +137,9 @@ def analyse(msg: RawMessage, ctx: Context) -> Analysis:
     signals = bool(match) or sub_subject or (sub_body and lifecycle)
     if not signals:
         return Analysis(None, False, text)
+    # Security mail never goes to a model; order/shipping mail without a known
+    # service is not worth a request.
+    ai_ok = not kw.any(cf, "never_send") and not (negative and not (match and not match.merchant.generic))
 
     reasons: list[str] = []
     if is_cancel:
@@ -161,7 +165,7 @@ def analyse(msg: RawMessage, ctx: Context) -> Analysis:
 
     if amount is None and not (is_cancel or is_trial or (match and lifecycle)):
         # Mentions a service or the word "subscription" but nothing we can use.
-        return Analysis(None, True, text)
+        return Analysis(None, True, text, ai_allowed=ai_ok)
 
     reference = (clock.to_local(msg.date).date() if msg.date else clock.today())
     english = _looks_english(full)
@@ -191,7 +195,7 @@ def analyse(msg: RawMessage, ctx: Context) -> Analysis:
         cancel_url = None
     service = ctx.learned.aliases.get(service_key(service), service)
     if not service:
-        return Analysis(None, True, text)
+        return Analysis(None, True, text, ai_allowed=ai_ok)
 
     # Confidence.
     score = 0.0
@@ -265,7 +269,7 @@ def analyse(msg: RawMessage, ctx: Context) -> Analysis:
         known_service=bool(match and not match.merchant.generic),
         received=reference,
     )
-    return Analysis(detection, True, text)
+    return Analysis(detection, True, text, ai_allowed=ai_ok)
 
 
 def detection_period(det: Detection) -> Period:

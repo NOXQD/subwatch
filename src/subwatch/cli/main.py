@@ -281,7 +281,7 @@ def list_command(
         warn(t("cli.list.unconverted", services=", ".join(s.service for s in tot.unconverted)))
     review = len(a.store.review_queue())
     if review and not status:
-        say(t("cli.list.review_hint", count=tn("fmt.units.item", review)), "yellow")
+        say(tn("cli.list.review_hint", review), "yellow")
 
 
 @cmd("show")

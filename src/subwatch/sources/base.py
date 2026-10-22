@@ -38,6 +38,8 @@ class SourceContext:
     options: dict[str, Any] = field(default_factory=dict)
     prefilter: Callable[[str, str], bool] | None = None
     progress: Callable[[str, int], None] | None = None
+    skipped: int = 0  # messages dropped by the header prefilter
+    reprocess: bool = False  # read messages again even if they were processed
 
 
 class Source:

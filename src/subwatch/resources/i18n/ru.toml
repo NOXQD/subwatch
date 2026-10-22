@@ -43,7 +43,6 @@ hour = { one = "{n} час", few = "{n} часа", many = "{n} часов" }
 minute = { one = "{n} минута", few = "{n} минуты", many = "{n} минут" }
 subscription = { one = "{n} подписка", few = "{n} подписки", many = "{n} подписок" }
 item = { one = "{n} запись", few = "{n} записи", many = "{n} записей" }
-transaction = { one = "{n} операция", few = "{n} операции", many = "{n} операций" }
 
 [fmt.period]
 every_1_day = "ежедневно"
@@ -332,7 +331,7 @@ empty = "Подписок пока нет."
 empty_hint = "Добавьте вручную (subwatch add) или подключите почту: subwatch auth gmail / subwatch auth imap."
 total = "Итого: {total} в месяц ({yearly} в год), {count}."
 unconverted = "Не удалось пересчитать в базовую валюту (нет курса): {services}. Задайте курс: subwatch rates set КОД КУРС"
-review_hint = "Ещё {count} ждёт проверки: subwatch review"
+review_hint = { one = "Ещё {n} находка ждёт проверки: subwatch review", few = "Ещё {n} находки ждут проверки: subwatch review", many = "Ещё {n} находок ждут проверки: subwatch review" }
 
 [cli.show]
 help = "Подробности о подписке: суммы, даты, история списаний."
@@ -990,6 +989,7 @@ body = "Было {old}, стало {new}."
 
 [notify.duplicate]
 summary = "Похоже, вы платите дважды"
+summary_many = { one = "Похоже, вы платите дважды: {n} случай", few = "Похоже, вы платите дважды: {n} случая", many = "Похоже, вы платите дважды: {n} случаев" }
 same_service = "«{a}» и «{b}» — две записи об одном сервисе. Объединить: subwatch merge"
 bundle = "«{b}» уже входит в «{a}». Возможно, одну из подписок можно отменить."
 similar_name = "«{a}» и «{b}» похожи на одну и ту же подписку."

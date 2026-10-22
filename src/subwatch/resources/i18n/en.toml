@@ -41,7 +41,6 @@ hour = { one = "{n} hour", other = "{n} hours" }
 minute = { one = "{n} minute", other = "{n} minutes" }
 subscription = { one = "{n} subscription", other = "{n} subscriptions" }
 item = { one = "{n} item", other = "{n} items" }
-transaction = { one = "{n} transaction", other = "{n} transactions" }
 
 [fmt.period]
 every_1_day = "daily"
@@ -328,7 +327,7 @@ empty = "No subscriptions yet."
 empty_hint = "Add one by hand (subwatch add) or connect your mail: subwatch auth gmail / subwatch auth imap."
 total = "Total: {total} per month ({yearly} per year), {count}."
 unconverted = "No exchange rate to convert into the base currency: {services}. Set one: subwatch rates set CODE RATE"
-review_hint = "{count} more waiting for review: subwatch review"
+review_hint = { one = "{n} more finding waits for review: subwatch review", other = "{n} more findings wait for review: subwatch review" }
 
 [cli.show]
 help = "Details of a subscription: amounts, dates, charge history."
@@ -972,6 +971,7 @@ body = "Was {old}, now {new}."
 
 [notify.duplicate]
 summary = "Looks like you pay twice"
+summary_many = { one = "Looks like you pay twice: {n} case", other = "Looks like you pay twice: {n} cases" }
 same_service = "“{a}” and “{b}” are two records of one service. Merge: subwatch merge"
 bundle = "“{b}” is already included in “{a}”. Maybe one of them can go."
 similar_name = "“{a}” and “{b}” look like the same subscription."

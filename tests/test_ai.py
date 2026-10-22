@@ -183,3 +183,21 @@ def test_scan_ai_dry_run_cli(monkeypatch, capsys):
         pass
     out = capsys.readouterr().out
     assert "В модель не ушло бы ничего" in out and "Ничего нового не найдено" in out
+
+
+def test_codes_are_redacted_and_security_mail_never_sent():
+    assert "482913" not in redact("Ваш код подтверждения: 482913.")
+    assert "4417" not in redact("Your verification code is 4417")
+    assert "4 990 ₽" in redact("Сумма 4 990 ₽")
+    from fixtures.emails import EMAILS
+
+    from subwatch.extract.engine import Context, analyse
+    from subwatch.extract.merchants import MerchantBook
+    from subwatch.extract.text import parse_email
+
+    ctx = Context.build(Config(), MerchantBook.load())
+    by_id = {e.id: analyse(parse_email(e.to_bytes(), "imap", e.id), ctx) for e in EMAILS}
+    assert not by_id["ru_yandex_id_code"].ai_allowed
+    assert not by_id["kk_kaspi_otp"].ai_allowed
+    assert not by_id["ru_ozon_order"].ai_allowed
+    assert by_id["ru_megadisk_unknown"].ai_allowed

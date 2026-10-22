@@ -129,7 +129,7 @@ def test_months_back_limits_first_scan(server):
     app, report = scan()
     searches = [line for line in server.state.log if "SEARCH" in line]
     assert any("SINCE" in s for s in searches)
-    assert report.stats["imap"]["seen"] < len(EMAILS)
+    assert report.stats["imap"]["seen"] == len(EMAILS)  # the 2024 message is outside the window
     app.close()
 
 

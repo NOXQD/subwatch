@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import json
 import time
 import traceback
 from collections import Counter
@@ -99,7 +100,7 @@ class Scanner:
         det = result.detection
         if result.skipped:
             stats["filtered"] += 1
-        if self.ai is not None and result.signals and (
+        if self.ai is not None and result.ai_allowed and (
             det is None or det.confidence < self.config.extraction.auto_accept
         ):
             ai_det = self.ai.extract(msg, result.text)
@@ -154,7 +155,7 @@ class Scanner:
                 config=self.config, store=self.store, since=since, full=full,
                 max_messages=self.config.scan.max_messages,
                 options=dict(self.config.plugins.options.get(name, {})),
-                prefilter=prefilter, progress=progress,
+                prefilter=prefilter, progress=progress, reprocess=self.reprocess,
             )
             log.info("scan_source_started", source=name)
             try:
@@ -172,6 +173,9 @@ class Scanner:
                 log.error("scan_source_crashed", source=name, error=repr(exc),
                           trace=traceback.format_exc(limit=5))
                 self._fail(name, t("scan.err.crashed", source=name, detail=repr(exc)))
+            if sctx.skipped:
+                stats["seen"] += sctx.skipped
+                stats["filtered"] += sctx.skipped
             log.info("scan_source_finished", source=name, **{k: v for k, v in stats.items()})
         if self.transactions:
             self._ingest_transactions()
@@ -238,16 +242,19 @@ def react(app: AppContext, events: list[Event], errors: list[tuple[str, str]] | 
         store.add_event(ev.name, ev.subscription.id if ev.subscription else None, ev.data)
 
     subs = store.subscriptions()
+    known_pairs = {json.loads(r["payload"]).get("pair") for r in store.events("duplicate_found", 1000)}
     for dup in analysis.find_duplicates(subs, cfg, app.book):
-        seen = any(r["payload"] and dup.key in r["payload"] for r in store.events("duplicate_found", 500))
-        if seen:
+        if dup.key in known_pairs:
             continue
         payload = {"pair": dup.key, "reason": dup.reason, "a": dup.a.service, "b": dup.b.service}
         store.add_event("duplicate_found", dup.a.id, payload)
         hooks.run_hooks(cfg, "duplicate_found", dup.a, payload)
-        _notify(app, cfg.notifications.on_duplicates, t("notify.duplicate.summary"),
-                t(f"notify.duplicate.{dup.reason}", a=dup.a.service, b=dup.b.service), "duplicate")
         out["duplicates"].append(dup)
+    if out["duplicates"]:
+        lines = [t(f"notify.duplicate.{d.reason}", a=d.a.service, b=d.b.service) for d in out["duplicates"]]
+        title = t("notify.duplicate.summary") if len(lines) == 1 else \
+            tn("notify.duplicate.summary_many", len(lines))
+        _notify(app, cfg.notifications.on_duplicates, title, "\n".join(lines[:4]), "duplicate")
 
     today = clock.today()
     for z in analysis.find_zombies(subs, cfg, today):

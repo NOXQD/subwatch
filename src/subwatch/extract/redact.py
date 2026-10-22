@@ -20,6 +20,9 @@ MASKED_CARD = re.compile(
 )
 DIGIT_RUN = re.compile(r"(?<![\w.,])\+?\(?\d[\d \-().]{6,}\d(?![\w])")
 GREETING = re.compile(r"^\s*" + regex_group("redact_greeting") + r"(?!\w)", re.IGNORECASE)
+# "your verification code is 4417": up to two words between the word and the digits.
+CODE = re.compile(r"(?<!\w)(" + regex_group("redact_code_word") + r")((?:[\s:—-]+[^\s\d]{1,20}){0,2}[\s:—-]+)"
+                  r"\d{3,8}(?!\d)", re.IGNORECASE)
 ADDRESS = re.compile(r"(?<!\w)" + regex_group("redact_address") + r"(?!\w)", re.IGNORECASE)
 
 
@@ -51,6 +54,7 @@ def redact(text: str) -> str:
         line = URL.sub(lambda m: m.group(1).lower(), line)
         line = IBAN.sub("[account]", line)
         line = MASKED_CARD.sub("[card]", line)
+        line = CODE.sub(lambda m: m.group(1) + m.group(2) + "[code]", line)
         line = DIGIT_RUN.sub(_replace_runs, line)
         out.append(line)
     return "\n".join(out)
