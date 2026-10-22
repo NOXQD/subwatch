@@ -67,8 +67,8 @@ SORTS = ("next_charge", "amount", "monthly", "name", "category", "status")
 CSS = """
 Screen { layout: vertical; }
 #subs-row, #review-row { height: 1fr; }
-DataTable { width: 3fr; height: 1fr; }
-.details { width: 2fr; height: 1fr; border-left: tall $panel; padding: 0 1; }
+DataTable { width: 2fr; height: 1fr; }
+.details { width: 1fr; min-width: 34; max-width: 64; height: 1fr; border-left: tall $panel; padding: 0 1; }
 #status-line { height: 1; padding: 0 1; color: $text-muted; }
 #search { dock: bottom; display: none; }
 #search.visible { display: block; }
