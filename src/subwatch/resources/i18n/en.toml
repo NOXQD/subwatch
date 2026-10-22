@@ -474,6 +474,8 @@ help = "Show the version."
 short = "Version"
 
 [cli.config]
+init_created = "Created {path}"
+init_exists = "Already exists: {path}"
 help = "Settings: show, change, check."
 short = "Settings"
 set_done = "{key}: {old} → {new}"
@@ -492,6 +494,10 @@ reset_done = "Configuration reset. Old copy: {backup}"
 reset_key = "{key} reset to its default."
 no_diff = "All settings are default."
 diff_line = "{key}: {default} → {current} ({origin})"
+
+[cli.config_init]
+help = "Create a commented config.toml if there is none yet."
+short = "Create the file"
 
 [cli.config_path]
 help = "Path to the configuration file."

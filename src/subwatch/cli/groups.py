@@ -32,6 +32,18 @@ def register(app: typer.Typer, make, opt, arg) -> None:
 
     config = group("config")
 
+    @sub(config, "init", "config_init")
+    @handle_errors
+    def config_init() -> None:
+        from ..config.editor import ensure_config_file
+
+        path, created = ensure_config_file(paths.config_file() if State.config_path is None
+                                           else Path(State.config_path).expanduser())
+        if created:
+            ok(t("cli.config.init_created", path=paths.contract_home(path)))
+        else:
+            say(t("cli.config.init_exists", path=paths.contract_home(path)))
+
     @sub(config, "path", "config_path")
     @handle_errors
     def config_path() -> None:

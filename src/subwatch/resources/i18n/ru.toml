@@ -478,6 +478,8 @@ help = "Показать версию."
 short = "Версия"
 
 [cli.config]
+init_created = "Создан {path}"
+init_exists = "Уже есть: {path}"
 help = "Настройки: показать, изменить, проверить."
 short = "Настройки"
 set_done = "{key}: {old} → {new}"
@@ -496,6 +498,10 @@ reset_done = "Конфигурация сброшена. Старая копия
 reset_key = "{key} сброшен к значению по умолчанию."
 no_diff = "Все настройки стандартные."
 diff_line = "{key}: {default} → {current} ({origin})"
+
+[cli.config_init]
+help = "Создать config.toml с комментариями, если его ещё нет."
+short = "Создать файл"
 
 [cli.config_path]
 help = "Путь к файлу конфигурации."
