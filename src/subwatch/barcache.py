@@ -28,9 +28,18 @@ def key_for(db_path: Path, config_path: Path) -> dict[str, Any]:
     return {"db": _stamp(db_path), "config": _stamp(config_path), "date": clock.today().isoformat()}
 
 
-def read(db_path: Path, config_path: Path) -> dict[str, Any] | None:
+def _file(name: str) -> Path:
+    return paths.bar_cache_file() if name == "bar" else paths.cache_dir() / f"{name}.json"
+
+
+def stamp_file() -> Path:
+    """Touched on every change, so the Omarchy widget can watch one small file."""
+    return paths.cache_dir() / "changed"
+
+
+def read(db_path: Path, config_path: Path, name: str = "bar") -> dict[str, Any] | None:
     try:
-        raw = json.loads(paths.bar_cache_file().read_text(encoding="utf-8"))
+        raw = json.loads(_file(name).read_text(encoding="utf-8"))
     except (OSError, ValueError):
         return None
     if raw.get("key") != key_for(db_path, config_path):
@@ -40,8 +49,8 @@ def read(db_path: Path, config_path: Path) -> dict[str, Any] | None:
     return raw.get("data")
 
 
-def write(data: dict[str, Any], db_path: Path, config_path: Path) -> None:
-    target = paths.bar_cache_file()
+def write(data: dict[str, Any], db_path: Path, config_path: Path, name: str = "bar") -> None:
+    target = _file(name)
     try:
         paths.ensure_private_dir(target.parent)
         tmp = target.with_suffix(".tmp")
@@ -54,8 +63,14 @@ def write(data: dict[str, Any], db_path: Path, config_path: Path) -> None:
 
 
 def invalidate() -> None:
+    for name in ("bar", "panel"):
+        try:
+            _file(name).unlink()
+        except OSError:
+            pass
     try:
-        paths.bar_cache_file().unlink()
+        paths.ensure_private_dir(paths.cache_dir())
+        stamp_file().write_text(str(clock.now().timestamp()), encoding="utf-8")
     except OSError:
         pass
 

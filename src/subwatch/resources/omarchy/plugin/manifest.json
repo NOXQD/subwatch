@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "id": "noxqd.subwatch",
+  "name": "Subwatch",
+  "version": "0.2.0",
+  "author": "noxqd",
+  "license": "MIT",
+  "description": "Subscription tracker: what you pay for, when the next charge is, and where the budget stands. Bar widget with a popup and a full settings window.",
+  "kinds": ["bar-widget", "panel"],
+  "entryPoints": {
+    "barWidget": "BarWidget.qml",
+    "panel": "Settings.qml"
+  },
+  "barWidget": {
+    "displayName": "Subwatch",
+    "description": "Next charge or the monthly total; click for spending and upcoming charges",
+    "category": "Info",
+    "aliases": ["subscriptions", "subwatch", "budget"],
+    "defaultSection": "right",
+    "allowMultiple": false
+  }
+}

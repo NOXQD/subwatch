@@ -652,6 +652,14 @@ class Store:
 
     # --------------------------------------------------------------- events
 
+    def get_meta(self, key: str) -> str | None:
+        row = self.conn.execute("SELECT value FROM meta WHERE key = ?", (key,)).fetchone()
+        return row[0] if row else None
+
+    def set_meta(self, key: str, value: str) -> None:
+        with self.transaction():
+            self.conn.execute("INSERT OR REPLACE INTO meta(key, value) VALUES (?, ?)", (key, value))
+
     def add_event(self, kind: str, sub_id: int | None = None, payload: dict[str, Any] | None = None) -> None:
         self.conn.execute(
             "INSERT INTO events (ts, kind, subscription_id, payload) VALUES (?, ?, ?, ?)",

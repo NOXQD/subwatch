@@ -230,13 +230,23 @@ def check_integration(config: Config) -> list[Check]:
     from .integrate import completion_targets, hyprland, launchers, omarchy
 
     out = []
-    if omarchy.is_omarchy():
+    if omarchy.is_omarchy() and omarchy.plugins_supported():
+        placed = omarchy.plugin_installed()
+        current = placed and omarchy.plugin_current()
+        key = "doctor.int.plugin_ok" if current else ("doctor.int.plugin_stale" if placed
+                                                      else "doctor.int.plugin_missing")
+        out.append(Check("integration", "ok" if current else ("warn" if placed else "fail"), key,
+                         {"path": paths.contract_home(omarchy.plugin_dir())},
+                         None if current else "doctor.hint.integrate",
+                         fix=None if current else (lambda: _integrate(config, ["bar"]))))
+    elif omarchy.is_omarchy():
         bar_ok = omarchy.bar_installed()
         out.append(Check("integration", "ok" if bar_ok else "fail",
                          "doctor.int.bar_ok" if bar_ok else "doctor.int.bar_missing",
                          {"path": paths.contract_home(omarchy.shell_file())},
                          None if bar_ok else "doctor.hint.integrate",
                          fix=None if bar_ok else (lambda: _integrate(config, ["bar"]))))
+    if omarchy.is_omarchy():
         if config.menu.enabled:
             menu_ok = omarchy.menu_installed()
             out.append(Check("integration", "ok" if menu_ok else "fail",

@@ -27,7 +27,7 @@ from .common import Step, backup_file, has_block, make_block, strip_block, subwa
 MODS = {"SHIFT": 1, "CAPS": 2, "CTRL": 4, "CONTROL": 4, "ALT": 8, "MOD2": 16, "MOD3": 32,
         "SUPER": 64, "WIN": 64, "LOGO": 64, "MOD4": 64, "MOD5": 128}
 
-ACTIONS = ("open_tui", "upcoming", "menu", "rescan", "add")
+ACTIONS = ("open_tui", "upcoming", "menu", "settings", "rescan", "add")
 
 
 @dataclass(frozen=True)
@@ -94,6 +94,7 @@ def commands(config: Config) -> dict[str, str]:
         "open_tui": f"{exe} open",
         "upcoming": f"{exe} upcoming --notify",
         "menu": f"{exe} menu",
+        "settings": f"{exe} settings",
         "rescan": "systemctl --user start --no-block subwatch-scan.service",
         "add": f"{exe} open --add",
     }

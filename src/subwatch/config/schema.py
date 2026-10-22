@@ -529,6 +529,7 @@ class KeybindsConfig(Strict):
     open_tui: str = "SUPER + CTRL + U"
     upcoming: str = "SUPER + CTRL + ALT + U"
     menu: str = "SUPER + CTRL + SHIFT + U"
+    settings: str = ""
     rescan: str = ""
     add: str = ""
     override_conflicts: bool = False

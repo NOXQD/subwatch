@@ -20,14 +20,15 @@ from textual.binding import Binding
 from textual.containers import Horizontal, VerticalScroll
 from textual.widgets import DataTable, Footer, Header, Input, Static, TabbedContent, TabPane
 
-from .. import barcache, clock
+from .. import barcache, clock, ops
 from ..analysis import budget_status, monthly_spend, totals
 from ..app import AppContext
 from ..config.loader import ConfigWatcher
 from ..config.schema import UIKeys
+from ..errors import SubwatchError
 from ..fmt import format_date, format_money, format_period, format_when
 from ..i18n import t, tn
-from ..models import Subscription, service_key
+from ..models import Subscription
 from . import charts
 from .screens import ConfirmScreen, FilterScreen, FormScreen, HelpScreen
 from .theme import build_theme, palette_mtime
@@ -405,45 +406,7 @@ class SubwatchApp(App):
         self.reload_data()
 
     def validate_form(self, values: dict[str, Any]) -> None:
-        from ..cli.main import parse_user_amount, parse_user_date, parse_user_period
-
-        if values["amount"]:
-            parse_user_amount(values["amount"], values["currency"] or self.ctx.config.currency.base)
-        parse_user_period(values["period"] or "1m")
-        if values["next"]:
-            parse_user_date(values["next"])
-
-    def _apply_form(self, sub: Subscription, values: dict[str, Any]) -> Subscription:
-        from ..cli.main import parse_user_amount, parse_user_date, parse_user_period
-
-        cfg = self.ctx.config
-        before = sub.service
-        sub.service = values["service"]
-        if values["amount"]:
-            sub.amount, code = parse_user_amount(values["amount"], (values["currency"] or cfg.currency.base).upper())
-            sub.currency = (values["currency"] or code).upper()
-        else:
-            sub.amount = None
-            sub.currency = (values["currency"] or "").upper() or None
-        sub.period = parse_user_period(values["period"] or "1m")
-        sub.next_charge = parse_user_date(values["next"]) if values["next"] else None
-        if sub.next_charge:
-            sub.anchor_day = sub.next_charge.day
-        if values["category"] != sub.category:
-            self.ctx.store.add_rule("category", service_key(sub.service), values["category"])
-        sub.category = values["category"]
-        sub.tags = [x.strip() for x in values["tags"].split(",") if x.strip()]
-        sub.cancel_url = values["cancel_url"] or None
-        sub.notes = values["notes"] or None
-        if values.get("status"):
-            sub.status = values["status"]
-        if values["track_usage"] and not sub.track_usage:
-            sub.last_used = sub.last_used or clock.today()
-        sub.track_usage = values["track_usage"]
-        if before and service_key(before) != service_key(sub.service):
-            self.ctx.store.add_rule("alias", service_key(before), sub.service)
-        sub.key = sub.make_key()
-        return sub
+        ops.validate_values(self.ctx, values)
 
     # ------------------------------------------------------------- actions
 
@@ -527,17 +490,13 @@ class SubwatchApp(App):
         def done(values) -> None:
             if not values:
                 return
-            sub = self._apply_form(Subscription(service=values["service"], source="manual"), values)
-            existing = self.ctx.store.find_by_key(sub.key)
-            if existing and existing.status != "cancelled":
-                self.notify(t("cli.err.exists", service=sub.service, id=existing.id), severity="warning")
+            try:
+                sub = ops.create(self.ctx, values, "tui")
+            except SubwatchError as exc:
+                self.notify(exc.message, severity="warning")
                 return
-            self.ctx.store.insert_subscription(sub)
-            from ..hooks import run_hooks
-
-            run_hooks(self.ctx.config, "new_subscription", sub, {"via": "tui"})
             self.notify(t("cli.add.done", service=sub.service, id=sub.id))
-            self.changed()
+            self.reload_data()
 
         self.push_screen(FormScreen(self.ctx.config), done)
 
@@ -549,9 +508,9 @@ class SubwatchApp(App):
         def done(values) -> None:
             if not values:
                 return
-            self.ctx.store.update_subscription(self._apply_form(sub, values))
+            ops.update(self.ctx, sub, values)
             self.notify(t("cli.edit.done", service=sub.service))
-            self.changed()
+            self.reload_data()
 
         self.push_screen(FormScreen(self.ctx.config, sub), done)
 
@@ -562,9 +521,9 @@ class SubwatchApp(App):
 
         def done(yes: bool | None) -> None:
             if yes:
-                self.ctx.store.delete_subscription(sub.id or 0)
+                ops.remove(self.ctx, sub)
                 self.notify(t("cli.remove.done", service=sub.service))
-                self.changed()
+                self.reload_data()
 
         self.push_screen(ConfirmScreen(t("cli.remove.confirm", service=sub.service)), done)
 
@@ -576,18 +535,9 @@ class SubwatchApp(App):
         def done(yes: bool | None) -> None:
             if not yes:
                 return
-            from ..hooks import run_hooks
-            from ..reminders import open_url
-
-            if sub.cancel_url:
-                open_url(sub.cancel_url)
-            sub.status = "cancelled"
-            sub.cancelled_at = clock.now()
-            sub.next_charge = None
-            self.ctx.store.update_subscription(sub)
-            run_hooks(self.ctx.config, "subscription_cancelled", sub, {"via": "tui"})
+            ops.cancel(self.ctx, sub, "tui")
             self.notify(t("cli.cancel.done", service=sub.service))
-            self.changed()
+            self.reload_data()
 
         question = t("tui.cancel_confirm_url", service=sub.service) if sub.cancel_url else \
             t("tui.cancel_confirm", service=sub.service)
@@ -597,9 +547,7 @@ class SubwatchApp(App):
         sub = self.selected()
         if sub is None:
             return
-        sub.track_usage = True
-        sub.last_used = clock.today()
-        self.ctx.store.update_subscription(sub)
+        ops.mark_used(self.ctx, sub)
         self.notify(t("cli.used.done", service=sub.service))
         self.reload_data()
 
@@ -609,9 +557,7 @@ class SubwatchApp(App):
         sub = self.current_sub("review-table")
         if sub is None:
             return
-        from ..cli.groups import _decide
-
-        _decide(self.ctx, sub, accepted)
+        ops.decide(self.ctx, sub, accepted)
         key = "cli.review.confirmed" if accepted else "cli.review.rejected"
         self.notify(t(key, service=sub.service))
         self.reload_data()

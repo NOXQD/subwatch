@@ -518,7 +518,7 @@ def register(app: typer.Typer, make, opt, arg) -> None:
     ) -> None:
         from ..config.editor import ensure_config_file, set_value
         from ..money import parse_number
-        from .main import parse_category
+        from ..userinput import parse_category
 
         a = get_app()
         value = parse_number(amount)
@@ -783,19 +783,9 @@ def _review_item(a, ref: str):
 
 
 def _decide(a, sub, accepted: bool) -> None:
-    from ..hooks import run_hooks
-    from ..ingest import remember_review_decision
+    from .. import ops
 
-    remember_review_decision(a.store, sub, accepted)
-    if accepted:
-        sub.status = "active"
-        sub.review_reason = None
-        sub.confidence = max(sub.confidence, a.config.extraction.auto_accept)
-        a.store.update_subscription(sub)
-        run_hooks(a.config, "new_subscription", sub, {"via": "review"})
-    else:
-        a.store.delete_subscription(sub.id or 0)
-    a.after_change()
+    ops.decide(a, sub, accepted)
 
 
 def _review_list(as_json: bool) -> None:

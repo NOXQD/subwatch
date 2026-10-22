@@ -13,7 +13,7 @@ from typing import Any, get_args, get_origin
 
 import tomlkit
 from pydantic import BaseModel
-from tomlkit.items import Table
+from tomlkit.items import AoT, Table
 
 from .. import paths
 from ..i18n import get_language, t
@@ -143,6 +143,76 @@ def set_value(dotted: str, raw: str, path: Path | None = None) -> tuple[Any, Any
     validate(tomlkit.parse(text).unwrap(), path)
     write_atomic(path, text)
     return old_plain, value
+
+
+def _toml_item(value: Any) -> Any:
+    """Lists of tables become [[arrays of tables]], dicts become tables."""
+    if isinstance(value, list) and value and all(isinstance(v, dict) for v in value):
+        aot = tomlkit.aot()
+        for item in value:
+            table = tomlkit.table()
+            for k, v in item.items():
+                if v is not None:
+                    table[k] = _toml_item(v)
+            aot.append(table)
+        return aot
+    if isinstance(value, dict):
+        table = tomlkit.table()
+        for k, v in value.items():
+            if v is not None:
+                table[k] = _toml_item(v)
+        return table
+    return _to_toml_value(value)
+
+
+def set_python(dotted: str, value: Any, path: Path | None = None) -> tuple[Any, Any]:
+    """Like set_value, but takes an already typed value (from the settings
+    window): lists of tables and whole tables are written as such."""
+    try:
+        field_annotation(dotted)
+    except KeyError:
+        raise ConfigError(None, [(dotted, t("config.err.unknown_key"))]) from None
+    path = path or paths.config_file()
+    doc = _load_doc(path)
+    parts = dotted.split(".")
+    node: Any = doc
+    for part in parts[:-1]:
+        if part not in node or not isinstance(node[part], (Table, dict)):
+            node[part] = tomlkit.table()
+        node = node[part]
+    old = node.get(parts[-1])
+    old_plain = old.unwrap() if hasattr(old, "unwrap") else old
+    item = _toml_item(value) if value is not None else None
+    if isinstance(old, Table) and isinstance(value, dict):
+        # Update a table in place, so it keeps its spot and comments.
+        for key in [k for k in old if k not in value or value[k] is None]:
+            del old[key]
+        for key, v in value.items():
+            if v is not None:
+                old[key] = _toml_item(v)
+    else:
+        structured = isinstance(item, (AoT, Table)) or isinstance(old, (AoT, Table))
+        if parts[-1] in node and (item is None or structured):
+            del node[parts[-1]]
+        if item is not None:
+            node[parts[-1]] = item
+    text = tomlkit.dumps(doc)
+    validate(tomlkit.parse(text).unwrap(), path)
+    write_atomic(path, text)
+    return old_plain, value
+
+
+def materialize(dotted: str, effective: Config, path: Path | None = None) -> None:
+    """Write the effective value of a table into the file if the file has
+    no such table yet, so that editing one entry keeps the others."""
+    path = path or paths.config_file()
+    doc = _load_doc(path)
+    node: Any = doc
+    for part in dotted.split("."):
+        if part not in node:
+            set_python(dotted, plain(get_dotted(effective, dotted.split("."))), path)
+            return
+        node = node[part]
 
 
 def unset_value(dotted: str, path: Path | None = None) -> bool:

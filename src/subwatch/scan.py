@@ -330,6 +330,10 @@ def run_job(app: AppContext, only: list[str] | None = None, full: bool = False,
         if cfg.scan.remind_after_scan:
             reminders.run(app.store, cfg, app.rates())
         app.store.purge_transactions_older_than(cfg.sources.statements.keep_transactions_days)
+        app.store.set_meta("last_scan", json.dumps({"at": clock.now().isoformat(timespec="seconds"),
+                                                    "created": total.get("created", 0),
+                                                    "review": total.get("review", 0),
+                                                    "errors": len(report.errors)}))
         log.info("scan_finished", seconds=round(report.seconds, 2), created=total.get("created", 0),
                  review=total.get("review", 0), errors=len(report.errors))
         return report

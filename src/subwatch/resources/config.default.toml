@@ -561,6 +561,8 @@ open_tui = "SUPER + CTRL + U"
 upcoming = "SUPER + CTRL + ALT + U"
 # Меню Subwatch.
 menu = "SUPER + CTRL + SHIFT + U"
+# Окно Subwatch: обзор, подписки и все настройки (виджет панели Omarchy).
+settings = ""
 # Запустить сканирование.
 rescan = ""
 # Добавить подписку.

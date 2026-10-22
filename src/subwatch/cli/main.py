@@ -9,7 +9,7 @@ import shlex
 import shutil
 import subprocess
 import sys
-from datetime import date, timedelta
+from datetime import date
 from pathlib import Path
 from typing import Annotated, Optional
 
@@ -18,6 +18,7 @@ import typer
 from .. import __version__, clock
 from ..errors import NotFoundError, SubwatchError
 from ..i18n import t, tn
+from ..userinput import parse_category, parse_user_amount, parse_user_date, parse_user_period
 from . import chrome
 from .common import State, confirm, console, get_app, handle_errors, ok, say, warn
 
@@ -98,71 +99,6 @@ def _resolve(store, ref: str):
                                 ids=", ".join(str(m.id) for m in matches))
         raise NotFoundError("cli.err.not_found", hint="cli.hint.list", ref=ref)
     return sub
-
-
-def parse_user_date(text: str) -> date:
-    from ..extract.patterns import find_dates
-
-    s = text.strip()
-    if s.startswith("+") and s[1:-1].isdigit() and s[-1] in "dwm":
-        n = int(s[1:-1])
-        if s[-1] == "d":
-            return clock.today() + timedelta(days=n)
-        if s[-1] == "w":
-            return clock.today() + timedelta(weeks=n)
-        from ..period import add_months
-
-        return add_months(clock.today(), n)
-    aliases = {t("input.today"): 0, t("input.tomorrow"): 1}
-    if s.casefold() in aliases:
-        return clock.today() + timedelta(days=aliases[s.casefold()])
-    hits = find_dates(s, clock.today(), english_numeric=False)
-    if hits:
-        return hits[0].value
-    raise SubwatchError("cli.err.bad_date", hint="cli.hint.date_formats", value=text)
-
-
-def parse_user_period(text: str):
-    from ..i18n import tget
-    from ..period import Period, PeriodError
-
-    aliases = {str(k).casefold(): v for k, v in (tget("input.period") or {}).items()}
-    s = text.strip().casefold()
-    try:
-        return Period.parse(aliases.get(s, s))
-    except PeriodError:
-        raise SubwatchError("cli.err.bad_period", hint="cli.hint.period_formats", value=text) from None
-
-
-def parse_user_amount(text: str, default_currency: str):
-    from ..extract.patterns import find_amounts
-    from ..money import is_valid_code, parse_number, resolve_currency
-
-    s = text.strip()
-    hits = find_amounts(s)
-    if hits:
-        return hits[0].amount, hits[0].currency
-    value = parse_number(s)
-    if value is None:
-        parts = s.rsplit(" ", 1)
-        if len(parts) == 2:
-            value = parse_number(parts[0])
-            code = resolve_currency(parts[1]) or (parts[1].upper() if is_valid_code(parts[1].upper()) else None)
-            if value is not None and code:
-                return value, code
-        raise SubwatchError("cli.err.bad_amount", hint="cli.hint.amount_formats", value=text)
-    return value, default_currency
-
-
-def parse_category(text: str, config) -> str:
-    s = text.strip()
-    if s in config.categories:
-        return s
-    for key, cat in config.categories.items():
-        if cat.name.casefold() == s.casefold():
-            return key
-    raise SubwatchError("cli.err.bad_category", hint="cli.hint.categories", value=text,
-                        known=", ".join(f"{k} ({c.name})" for k, c in config.categories.items()))
 
 
 def _json_out(data) -> None:
@@ -456,47 +392,36 @@ def cancel_command(
     ref: Annotated[str, arg("ref", "ref")],
     open_page: Annotated[bool, opt("--open/--no-open", key="open_page")] = True,
 ) -> None:
-    from ..hooks import run_hooks
-    from ..reminders import open_url
+    from .. import ops
 
     a = get_app()
     sub = _resolve(a.store, ref)
-    if sub.cancel_url and open_page:
-        open_url(sub.cancel_url)
-        say(t("cli.cancel.opened", url=sub.cancel_url))
-    elif not sub.cancel_url:
+    if not sub.cancel_url:
         say(t("cli.cancel.no_url", service=sub.service), "yellow")
-    sub.status = "cancelled"
-    sub.cancelled_at = clock.now()
-    sub.next_charge = None
-    a.store.update_subscription(sub)
-    run_hooks(a.config, "subscription_cancelled", sub, {"via": "cli"})
-    a.after_change()
+    if ops.cancel(a, sub, "cli", open_page=open_page):
+        say(t("cli.cancel.opened", url=sub.cancel_url))
     ok(t("cli.cancel.done", service=sub.service))
 
 
 @cmd("pause")
 @handle_errors
 def pause_command(ref: Annotated[str, arg("ref", "ref")]) -> None:
+    from .. import ops
+
     a = get_app()
     sub = _resolve(a.store, ref)
-    sub.status = "paused"
-    a.store.update_subscription(sub)
-    a.after_change()
+    ops.pause(a, sub)
     ok(t("cli.pause.done", service=sub.service))
 
 
 @cmd("resume")
 @handle_errors
 def resume_command(ref: Annotated[str, arg("ref", "ref")]) -> None:
+    from .. import ops
+
     a = get_app()
     sub = _resolve(a.store, ref)
-    sub.status = "active"
-    sub.cancelled_at = None
-    if sub.next_charge is None and sub.last_charge:
-        sub.next_charge = sub.period.next_after(sub.last_charge, clock.today(), sub.anchor_day)
-    a.store.update_subscription(sub)
-    a.after_change()
+    ops.resume(a, sub)
     ok(t("cli.resume.done", service=sub.service))
 
 
@@ -506,11 +431,11 @@ def used_command(
     ref: Annotated[str, arg("ref", "ref")],
     when: Annotated[Optional[str], opt("--date", key="used_date", metavar="date")] = None,
 ) -> None:
+    from .. import ops
+
     a = get_app()
     sub = _resolve(a.store, ref)
-    sub.track_usage = True
-    sub.last_used = parse_user_date(when) if when else clock.today()
-    a.store.update_subscription(sub)
+    ops.mark_used(a, sub, parse_user_date(when) if when else None)
     ok(t("cli.used.done", service=sub.service))
 
 
@@ -834,6 +759,9 @@ def bar_command(
     """Never fails loudly: a broken bar module is worse than an empty one."""
     from .. import bar
 
+    if fmt == "panel":
+        sys.stdout.write(json.dumps(_panel_data(), ensure_ascii=False) + "\n")
+        return
     try:
         a = get_app()
         data = bar.read_cache(a.db_path, a.loaded.path) if fmt == "waybar" else None
@@ -849,6 +777,47 @@ def bar_command(
         sys.stdout.write(data["text"] + "\n")
     else:
         sys.stdout.write(json.dumps(data, ensure_ascii=False) + "\n")
+
+
+def _panel_data() -> dict:
+    """Data for the Omarchy widget and its popup, cached like the bar text."""
+    from .. import bar
+    from ..gui.views import dashboard
+
+    try:
+        a = get_app()
+        data = bar.read_cache(a.db_path, a.loaded.path, "panel")
+        if data is None:
+            data = dashboard(a)
+            bar.write_cache(data, a.db_path, a.loaded.path, "panel")
+        a.close()
+        State.app = None
+        return data
+    except Exception as exc:
+        return {"version": 1, "error": t("bar.error", detail=str(exc))}
+
+
+@cmd("settings")
+@handle_errors
+def settings_command(
+    page: Annotated[Optional[str], arg("settings_page", "page")] = None,
+) -> None:
+    from ..integrate import omarchy
+
+    payload = json.dumps({"page": page} if page else {})
+    if omarchy.plugin_installed() and shutil.which("omarchy-shell"):
+        done = subprocess.run(["omarchy-shell", "shell", "summon", omarchy.PLUGIN_ID, payload],
+                              capture_output=True, text=True, check=False)
+        if done.returncode == 0 and "false" not in done.stdout:
+            return
+    open_command()
+
+
+@cmd("gui-server", hidden=True)
+def gui_server_command() -> None:
+    from ..gui.server import main
+
+    main()
 
 
 @cmd("menu")

@@ -3,7 +3,10 @@
 Menu:  ~/.config/omarchy/extensions/omarchy-menu.jsonc (hot-reloaded by the
        shell). Its parser only understands whole-line // comments and
        trailing commas, so the block uses nothing else.
-Bar:   a `type: command` module in ~/.config/omarchy/shell.json.
+Bar:   the noxqd.subwatch shell plugin (bar widget with a popup and the
+       settings window), copied to ~/.config/omarchy/plugins/ and placed in
+       ~/.config/omarchy/shell.json. Shells without plugin support get a
+       plain `type: command` module instead.
 Hook:  ~/.config/omarchy/hooks/post-update.d/subwatch re-applies the
        integration in case an update or `omarchy refresh` reset a file.
 """
@@ -32,6 +35,7 @@ from .common import (
 )
 
 MODULE_ID = "subwatch"
+PLUGIN_ID = "noxqd.subwatch"
 SCAN_UNIT_START = "systemctl --user start --no-block subwatch-scan.service"
 
 
@@ -57,6 +61,15 @@ def shell_file() -> Path:
 
 def hook_file() -> Path:
     return omarchy_config() / "hooks" / "post-update.d" / "subwatch"
+
+
+def plugin_dir() -> Path:
+    return omarchy_config() / "plugins" / PLUGIN_ID
+
+
+def plugins_supported() -> bool:
+    """Omarchy 4 shells load QML plugins from ~/.config/omarchy/plugins."""
+    return (omarchy_root() / "shell" / "services" / "PluginRegistry.qml").exists()
 
 
 # ------------------------------------------------------------------ menu
@@ -177,18 +190,153 @@ def _load_shell_json() -> tuple[dict[str, Any] | None, bool]:
     return None, False
 
 
-def _find_entry(layout: dict[str, Any]) -> tuple[str, int] | None:
+def _find_entry(layout: dict[str, Any], ident: str = MODULE_ID) -> tuple[str, int] | None:
     for section, items in layout.items():
         if not isinstance(items, list):
             continue
         for i, item in enumerate(items):
-            ident = item.get("id") if isinstance(item, dict) else item
-            if ident == MODULE_ID:
+            current = item.get("id") if isinstance(item, dict) else item
+            if current == ident:
                 return section, i
     return None
 
 
+# ---------------------------------------------------------------- plugin
+
+
+def env_js() -> str:
+    return (
+        ".pragma library\n"
+        f"// {t('integrate.plugin.env_comment')}\n"
+        f"var exe = {json.dumps(subwatch_exe())}\n"
+        f"var cacheDir = {json.dumps(str(paths.cache_dir()))}\n"
+    )
+
+
+def plugin_files() -> dict[str, bytes]:
+    """Everything that goes into the plugin directory, by relative path."""
+    from importlib import resources
+
+    out: dict[str, bytes] = {}
+
+    def walk(node: Any, prefix: str) -> None:
+        for child in node.iterdir():
+            name = prefix + child.name
+            if child.is_dir():
+                if child.name != "__pycache__":
+                    walk(child, name + "/")
+            elif child.name not in ("Env.js", ".gitignore"):
+                out[name] = child.read_bytes()
+
+    walk(resources.files("subwatch") / "resources" / "omarchy" / "plugin", "")
+    out["Env.js"] = env_js().encode()
+    return out
+
+
+def _plugin_changes() -> tuple[dict[str, bytes], list[str]]:
+    """(files to write, files to delete) to bring the plugin up to date."""
+    target = plugin_dir()
+    wanted = plugin_files()
+    write = {rel: data for rel, data in wanted.items()
+             if not (target / rel).is_file() or (target / rel).read_bytes() != data}
+    stale = []
+    if target.is_dir():
+        stale = sorted(p.relative_to(target).as_posix() for p in target.rglob("*")
+                       if p.is_file() and p.relative_to(target).as_posix() not in wanted)
+    return write, stale
+
+
+def plugin_current() -> bool:
+    write, stale = _plugin_changes()
+    return not write and not stale
+
+
+def _ours(path: Path) -> bool:
+    try:
+        return json.loads((path / "manifest.json").read_text(encoding="utf-8")).get("id") == PLUGIN_ID
+    except (OSError, ValueError):
+        return False
+
+
+def _shell_ipc(*args: str) -> None:
+    import subprocess
+
+    # Only inside a running Hyprland session: the shell is not ours to poke otherwise.
+    if shutil.which("omarchy-shell") and os.environ.get("HYPRLAND_INSTANCE_SIGNATURE"):
+        subprocess.run(["omarchy-shell", "-q", *args], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+                       timeout=10, check=False)
+
+
+def _sync_plugin(dry_run: bool) -> bool:
+    write, stale = _plugin_changes()
+    if dry_run or (not write and not stale):
+        return bool(write or stale)
+    target = plugin_dir()
+    if target.exists() and not _ours(target) and (target / "manifest.json").exists():
+        raise OSError(str(target))
+    for rel, data in write.items():
+        path = target / rel
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_bytes(data)
+    for rel in stale:
+        (target / rel).unlink()
+    for folder in sorted((p for p in target.rglob("*") if p.is_dir()), reverse=True):
+        if not any(folder.iterdir()):
+            folder.rmdir()
+    return True
+
+
+def _apply_plugin(config: Config, dry_run: bool) -> Step:
+    from .. import barcache
+
+    path = shell_file()
+    data, existed = _load_shell_json()
+    if data is None:
+        return Step("bar", "failed", "integrate.bar.unreadable", {}, path)
+    try:
+        files_changed = _sync_plugin(dry_run)
+    except OSError:
+        return Step("bar", "failed", "integrate.plugin.foreign", {"path": paths.contract_home(plugin_dir())},
+                    plugin_dir())
+    if files_changed and not dry_run:
+        _shell_ipc("shell", "rescanPlugins")
+    layout = data.setdefault("bar", {}).setdefault("layout", {})
+    plugin_at = _find_entry(layout, PLUGIN_ID)
+    legacy_at = _find_entry(layout, MODULE_ID)
+    section = plugin_at[0] if plugin_at else config.bar.section
+    layout_changed = False
+    if legacy_at:
+        # The old text-only module gives its place to the widget.
+        legacy_section, index = legacy_at
+        if plugin_at:
+            del layout[legacy_section][index]
+        else:
+            layout[legacy_section][index] = {"id": PLUGIN_ID}
+            section = legacy_section
+        layout_changed = True
+    elif not plugin_at:
+        layout.setdefault(config.bar.section, []).insert(0, {"id": PLUGIN_ID})
+        layout_changed = True
+    if not layout_changed and not files_changed and existed:
+        return Step("bar", "unchanged", "integrate.bar.same", {}, path)
+    if dry_run:
+        return Step("bar", "planned", "integrate.plugin.would", {"section": section}, path)
+    if layout_changed:
+        if existed:
+            backup_file(path)
+        write_text(path, json.dumps(data, ensure_ascii=False, indent=2) + "\n")
+    barcache.invalidate()
+    key = "integrate.plugin.written" if layout_changed else "integrate.plugin.updated"
+    return Step("bar", "changed", key, {"section": section}, path)
+
+
 def apply_bar(config: Config, dry_run: bool = False) -> Step:
+    if plugins_supported():
+        return _apply_plugin(config, dry_run)
+    return _apply_command(config, dry_run)
+
+
+def _apply_command(config: Config, dry_run: bool = False) -> Step:
     path = shell_file()
     data, existed = _load_shell_json()
     if data is None:
@@ -224,27 +372,42 @@ def remove_bar(dry_run: bool = False) -> Step:
     except ValueError:
         return Step("bar", "failed", "integrate.bar.unreadable", {}, path)
     layout = (data.get("bar") or {}).get("layout") or {}
-    found = _find_entry(layout)
-    if not found:
+    found = [f for f in (_find_entry(layout, PLUGIN_ID), _find_entry(layout, MODULE_ID)) if f]
+    has_dir = plugin_dir().exists() and _ours(plugin_dir())
+    if not found and not has_dir:
         return Step("bar", "unchanged", "integrate.not_installed", {}, path)
     if dry_run:
         return Step("bar", "planned", "integrate.bar.removed", {}, path)
-    section, index = found
-    del layout[section][index]
-    backup_file(path)
-    write_text(path, json.dumps(data, ensure_ascii=False, indent=2) + "\n")
+    if found:
+        for section, index in sorted(found, key=lambda f: -f[1]):
+            del layout[section][index]
+        backup_file(path)
+        write_text(path, json.dumps(data, ensure_ascii=False, indent=2) + "\n")
+    if has_dir:
+        shutil.rmtree(plugin_dir())
+        _shell_ipc("shell", "rescanPlugins")
     return Step("bar", "removed", "integrate.bar.removed", {}, path)
 
 
-def bar_installed() -> bool:
+def _layout() -> dict[str, Any]:
     path = shell_file()
     if not path.exists():
-        return False
+        return {}
     try:
         data = json.loads(path.read_text(encoding="utf-8"))
     except ValueError:
-        return False
-    return _find_entry((data.get("bar") or {}).get("layout") or {}) is not None
+        return {}
+    return (data.get("bar") or {}).get("layout") or {}
+
+
+def bar_installed() -> bool:
+    layout = _layout()
+    return _find_entry(layout, PLUGIN_ID) is not None or _find_entry(layout, MODULE_ID) is not None
+
+
+def plugin_installed() -> bool:
+    """The widget is on the bar, so the shell has the window loaded too."""
+    return _ours(plugin_dir()) and _find_entry(_layout(), PLUGIN_ID) is not None
 
 
 # ------------------------------------------------------------------ hook

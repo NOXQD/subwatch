@@ -31,12 +31,15 @@ def _fast_bar(argv: list[str]) -> bool:
     if not argv or argv[0] != "bar" or any(a in ("-h", "--help") for a in argv):
         return False
     rest = argv[1:]
-    if rest and rest not in (["--format", "waybar"], ["-f", "waybar"], ["--format=waybar"]):
+    name = "bar"
+    if rest in (["--format", "panel"], ["-f", "panel"], ["--format=panel"]):
+        name = "panel"
+    elif rest and rest not in (["--format", "waybar"], ["-f", "waybar"], ["--format=waybar"]):
         return False
     from . import barcache
 
     cfg = _config_path([])
-    data = barcache.read(barcache.fast_db_path(cfg), cfg)
+    data = barcache.read(barcache.fast_db_path(cfg), cfg, name)
     if data is None:
         return False
     import json
